@@ -37,3 +37,7 @@ Dicas:
 - Logos em PNG transparente ou SVG. Use o campo de altura para equilibrar o tamanho entre os logos.
 - Fotos verticais (3:4).
 - O site abre com `?painel=1` no fim do endereço para testar vídeos só no seu navegador, sem publicar.
+
+## Publicação
+
+O repositório é público para o Netlify (plano grátis) aceitar atualizações de mais de um autor. Nada secreto fica aqui: a chave do login do painel está guardada no Netlify.
