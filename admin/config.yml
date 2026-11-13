@@ -16,8 +16,8 @@ site_url: https://dacostamotion.com
 display_url: https://dacostamotion.com
 
 # arquivos enviados pelo painel (vídeos, fotos, logos)
-media_folder: media/uploads
-public_folder: media/uploads
+media_folder: media
+public_folder: media
 
 collections:
   - name: conteudo
