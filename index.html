@@ -506,6 +506,10 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
   <div class="ld-mid"><span class="ld-n" id="ldN">0</span></div>
   <div class="ld-bot"><span>Always moving</span><div class="ld-bar"><i id="ldBar"></i></div></div>
 </div>
+<!-- formulário "fantasma" pro Netlify reconhecer o contato na publicação; o visível é desenhado pelo script -->
+<form name="contato" data-netlify="true" netlify-honeypot="bot" hidden>
+  <input name="bot"><input name="nome"><input name="email"><input name="marca"><input name="tipo"><input name="orcamento"><textarea name="mensagem"></textarea>
+</form>
 <div id="app"></div>
 <button class="fab" id="fab" type="button" hidden><i></i>Painel de vídeos</button>
 <aside class="panel" id="panel" aria-label="Painel de vídeos">
@@ -557,7 +561,9 @@ const STR = {
   orcs: { pt: ["Até R$ 5 mil", "R$ 5–15 mil", "Acima de R$ 15 mil", "Ainda não sei"], en: ["Up to R$ 5k", "R$ 5–15k", "Over R$ 15k", "Not sure yet"] },
   fMsg: { pt: "Mensagem", en: "Message" }, fMsgPh: { pt: "Conta a ideia, o prazo e onde o vídeo vai aparecer.", en: "Share the idea, the deadline and where the video will live." },
   enviar: { pt: "Enviar mensagem", en: "Send message" }, ouEscreve: { pt: "Ou escreve direto pro e-mail ao lado.", en: "Or write straight to the email on the side." },
-  sendOk: { pt: "Pronto. No site no ar, isso chega no teu e-mail.", en: "Done. On the live site this lands in my inbox." },
+  sendOk: { pt: "Mensagem enviada. Te respondo em breve!", en: "Message sent. I'll get back to you soon!" },
+  sending: { pt: "Enviando…", en: "Sending…" },
+  sendFail: { pt: "Não consegui enviar agora. Tenta de novo ou me chama por e-mail.", en: "Couldn't send right now. Try again or email me." },
   sendErr: { pt: "Preenche nome e um e-mail válido.", en: "Please fill in your name and a valid email." },
   canais: { pt: "Canais", en: "Channels" }, copiar: { pt: "Copiar", en: "Copy" }, copiado: { pt: "Copiado", en: "Copied" }, selecione: { pt: "Selecione o e-mail", en: "Select the email" },
   abrir: { pt: "Abrir ↗", en: "Open ↗" }, base: { pt: "Base", en: "Based in" }, remoto: { pt: "Brasil · atendo remoto", en: "Brazil · working remotely" },
@@ -897,6 +903,7 @@ function contatoHTML() {
     </section>
     <section class="wrap c-grid">
       <form class="form" id="cForm" novalidate>
+        <input name="bot" id="fBot" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="head"><p class="label"><span class="sq"></span>${S("novo")}</p><p class="label dim">${S("leva")}</p></div>
         <div class="row2">
           <label class="field" for="fNome"><span class="fl">${S("fNome")}</span><input id="fNome" placeholder="${S("fNomePh")}"></label>
@@ -1221,10 +1228,22 @@ function setupFootCycle() {
 /* =========== Contato =========== */
 function afterContato() {
   $$("[data-chips]").forEach(g => $$(".chip", g).forEach(c => c.addEventListener("click", () => { $$(".chip", g).forEach(x => x.classList.remove("on")); c.classList.add("on"); })));
-  $("#cForm").addEventListener("submit", e => {
+  /* envia pro Netlify Forms; o Netlify manda por e-mail pro Emanuel */
+  $("#cForm").addEventListener("submit", async e => {
     e.preventDefault();
+    const note = $("#sendNote"), btn = $(".send-btn");
     const ok = $("#fNome").value.trim() && /\S+@\S+\.\S+/.test($("#fMail").value);
-    $("#sendNote").textContent = ok ? S("sendOk") : S("sendErr");
+    if (!ok) { note.textContent = S("sendErr"); return; }
+    const chip = i => { const c = $$("[data-chips]")[i]; const on = c && $(".chip.on", c); return on ? on.textContent : ""; };
+    const body = new URLSearchParams({ "form-name": "contato", bot: $("#fBot").value, nome: $("#fNome").value.trim(), email: $("#fMail").value.trim(),
+      marca: $("#fMarca").value.trim(), tipo: chip(0), orcamento: chip(1), mensagem: $("#fMsg").value.trim() });
+    btn.disabled = true; note.textContent = S("sending");
+    try {
+      const r = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() });
+      if (!r.ok) throw new Error(r.status);
+      note.textContent = S("sendOk"); $("#cForm").reset();
+    } catch (err) { note.textContent = S("sendFail"); }
+    btn.disabled = false;
   });
   $("#copyMail").addEventListener("click", async e => {
     const b = e.currentTarget;
