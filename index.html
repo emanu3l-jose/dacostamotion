@@ -244,6 +244,9 @@ a.sub:hover { color: var(--ink); }
 .channel .top { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
 .channel .top b { color: var(--ink); font-weight: 400; }
 .channel .val { font-size: 16px; line-height: 24px; }
+a.channel, .channel a.val { color: inherit; text-decoration: none; }
+a.channel .val { transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+a.channel:hover .val { transform: translateX(6px); }
 @media (max-width: 900px) { .c-grid { grid-template-columns: 1fr; gap: 48px; } .c-hero { height: auto; padding-block: 80px; } }
 
 /* ===================== TRABALHOS (tela cheia) ===================== */
@@ -558,7 +561,7 @@ const STR = {
   fMarca: { pt: "Marca / empresa", en: "Brand / company" }, fMarcaPh: { pt: "Nome da marca", en: "Brand name" },
   fTipo: { pt: "Tipo de projeto", en: "Project type" }, fOrc: { pt: "Orçamento", en: "Budget" },
   tipos: { pt: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Outro"], en: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Other"] },
-  orcs: { pt: ["Até R$ 5 mil", "R$ 5–15 mil", "Acima de R$ 15 mil", "Ainda não sei"], en: ["Up to R$ 5k", "R$ 5–15k", "Over R$ 15k", "Not sure yet"] },
+  orcs: { pt: ["US$ 1–3 mil", "US$ 3–6 mil", "Acima de US$ 6 mil", "Ainda não sei"], en: ["US$ 1–3k", "US$ 3–6k", "US$ 6k+", "Not sure yet"] },
   fMsg: { pt: "Mensagem", en: "Message" }, fMsgPh: { pt: "Conta a ideia, o prazo e onde o vídeo vai aparecer.", en: "Share the idea, the deadline and where the video will live." },
   enviar: { pt: "Enviar mensagem", en: "Send message" }, ouEscreve: { pt: "Ou escreve direto pro e-mail ao lado.", en: "Or write straight to the email on the side." },
   sendOk: { pt: "Mensagem enviada. Te respondo em breve!", en: "Message sent. I'll get back to you soon!" },
@@ -581,6 +584,14 @@ const S = k => tx(STR[k]);
 
 /* =========== conteúdo real =========== */
 /* conteúdo padrão: é substituído pelo que está em /content (editado pelo painel /admin) */
+/* contatos e redes */
+const LINKS = {
+  email: "dacostamotion@hotmail.com",
+  whatsapp: "https://wa.me/5588993654850",
+  instagram: "https://www.instagram.com/dacostamotion/",
+  behance: "https://www.behance.net/dacostamotion",
+  linkedin: "https://www.linkedin.com/in/dacostamotion/",
+};
 let GERAL = { video_abertura: "media/reel.mp4", capa_abertura: "media/poster-workflow.jpg" };
 let PROJECTS = [
   { id: 1, slug: "workflow", dark: true, nome: "Workflow Studio", cliente: "Workflow Studio", duracao: "0:40",
@@ -733,7 +744,7 @@ function headerHTML(active, extra = "") {
   return `<header class="site-header ${extra}" id="siteHeader"><div class="wrap row">
     <div class="left"><a class="brand" href="#inicio">DacostaStudio</a><span class="local"><span>${S("brasil")}</span><span class="t2 js-clock">${brTime()}</span></span></div>
     <nav class="site-nav">${items.map(k => `<a href="#${k}" class="${k === active ? "active" : ""}">${tx(STR.nav[k])}</a>`).join("")}</nav>
-    <div class="right"><div class="socials"><a href="#" data-noop>Instagram</a><a href="#" data-noop>Behance</a></div>${langHTML()}</div>
+    <div class="right"><div class="socials"><a href="${LINKS.instagram}" target="_blank" rel="noopener">Instagram</a><a href="${LINKS.behance}" target="_blank" rel="noopener">Behance</a></div>${langHTML()}</div>
   </div></header>`;
 }
 function footerHTML() {
@@ -750,8 +761,8 @@ function footerHTML() {
       <div class="acts"><a class="b1" href="#contato">${S("entrar")}</a><a class="b2" href="#trabalhos">${S("verTrab")}</a></div>
     </div>
     <div class="wrap foot-cols">
-      <div class="col main"><span class="fl">${S("contatoL")}</span><span class="mail">contato@dacostastudio.com</span><span class="item" style="font-size:15px">${S("respondo")}</span></div>
-      <div class="col"><span class="fl">${S("redes")}</span><a href="#" data-noop>Instagram ↗</a><a href="#" data-noop>Behance ↗</a><a href="#" data-noop>Vimeo ↗</a><a href="#" data-noop>LinkedIn ↗</a></div>
+      <div class="col main"><span class="fl">${S("contatoL")}</span><a class="mail" href="mailto:${LINKS.email}">${LINKS.email}</a><span class="item" style="font-size:15px">${S("respondo")}</span></div>
+      <div class="col"><span class="fl">${S("redes")}</span><a href="${LINKS.instagram}" target="_blank" rel="noopener">Instagram ↗</a><a href="${LINKS.behance}" target="_blank" rel="noopener">Behance ↗</a><a href="${LINKS.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a><a href="${LINKS.whatsapp}" target="_blank" rel="noopener">WhatsApp ↗</a></div>
       <div class="col"><span class="fl">${S("navegacao")}</span>${["inicio", "trabalhos", "sobre", "contato"].map(k => `<a href="#${k}">${tx(STR.nav[k])}</a>`).join("")}</div>
     </div>
     <div class="wrap foot-bar"><span>© 2026 DacostaStudio</span><span>${L === "pt" ? "Em motion" : "In motion"} · Always moving</span><button type="button" data-top>${S("topo")}</button></div>
@@ -918,10 +929,11 @@ function contatoHTML() {
       <div class="channels">
         <p class="label"><span class="sq"></span>${S("canais")}</p>
         <div style="height:24px"></div>
-        <div class="channel"><div class="top"><span>${S("fMail")}</span><b><button type="button" id="copyMail">${S("copiar")}</button></b></div><div class="val">contato@dacostastudio.com</div></div>
-        <div class="channel"><div class="top"><span>WhatsApp</span><b>${S("abrir")}</b></div><div class="val">+55 (00) 00000-0000</div></div>
-        <div class="channel"><div class="top"><span>Instagram</span><b>${S("abrir")}</b></div><div class="val">@dacostastudio</div></div>
-        <div class="channel"><div class="top"><span>Behance</span><b>${S("abrir")}</b></div><div class="val">behance.net/dacostastudio</div></div>
+        <div class="channel"><div class="top"><span>${S("fMail")}</span><b><button type="button" id="copyMail">${S("copiar")}</button></b></div><a class="val" href="mailto:${LINKS.email}">${LINKS.email}</a></div>
+        <a class="channel" href="${LINKS.whatsapp}" target="_blank" rel="noopener"><div class="top"><span>WhatsApp</span><b>${S("abrir")}</b></div><div class="val">+55 (88) 99365-4850</div></a>
+        <a class="channel" href="${LINKS.instagram}" target="_blank" rel="noopener"><div class="top"><span>Instagram</span><b>${S("abrir")}</b></div><div class="val">@dacostamotion</div></a>
+        <a class="channel" href="${LINKS.behance}" target="_blank" rel="noopener"><div class="top"><span>Behance</span><b>${S("abrir")}</b></div><div class="val">behance.net/dacostamotion</div></a>
+        <a class="channel" href="${LINKS.linkedin}" target="_blank" rel="noopener"><div class="top"><span>LinkedIn</span><b>${S("abrir")}</b></div><div class="val">in/dacostamotion</div></a>
         <div class="channel"><div class="top"><span>${S("base")}</span><b class="js-clock">${brTime()}</b></div><div class="val">${S("remoto")}</div></div>
       </div>
     </section>
@@ -1247,7 +1259,7 @@ function afterContato() {
   });
   $("#copyMail").addEventListener("click", async e => {
     const b = e.currentTarget;
-    try { await navigator.clipboard.writeText("contato@dacostastudio.com"); b.textContent = S("copiado"); }
+    try { await navigator.clipboard.writeText(LINKS.email); b.textContent = S("copiado"); }
     catch (err) { b.textContent = S("selecione"); }
     setTimeout(() => b.textContent = S("copiar"), 1800);
   });
