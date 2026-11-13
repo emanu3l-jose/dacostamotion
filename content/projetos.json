@@ -1,7 +1,7 @@
 {
   "projetos": [
     {
-      "nome": "Workflow Studio",
+      "nome": "Work From Within",
       "cliente": "Workflow Studio",
       "duracao": "0:40",
       "video": "media/reel.mp4",
@@ -26,25 +26,48 @@
       ],
       "rodape_escuro": true,
       "tipo": {
-        "pt": "Identidade em movimento",
-        "en": "Motion identity"
+        "pt": "Brand motion · Manifesto",
+        "en": "Brand motion · Manifesto"
       },
       "servicos": {
-        "pt": "Logo animation · Motion identity · Aplicações",
-        "en": "Logo animation · Motion identity · Brand applications"
+        "pt": "Animação · Sound design",
+        "en": "Animation · Sound design"
       },
       "resumo": {
-        "pt": "A Workflow Studio é um estúdio de identidade de marca. O símbolo de três círculos ganhou movimento e virou o fio que liga cada peça, do logo à placa na rua.",
-        "en": "Workflow Studio is a brand identity studio. Its three-circle symbol was put in motion and became the thread that ties every piece together, from the logo to the sign on the street."
+        "pt": "Manifesto em movimento para a Workflow Studio. A convite do estúdio, assinei a animação e o sound design do filme “Work From Within”.",
+        "en": "A manifesto in motion for Workflow Studio. Invited by the studio, I created the animation and sound design for the film “Work From Within”."
       },
       "desafio": {
-        "pt": "Mostrar o conceito “Work From Within” sem explicar demais: a marca nasce de dentro pra fora.",
-        "en": "Show the “Work From Within” idea without over-explaining it: the brand grows from the inside out."
+        "pt": "Dar vida ao conceito “Work From Within” e mostrar que a marca nasce de dentro pra fora, sem explicar demais.",
+        "en": "Bring the “Work From Within” idea to life and show the brand growing from the inside out, without over-explaining it."
       },
       "solucao": {
-        "pt": "O símbolo se monta a partir dos círculos e se desdobra nas aplicações (papelaria, sinalização e outdoor) num ritmo calmo e preciso.",
-        "en": "The symbol builds itself from the circles and unfolds into the applications (stationery, signage and billboards) at a calm, precise pace."
-      }
+        "pt": "O símbolo de três círculos se monta e se desdobra nas aplicações, com cada movimento ganhando o seu próprio som. Animação e efeitos sonoros nasceram juntos.",
+        "en": "The three-circle symbol builds itself and unfolds into the applications, with every movement getting its own sound. Animation and sound effects were made together."
+      },
+      "creditos": [
+        {
+          "funcao": {
+            "pt": "Direção criativa e de marca",
+            "en": "Brand & creative direction"
+          },
+          "nome": "Workflow Studio · @madebyworkflow"
+        },
+        {
+          "funcao": {
+            "pt": "Motion design",
+            "en": "Motion design"
+          },
+          "nome": "Emanuel Costa · @dacostamotion"
+        },
+        {
+          "funcao": {
+            "pt": "Efeitos sonoros",
+            "en": "Sound effects"
+          },
+          "nome": "Emanuel Costa · @dacostamotion"
+        }
+      ]
     },
     {
       "nome": "CleverMove",
@@ -69,29 +92,59 @@
       ],
       "rodape_escuro": false,
       "tipo": {
-        "pt": "Identidade visual",
-        "en": "Visual identity"
+        "pt": "Brand motion · Manifesto",
+        "en": "Brand motion · Manifesto"
       },
       "servicos": {
-        "pt": "Logo animation · Apresentação de marca",
-        "en": "Logo animation · Brand presentation"
+        "pt": "Motion design · Efeitos sonoros",
+        "en": "Motion design · Sound effects"
       },
       "resumo": {
-        "pt": "A CleverMove queria parecer exatamente o que promete: intencional e à frente. O cavalo do símbolo conduz o vídeo, do logo até a fachada.",
-        "en": "CleverMove wanted to look exactly like what it promises: intentional and ahead. The horse in the symbol leads the film, from the logo to the storefront."
+        "pt": "Brand motion da CleverMove, criado junto com o estúdio Oddside. O cavalo do símbolo conduz o filme, do logo até a fachada.",
+        "en": "Brand motion for CleverMove, made together with Oddside studio. The horse in the symbol leads the film, from the logo to the storefront."
       },
       "desafio": {
-        "pt": "Uma marca nova que precisava parecer sólida desde o primeiro contato.",
-        "en": "A new brand that had to feel solid from the very first contact."
+        "pt": "Uma marca nova que precisava parecer sólida e intencional desde o primeiro contato.",
+        "en": "A new brand that had to feel solid and intentional from the very first contact."
       },
       "solucao": {
-        "pt": "Uma apresentação em movimento da identidade (símbolo, papelaria, embalagem e loja) com transições que mantêm o mesmo passo firme do início ao fim.",
-        "en": "A moving presentation of the identity (symbol, stationery, packaging and store) with transitions that keep the same steady pace from start to finish."
-      }
+        "pt": "Uma apresentação em movimento da identidade (símbolo, papelaria, embalagem e loja), com transições e efeitos sonoros no mesmo passo firme do início ao fim.",
+        "en": "A moving presentation of the identity (symbol, stationery, packaging and store), with transitions and sound effects keeping the same steady pace from start to finish."
+      },
+      "creditos": [
+        {
+          "funcao": {
+            "pt": "Estúdio",
+            "en": "Studio"
+          },
+          "nome": "Oddside"
+        },
+        {
+          "funcao": {
+            "pt": "Direção criativa e estratégia",
+            "en": "Creative direction & strategy"
+          },
+          "nome": "Felipe Rufino · @ofeliperufino"
+        },
+        {
+          "funcao": {
+            "pt": "Logotipo",
+            "en": "Logotype"
+          },
+          "nome": "@brenowork"
+        },
+        {
+          "funcao": {
+            "pt": "Motion design e SFX",
+            "en": "Motion design & SFX"
+          },
+          "nome": "Emanuel Costa · @dacostamotion"
+        }
+      ]
     },
     {
       "nome": "Realure",
-      "cliente": "Felipe Rufino",
+      "cliente": "Realure",
       "duracao": "0:48",
       "video": "media/realure.mp4",
       "preview": "media/prev-realure.mp4",
@@ -109,25 +162,41 @@
       ],
       "rodape_escuro": false,
       "tipo": {
-        "pt": "Motion para app",
-        "en": "App motion"
+        "pt": "Brand motion · Manifesto",
+        "en": "Brand motion · Manifesto"
       },
       "servicos": {
-        "pt": "Motion de interface · Sound design",
-        "en": "UI motion · Sound design"
+        "pt": "Motion design · Sound design",
+        "en": "Motion design · Sound design"
       },
       "resumo": {
-        "pt": "Realure é um app com uma ideia simples: viver mais leve. O vídeo apresenta a marca e a interface no mesmo ritmo tranquilo.",
-        "en": "Realure is an app built on a simple idea: to live a lighter life. The film introduces the brand and the interface at the same unhurried pace."
+        "pt": "A convite de Felipe Rufino, transformei o manifesto da Realure numa peça viva. Para a marca, identidade não é algo fixo: é um ciclo hormonal, neurológico e comportamental que, quando se realinha, traz a mulher de volta pra si mesma.",
+        "en": "Invited by Felipe Rufino, I turned Realure's manifesto into a living piece. For the brand, identity isn't fixed: it's a cycle (hormonal, neurological, behavioural) that, once realigned, brings a woman back to herself."
       },
       "desafio": {
-        "pt": "Mostrar as telas do app sem virar um tutorial.",
-        "en": "Show the app screens without turning it into a tutorial."
+        "pt": "Fazer esse ciclo ser sentido no vídeo inteiro. Cada textura, movimento e elemento gráfico precisava respirar, orbitar e se reorganizar, fase por fase.",
+        "en": "Make that cycle felt across the whole film. Every texture, movement and graphic element had to breathe, orbit and rearrange itself, phase by phase."
       },
       "solucao": {
-        "pt": "Uma montagem que mistura grid, interface e sound design, para o app ser sentido antes de ser explicado.",
-        "en": "An edit that blends grid, interface and sound design, so the app is felt before it is explained."
-      }
+        "pt": "No som, em vez de uma trilha pronta com efeitos separados, desmontamos a própria música (bateria, baixo e piano) e tiramos cada SFX de dentro das camadas. Todo o universo sonoro do filme nasceu de um único som.",
+        "en": "For the sound, instead of a stock track with separate effects, we took the music itself apart (drums, bass and piano) and pulled every SFX out of its layers. The film's entire sound world was born from a single sound."
+      },
+      "creditos": [
+        {
+          "funcao": {
+            "pt": "Direção criativa",
+            "en": "Creative direction"
+          },
+          "nome": "Felipe Rufino · @ofeliperufino"
+        },
+        {
+          "funcao": {
+            "pt": "Motion design e sound design",
+            "en": "Motion & sound design"
+          },
+          "nome": "Emanuel Costa · @dacostamotion"
+        }
+      ]
     }
   ]
 }

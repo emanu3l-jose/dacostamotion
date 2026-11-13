@@ -78,6 +78,20 @@ collections:
                 fields:
                   - { name: pt, label: "Português", widget: text }
                   - { name: en, label: "Inglês", widget: text }
+              - name: creditos
+                label: "Créditos (quem fez o quê). Escreve @usuario que vira link pro Instagram"
+                label_singular: Crédito
+                widget: list
+                required: false
+                summary: "{{fields.funcao.pt}}: {{fields.nome}}"
+                fields:
+                  - name: funcao
+                    label: Função
+                    widget: object
+                    fields:
+                      - { name: pt, label: "Português (ex: Direção criativa)", widget: string }
+                      - { name: en, label: "Inglês (ex: Creative direction)", widget: string }
+                  - { name: nome, label: "Nome (ex: Felipe Rufino · @ofeliperufino)", widget: string }
 
       - name: depoimentos
         label: Depoimentos

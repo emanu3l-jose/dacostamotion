@@ -321,6 +321,7 @@ a.channel:hover .val { transform: translateX(6px); }
 .frames .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .frames .three > div { aspect-ratio: 1; overflow: hidden; }
 .frames .tinted { background: var(--tint); padding: 5%; }
+.credits a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .credits { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); margin-top: 120px; }
 .outros { margin-top: 120px; padding-bottom: 150px; display: flex; flex-direction: column; gap: 28px; }
 .outros .head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--hair); padding-bottom: 16px; }
@@ -430,6 +431,12 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 .hero-title .display .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
 .hero-title .display .w > span { display: inline-block; will-change: transform; animation: rise 1.1s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i) * 110ms + 150ms); }
 .hero-title .label { animation: fadeUp .9s cubic-bezier(.2,.7,.2,1) both; }
+/* palavra que troca subindo: "Motion for brands → products → SaaS…" */
+.rot { display: inline-block; position: relative; overflow: hidden; vertical-align: top; white-space: nowrap; padding-bottom: .08em; margin-bottom: -.08em;
+  transition: width .8s cubic-bezier(.76,0,.24,1); }
+.rot-w { display: inline-block; white-space: nowrap; transition: transform .8s cubic-bezier(.76,0,.24,1); }
+.rot-w.nx { position: absolute; left: 0; top: 0; }
+.rot-w.in { transform: translateY(110%); } .rot-w.out { transform: translateY(-110%); }
 @keyframes rise { from { transform: translateY(105%); } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } }
 /* títulos em cascata quando aparecem */
@@ -486,7 +493,8 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 .marquee .lg img.fix { max-height: none; max-width: none; width: 180px; height: auto; aspect-ratio: 3 / 1; }
 @media (max-width: 700px) { .marquee .lg img.fix { width: 132px; } }
 /* fotos trocando no bloco */
-.pstack { position: absolute; inset: 0; overflow: hidden; }
+.pstack { position: absolute; inset: 0; overflow: hidden; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.pstack img { -webkit-user-drag: none; pointer-events: none; }
 .pstack img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
   clip-path: inset(100% 0 0 0); transform: scale(1.18) translateY(6%);
   transition: clip-path 1.2s cubic-bezier(.76,0,.24,1), transform 1.6s cubic-bezier(.2,.7,.2,1); }
@@ -494,13 +502,12 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 .pstack img.top { z-index: 2; }
 .pstack img.old { transform: scale(1.06) translateY(-4%); transition: transform 1.3s cubic-bezier(.76,0,.24,1); }
 /* loading */
-.loader { position: fixed; inset: 0; z-index: 200; background: #0b0b0b; color: #f5f5f1; display: flex; flex-direction: column; justify-content: space-between; padding: 28px var(--gut); transition: transform 1.1s cubic-bezier(.76,0,.24,1); }
+.loader { position: fixed; inset: 0; z-index: 200; background: #000; color: #f5f5f1; display: flex; flex-direction: column; justify-content: space-between; padding: 28px var(--gut); transition: transform 1.1s cubic-bezier(.76,0,.24,1); }
 .loader.done { transform: translateY(-100%); }
 /* vídeo do logo na abertura: ocupa a tela, fundo preto igual ao do vídeo */
 .loader.has-video { background: #000; }
 .ld-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity .3s; pointer-events: none; }
 .loader.has-video .ld-video { opacity: 1; }
-.loader.has-video .ld-mid, .loader.has-video .ld-top, .loader.has-video .ld-bot > span { opacity: 0; }
 .ld-top, .ld-bot { position: relative; z-index: 1; }
 @media (orientation: portrait) { .ld-video { width: 180%; left: -40%; } }
 .ld-top, .ld-bot { display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
@@ -515,12 +522,9 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 </style>
 
 <div class="loader" id="loader" aria-hidden="true">
-  <div class="ld-top"><span>DacostaStudio</span><span>Motion for brands</span></div>
   <video class="ld-video" id="ldVideo" muted playsinline webkit-playsinline preload="auto" aria-hidden="true">
     <source src="media/loader.webm" type="video/webm"><source src="media/loader.mp4" type="video/mp4">
   </video>
-  <div class="ld-mid"><span class="ld-n" id="ldN">0</span></div>
-  <div class="ld-bot"><span>Always moving</span><div class="ld-bar"><i id="ldBar"></i></div></div>
 </div>
 <!-- formulário "fantasma" pro Netlify reconhecer o contato na publicação; o visível é desenhado pelo script -->
 <form name="contato" method="POST" data-netlify="true" netlify-honeypot="bot" hidden>
@@ -543,11 +547,13 @@ const tx = v => (v && typeof v === "object" && !Array.isArray(v)) ? (v[L] ?? v.p
 const STR = {
   nav: { inicio: { pt: "Início", en: "Home" }, trabalhos: { pt: "Trabalhos", en: "Work" }, sobre: { pt: "Sobre", en: "About" }, contato: { pt: "Contato", en: "Contact" } },
   brasil: { pt: "Brasil", en: "Brazil" },
-  heroLabel: { pt: "Emanuel Costa · Founder DacostaStudio", en: "Emanuel Costa · Founder DacostaStudio" },
+  heroLabel: { pt: "Emanuel Costa · Motion designer", en: "Emanuel Costa · Motion designer" },
+  /* palavras que trocam depois de "Motion for" */
+  rotWords: { pt: ["brands", "products", "SaaS", "startups", "apps"], en: ["brands", "products", "SaaS", "startups", "apps"] },
   reelTl: { pt: "Demo reel", en: "Demo reel" },
   som: { pt: "Som", en: "Sound" }, mudo: { pt: "Mudo", en: "Mute" }, telaCheia: { pt: "Tela cheia", en: "Fullscreen" },
-  aboutTxt: { pt: "A natureza não para e o relógio está sempre correndo. Uma marca parada vai contra isso. Meu trabalho é dar a ela ritmo, peso e intenção, até o <b>movimento virar emoção.</b>",
-              en: "Nature never stops and the clock is always running. A still brand goes against that. My job is to give it rhythm, weight and intention, until <b>motion turns into emotion.</b>" },
+  aboutTxt: { pt: "Marca parada não emociona ninguém. Eu dou ritmo, peso e intenção a cada elemento, até o <b>motion virar emotion.</b>",
+              en: "A still brand doesn't move anyone. I give every element rhythm, weight and intention, until <b>motion becomes emotion.</b>" },
   trabalheiCom: { pt: "Trabalhei com", en: "Worked with" }, marcas: { pt: "Marcas e estúdios", en: "Brands and studios" },
   selecionados: { pt: "Trabalhos selecionados", en: "Selected work" }, todos: { pt: "Todos os trabalhos →", en: "All work →" },
   comoTrabalho: { pt: "Como eu trabalho", en: "How I work" }, doBrief: { pt: "Do brief à entrega", en: "From brief to delivery" },
@@ -560,10 +566,12 @@ const STR = {
   redes: { pt: "Redes", en: "Social" }, navegacao: { pt: "Navegação", en: "Navigation" }, contatoL: { pt: "Contato", en: "Contact" },
   topo: { pt: "Voltar ao topo ↑", en: "Back to top ↑" },
   /* sobre */
-  quemLabel: { pt: "Emanuel · Motion designer", en: "Emanuel · Motion designer" },
-  quemH: { pt: "Sou Emanuel, motion designer. O DacostaStudio existe para colocar marcas em movimento.", en: "I'm Emanuel, a motion designer. DacostaStudio exists to put brands in motion." },
-  quemBio: { pt: "A natureza não para e o relógio está sempre correndo. Uma marca parada vai contra isso. Meu trabalho é dar a ela ritmo, peso e intenção, até o movimento virar emoção.",
-             en: "Nature never stops and the clock is always running. A still brand goes against that. My job is to give it rhythm, weight and intention, until motion turns into emotion." },
+  quemLabel: { pt: "José Emanuel Silva Costa · Motion designer", en: "José Emanuel Silva Costa · Motion designer" },
+  quemH: { pt: "Motion designer para marcas. Transformo identidade em motion, e motion em emotion.", en: "Motion designer for brands. I turn identity into motion, and motion into emotion." },
+  quemBio: { pt: "Comecei em 2019, ainda na escola, apaixonado por fotografia. Em 2021 animei meu primeiro logo e não parei mais: vieram posts e flyers animados, até eu encontrar o brand motion. Hoje crio motion que agrega valor para marcas, estúdios e produtos digitais, com animação e sound design pensados juntos, do primeiro quadro ao último som.",
+             en: "I started in 2019, still at school, in love with photography. In 2021 I animated my first logo and never stopped: animated posts and flyers came next, until I found brand motion. Today I create motion that adds value for brands, studios and digital products, with animation and sound design built together, from the first frame to the last sound." },
+  oQueFaco: { pt: ["Logo animation", "Identidade visual em movimento", "Vídeos de marca e manifestos", "Motion para SaaS e produtos", "Sound design"],
+              en: ["Logo animation", "Motion identity", "Brand films and manifestos", "Motion for SaaS and products", "Sound design"] },
   whatIDo: { pt: "O que faço", en: "What I do" }, clients: { pt: "Clientes", en: "Clients" }, tools: { pt: "Ferramentas", en: "Tools" },
   principios: { pt: "Princípios", en: "Principles" }, guia: { pt: "O que guia cada animação", en: "What guides every animation" },
   /* contato */
@@ -788,7 +796,8 @@ function footerHTML() {
 const HERO_LINES = [["Motion", "for", "brands"], ["Always", "moving"]];
 function heroWords() {
   let k = 0;
-  return HERO_LINES.map((ws, li) => `<span class="${li ? "fade" : ""}">${ws.map(w => `<span class="w"><span style="--i:${k++}">${w}</span></span>`).join(" ")}</span>`).join("<br>");
+  const word = w => w === "brands" ? `<span class="rot" id="rot"><span class="rot-w">${w}</span></span>` : w;
+  return HERO_LINES.map((ws, li) => `<span class="${li ? "fade" : ""}">${ws.map(w => `<span class="w"><span style="--i:${k++}">${word(w)}</span></span>`).join(" ")}</span>`).join("<br>");
 }
 /* título em cascata: cada linha sobe quando aparece na tela */
 const casc = (lines, cls = "display", tag = "p", style = "") => `<${tag} class="${cls} casc" ${style ? `style="${style}"` : ""}>${lines.map((l, i) => `<span class="cz${i ? " fade" : ""}"><span style="--i:${i}">${l}</span></span>`).join("")}</${tag}>`;
@@ -884,10 +893,10 @@ function inicioHTML() {
 /* =========== SOBRE =========== */
 function sobreHTML() {
   const pr = [
-    ["01", `<span class="dim">In </span>motion`, { pt: "Toda marca tem um ritmo próprio. Meu trabalho começa encontrando o dela.", en: "Every brand has its own rhythm. My work starts by finding it." }],
+    ["01", `<span class="dim">In </span>motion`, { pt: "Toda marca tem um ritmo próprio. Antes de animar, eu escuto a marca até encontrar o dela.", en: "Every brand has its own rhythm. Before animating, I listen to the brand until I find it." }],
     ["02", "Always moving", { pt: "Nada fica parado: cada quadro puxa o próximo, do primeiro ao último segundo.", en: "Nothing stands still: every frame pulls the next, from the first second to the last." }],
     ["03", "Intention", { pt: "Nenhum movimento é por acaso. Tudo se mexe por um motivo.", en: "No movement is random. Everything moves for a reason." }],
-    ["04", `<span class="dim">E</span>motion`, { pt: "Quando ritmo e intenção se encaixam, a marca deixa de ser vista e passa a ser sentida.", en: "When rhythm and intention click, the brand stops being seen and starts being felt." }],
+    ["04", `<span class="dim">E</span>motion`, { pt: "Motion sem emoção é só movimento. Quando ritmo, som e intenção se encaixam, a marca deixa de ser vista e passa a ser sentida.", en: "Motion without emotion is just movement. When rhythm, sound and intention click, the brand stops being seen and starts being felt." }],
   ];
   return `${headerHTML("sobre")}
   <main>
@@ -901,8 +910,8 @@ function sobreHTML() {
         <h1 class="h2" style="max-width:470px" data-rv>${S("quemH")}</h1>
         <p class="bio" data-rv>${S("quemBio")}</p>
         <div class="lists">
-          <div class="cell" data-rv><span class="fl">${S("whatIDo")}</span><span>Logo animation</span><span>Motion identity</span><span>Social media motion</span><span>Explainer videos</span></div>
-          <div class="cell" data-rv style="transition-delay:90ms"><span class="fl">${S("clients")}</span><span>Workflow Studio</span><span>CleverMove</span><span>Realure</span></div>
+          <div class="cell" data-rv><span class="fl">${S("whatIDo")}</span>${S("oQueFaco").map(t => `<span>${t}</span>`).join("")}</div>
+          <div class="cell" data-rv style="transition-delay:90ms"><span class="fl">${S("clients")}</span><span>Workflow Studio</span><span>CleverMove</span><span>Realure</span><span>Oddside</span></div>
           <div class="cell" data-rv style="transition-delay:180ms"><span class="fl">${S("tools")}</span><span>After Effects</span><span>Illustrator</span><span>Figma</span><span>Cinema 4D</span></div>
         </div>
       </div>
@@ -957,6 +966,16 @@ function contatoHTML() {
 }
 
 /* =========== PROJETO =========== */
+/* créditos: cada linha tem função e nome; @usuario vira link pro Instagram */
+function creditsHTML(p) {
+  const cr = p.creditos && p.creditos.length ? p.creditos
+    : [{ funcao: { pt: "Direção e animação", en: "Direction and animation" }, nome: "Emanuel Costa" }, { funcao: { pt: "Cliente", en: "Client" }, nome: p.cliente }];
+  const who = n => {
+    const m = /@([\w.]+)/.exec(n || "");
+    return m ? esc(n).replace("@" + m[1], `<a href="https://www.instagram.com/${m[1]}/" target="_blank" rel="noopener">@${m[1]}</a>`) : esc(n);
+  };
+  return cr.map(c => `<div><span class="fl">${esc(tx(c.funcao))}</span><span>${who(c.nome)}</span></div>`).join("");
+}
 function projetoHTML(id) {
   const p = PROJECTS.find(x => x.id === id) || PROJECTS[0];
   const i = PROJECTS.indexOf(p);
@@ -996,7 +1015,7 @@ function projetoHTML(id) {
       ${rows}
     </div>
     <div class="credits">
-      <div><span class="fl">${S("direcao")}</span>Emanuel Costa</div><div><span class="fl">${S("cliente")}</span>${esc(p.cliente)}</div><div><span class="fl">Studio</span>DacostaStudio</div>
+      ${creditsHTML(p)}
     </div>
     <div class="outros">
       <div class="head"><p class="label"><span class="sq"></span>${S("outros")}</p><a class="label" href="#trabalhos">${S("verTodos")}</a></div>
@@ -1149,6 +1168,7 @@ function route(keepScroll) {
     });
     setupFootCycle();
     setupPhotoCycle();
+    setupRotator();
     if (h === "contato") afterContato();
     if (h.startsWith("projeto-")) afterProjeto();
     if (!["sobre", "contato"].includes(h) && !h.startsWith("projeto-")) afterInicio();
@@ -1250,6 +1270,25 @@ function setupFootCycle() {
     if (tag) { tag.style.opacity = 0; setTimeout(() => { tag.textContent = v.dataset.brand; tag.style.opacity = 1; }, 400); }
   }, 5000);
   onCleanup(() => clearInterval(t));
+}
+
+/* "Motion for ___": troca a palavra a cada 2,2 s, a nova sobe por baixo */
+function setupRotator() {
+  const box = $("#rot"); if (!box || REDUCE) return;
+  const ws = S("rotWords"); let i = 0, t = 0;
+  const swap = () => {
+    if (document.documentElement.classList.contains("is-loading")) return; // espera a abertura acabar
+    const cur = $(".rot-w:not(.nx)", box); if (!cur) return;
+    i = (i + 1) % ws.length;
+    const nx = document.createElement("span"); nx.className = "rot-w nx in"; nx.textContent = ws[i];
+    box.appendChild(nx);
+    box.style.width = cur.offsetWidth + "px"; void box.offsetWidth;
+    box.style.width = nx.offsetWidth + "px";          // a linha se ajusta ao tamanho da palavra nova
+    nx.classList.remove("in"); cur.classList.add("out");
+    setTimeout(() => { cur.remove(); nx.classList.remove("nx"); box.style.width = ""; }, 820);
+  };
+  const start = setTimeout(() => { swap(); t = setInterval(swap, 2400); }, 3200);
+  onCleanup(() => { clearTimeout(start); clearInterval(t); });
 }
 
 /* =========== Contato =========== */
@@ -1413,45 +1452,25 @@ function runLoader() {
   if (!el) return;
   if (REDUCE) { el.remove(); document.documentElement.classList.remove("is-loading"); return; }
   /* vídeo do logo: toca uma vez; a barra acompanha o vídeo e a tela sobe quando ele acaba */
+  /* só o vídeo do logo: toca uma vez e a tela sobe quando ele acaba.
+     Se o vídeo não tocar (navegador bloqueou), a tela sobe assim que o site estiver pronto. */
   const lv = $("#ldVideo");
-  if (lv) {
-    let started = false, finished = false;
-    const finish = () => {
-      if (finished) return; finished = true;
-      el.classList.add("done"); document.documentElement.classList.remove("is-loading");
-      setTimeout(() => el.remove(), 1200);
-    };
-    const fallback = () => { if (started) return; lv.remove(); el.classList.remove("has-video"); counter(); };
-    lv.addEventListener("playing", () => {
-      if (started) return; started = true; el.classList.add("has-video");
-      const tick = () => { if (finished) return; const d = lv.duration || 5; $("#ldBar").style.transform = `scaleX(${Math.min(1, lv.currentTime / d)})`; requestAnimationFrame(tick); };
-      tick();
-      setTimeout(finish, ((lv.duration || 5) + 2) * 1000); // segurança se o "ended" não vier
-    });
-    lv.addEventListener("ended", finish);
-    lv.addEventListener("error", fallback, true);
-    const pr = lv.play(); if (pr && pr.catch) pr.catch(fallback);
-    setTimeout(fallback, 1500); // não começou a tocar a tempo: usa o contador
-    return;
-  }
-  counter();
-  function counter() {
-  const t0 = performance.now(); let ready = false, shown = 0;
-  const v = $("#reelVideo");
-  if (v) { if (v.readyState >= 3) ready = true; else v.addEventListener("canplay", () => ready = true, { once: true }); } else ready = true;
-  (function step(now) {
-    const el2 = now - t0;
-    const target = ready ? Math.min(100, el2 / 14) : Math.min(90, el2 / 22);
-    shown += (Math.max(target, el2 > 2600 ? 100 : 0) - shown) * .12;
-    const n = Math.min(100, Math.round(shown));
-    $("#ldN").textContent = n; $("#ldBar").style.transform = `scaleX(${n / 100})`;
-    if (n >= 100) {
-      el.classList.add("done"); document.documentElement.classList.remove("is-loading");
-      setTimeout(() => el.remove(), 1200); return;
-    }
-    requestAnimationFrame(step);
-  })(t0);
-  }
+  let started = false, finished = false;
+  const finish = () => {
+    if (finished) return; finished = true;
+    el.classList.add("done"); document.documentElement.classList.remove("is-loading");
+    setTimeout(() => el.remove(), 1200);
+  };
+  const fallback = () => { if (!started) setTimeout(finish, 300); };
+  if (!lv) { fallback(); return; }
+  lv.addEventListener("playing", () => {
+    if (started) return; started = true; el.classList.add("has-video");
+    setTimeout(finish, ((lv.duration || 5) + 2) * 1000); // segurança se o "ended" não vier
+  });
+  lv.addEventListener("ended", finish);
+  lv.addEventListener("error", fallback, true);
+  const pr = lv.play(); if (pr && pr.catch) pr.catch(fallback);
+  setTimeout(fallback, 1500); // não começou a tocar a tempo
 }
 
 /* lê o conteúdo editado no painel (/content/*.json); se falhar, usa o padrão acima */
@@ -1464,6 +1483,7 @@ async function loadContent() {
       video: x.video, preview: x.preview || x.video, poster: x.capa || "",
       frames: (x.frames || []).map(f => f && (f.video || f)).filter(Boolean), dark: !!x.rodape_escuro,
       tipo: x.tipo || "", servicos: x.servicos || "", lede: x.resumo || "", desafio: x.desafio || "", solucao: x.solucao || "",
+      creditos: (x.creditos || []).filter(c => c && c.nome),
     }));
     SLOTS = SLOTS.filter(s => s.grp !== "Projetos").concat(PROJECTS.map(p => ({ grp: "Projetos", key: "p" + p.id, nome: `${pad(p.id)} · ${p.nome}`, accept: "video/*,image/*" })));
   }
