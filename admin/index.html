@@ -5,9 +5,112 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>Painel · DacostaStudio</title>
+  <style>
+    /* deixa o painel mais legível */
+    body { background: #eef0f3; }
+    [class*="ControlContainer"] label, [class*="FieldLabel"] { font-size: 13px !important; letter-spacing: .02em; }
+    [class*="StyledListItemTopBar"] + * { font-size: 15px; }
+    [class*="ListItem-listControlItem"] { border-radius: 10px; }
+    /* miniatura dos vídeos ao lado do nome do arquivo */
+    .dcs-thumb { display: block; width: 260px; max-width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;
+      background: #111; margin: 8px 0 4px; }
+  </style>
 </head>
 <body>
   <!-- Painel de conteúdo (Decap CMS). Configuração em admin/config.yml -->
   <script src="https://unpkg.com/decap-cms@3.17.3/dist/decap-cms.js"></script>
+  <script>
+  /* caminho do arquivo -> endereço que o navegador abre */
+  const url = (p, getAsset) => {
+    if (!p) return "";
+    let s = getAsset ? String(getAsset(p)) : p;
+    if (/^media\//.test(s)) s = "/" + s;
+    return s;
+  };
+  const isVideo = s => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(s || "");
+
+  /* miniatura de vídeo embaixo de cada campo de arquivo */
+  function addThumbs() {
+    document.querySelectorAll('[class*="FileLinks"]').forEach(box => {
+      const path = (box.textContent || "").trim();
+      const cur = box.nextElementSibling && box.nextElementSibling.classList.contains("dcs-thumb") ? box.nextElementSibling : null;
+      if (!isVideo(path)) { if (cur) cur.remove(); return; }
+      const src = url(path);
+      if (cur && cur.getAttribute("src") === src) return;
+      if (cur) cur.remove();
+      const v = document.createElement("video");
+      Object.assign(v, { src, muted: true, loop: true, playsInline: true, preload: "metadata", className: "dcs-thumb" });
+      v.addEventListener("mouseenter", () => v.play().catch(() => {}));
+      v.addEventListener("mouseleave", () => v.pause());
+      box.after(v);
+    });
+  }
+  new MutationObserver(() => { clearTimeout(addThumbs.t); addThumbs.t = setTimeout(addThumbs, 150); })
+    .observe(document.body, { childList: true, subtree: true, characterData: true });
+
+  /* prévia ao lado do editor, com a cara do site */
+  CMS.registerPreviewStyle(`
+    body { margin: 0; background: #0b0b0c; color: #f2f2f2; font: 15px/1.5 Inter, system-ui, sans-serif; padding: 28px; }
+    h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: #8a8a8f; margin: 0 0 16px; font-weight: 500; }
+    .card { background: #151517; border-radius: 14px; overflow: hidden; margin-bottom: 22px; }
+    .card video, .card img.cover { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+    .card .b { padding: 16px 18px 20px; }
+    .card h3 { margin: 0 0 2px; font-size: 22px; font-weight: 600; }
+    .muted { color: #8a8a8f; font-size: 13px; }
+    .card p { margin: 10px 0 0; color: #cfcfd4; }
+    .frames { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; padding: 0 18px 18px; }
+    .frames video { border-radius: 8px; aspect-ratio: 16/9; }
+    blockquote { margin: 0 0 18px; padding: 18px 20px; background: #151517; border-radius: 14px; font-size: 17px; }
+    blockquote footer { margin-top: 10px; font-size: 13px; color: #8a8a8f; }
+    .logos { display: flex; flex-wrap: wrap; align-items: center; gap: 36px; padding: 28px; background: #f4f4f2; border-radius: 14px; }
+    .logos img { display: block; width: auto; max-width: 170px; object-fit: contain; filter: grayscale(1); opacity: .75; }
+    .fotos { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+    .fotos img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 12px; display: block; }
+    .fotos .n { font-size: 12px; color: #8a8a8f; margin-top: 4px; }
+  `, { raw: true });
+
+  /* path = nome do arquivo (decide vídeo ou imagem), src = endereço para mostrar */
+  const media = (src, cls, path) => !src ? h("div", { className: cls || "cover", style: { aspectRatio: "16/9", background: "#000" } })
+    : isVideo(path || src) ? h("video", { src, className: cls, muted: true, autoPlay: true, loop: true, playsInline: true })
+    : h("img", { src, className: cls || "cover" });
+  const pt = o => (o && (o.pt || o.en)) || "";
+  const data = (props, key) => { const d = props.entry.getIn(["data", key]); return d && d.toJS ? d.toJS() : (d || []); };
+
+  CMS.registerPreviewTemplate("projetos", createClass({ render() {
+    const g = p => url(p, this.props.getAsset);
+    const list = data(this.props, "projetos");
+    return h("div", {}, h("h2", {}, "Como fica no site"), list.map((p, i) => h("div", { className: "card", key: i },
+      media(g(p.preview || p.video), "", p.preview || p.video),
+      h("div", { className: "b" },
+        h("h3", {}, p.nome || "Sem nome"),
+        h("div", { className: "muted" }, [p.cliente, pt(p.tipo), p.duracao].filter(Boolean).join(" · ")),
+        pt(p.resumo) ? h("p", {}, pt(p.resumo)) : null),
+      (p.frames || []).length ? h("div", { className: "frames" }, p.frames.map((f, j) => media(g(f && (f.video || f)), "fr", f && (f.video || f)))) : null
+    )));
+  } }));
+
+  CMS.registerPreviewTemplate("depoimentos", createClass({ render() {
+    const list = data(this.props, "depoimentos");
+    return h("div", {}, h("h2", {}, "Depoimentos"), list.map((d, i) => h("blockquote", { key: i },
+      "“" + pt(d.texto) + "”", h("footer", {}, [pt(d.nome), pt(d.cargo)].filter(Boolean).join(" · ")))));
+  } }));
+
+  CMS.registerPreviewTemplate("marcas", createClass({ render() {
+    const list = data(this.props, "marcas");
+    return h("div", {}, h("h2", {}, "Faixa de logos"), h("div", { className: "logos" },
+      list.map((m, i) => m.logo ? h("img", { key: i, src: url(m.logo, this.props.getAsset), alt: m.nome, style: { height: (+m.altura || 28) + "px" } }) : null)));
+  } }));
+
+  CMS.registerPreviewTemplate("fotos", createClass({ render() {
+    const list = data(this.props, "fotos");
+    return h("div", {}, h("h2", {}, "Fotos (trocam sozinhas, nesta ordem)"), h("div", { className: "fotos" },
+      list.map((f, i) => h("div", { key: i }, h("img", { src: url(f.foto || f, this.props.getAsset) }), h("div", { className: "n" }, i ? "Foto " + (i + 1) : "Foto principal")))));
+  } }));
+
+  CMS.registerPreviewTemplate("geral", createClass({ render() {
+    const d = this.props.entry.get("data"); const g = p => url(p, this.props.getAsset);
+    return h("div", {}, h("h2", {}, "Vídeo de abertura"), h("div", { className: "card" }, media(g(d && d.get("video_abertura")), "", d && d.get("video_abertura"))));
+  } }));
+  </script>
 </body>
 </html>

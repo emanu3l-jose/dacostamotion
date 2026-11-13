@@ -22,7 +22,7 @@ public_folder: media
 collections:
   - name: conteudo
     label: Conteúdo do site
-    editor: { preview: false }
+    editor: { preview: true }
     files:
       - name: projetos
         label: Projetos
