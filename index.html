@@ -236,6 +236,8 @@ a.sub:hover { color: var(--ink); }
 .field input::placeholder, .field textarea::placeholder { color: var(--dim); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { border: 1px solid var(--hair); border-radius: 999px; padding: 10px 16px; font-size: 15px; }
+.orc-chips { transition: opacity .18s, transform .18s; }
+.orc-chips.swap { opacity: 0; transform: translateY(6px); }
 .chip.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .send { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .send-btn { background: var(--ink); color: var(--paper); padding: 18px 26px; display: inline-flex; gap: 12px; align-items: center; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
@@ -561,7 +563,8 @@ const STR = {
   fMarca: { pt: "Marca / empresa", en: "Brand / company" }, fMarcaPh: { pt: "Nome da marca", en: "Brand name" },
   fTipo: { pt: "Tipo de projeto", en: "Project type" }, fOrc: { pt: "Orçamento", en: "Budget" },
   tipos: { pt: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Outro"], en: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Other"] },
-  orcs: { pt: ["US$ 1–3 mil", "US$ 3–6 mil", "Acima de US$ 6 mil", "Ainda não sei"], en: ["US$ 1–3k", "US$ 3–6k", "US$ 6k+", "Not sure yet"] },
+  naoSei: { pt: "Ainda não sei", en: "Not sure yet" },
+  msgObrig: { pt: "Conta a tua ideia na mensagem pra eu entender o projeto.", en: "Tell me your idea in the message so I can understand the project." },
   fMsg: { pt: "Mensagem", en: "Message" }, fMsgPh: { pt: "Conta a ideia, o prazo e onde o vídeo vai aparecer.", en: "Share the idea, the deadline and where the video will live." },
   enviar: { pt: "Enviar mensagem", en: "Send message" }, ouEscreve: { pt: "Ou escreve direto pro e-mail ao lado.", en: "Or write straight to the email on the side." },
   sendOk: { pt: "Mensagem enviada. Te respondo em breve!", en: "Message sent. I'll get back to you soon!" },
@@ -922,7 +925,7 @@ function contatoHTML() {
         </div>
         <label class="field" for="fMarca"><span class="fl">${S("fMarca")}</span><input id="fMarca" placeholder="${S("fMarcaPh")}"></label>
         <div class="field"><span class="fl">${S("fTipo")}</span><div class="chips" data-chips>${S("tipos").map((c, i) => `<button type="button" class="chip${i === 1 ? " on" : ""}">${c}</button>`).join("")}</div></div>
-        <div class="field"><span class="fl">${S("fOrc")}</span><div class="chips" data-chips>${S("orcs").map(c => `<button type="button" class="chip">${c}</button>`).join("")}</div></div>
+        <div class="field"><span class="fl">${S("fOrc")}</span><div class="chips orc-chips" data-chips id="orcChips">${orcChips(1)}</div></div>
         <label class="field" for="fMsg"><span class="fl">${S("fMsg")}</span><textarea id="fMsg" placeholder="${S("fMsgPh")}"></textarea></label>
         <div class="send"><button class="send-btn" type="submit">${S("enviar")} <span>→</span></button><span class="dim" style="font-size:15px" id="sendNote">${S("ouEscreve")}</span></div>
       </form>
@@ -1238,14 +1241,34 @@ function setupFootCycle() {
 }
 
 /* =========== Contato =========== */
+/* faixas de orçamento por tipo de projeto (mesma ordem da lista "tipos") */
+const ORCS = [
+  ["US$ 500–1k", "US$ 1k+"],                 // Logo animation
+  ["US$ 2–4k", "US$ 4–8k", "US$ 8–10k+"],     // Motion identity
+  ["US$ 1–2k", "US$ 2–4k", "US$ 4k+"],        // Social media motion
+  ["US$ 2–4k", "US$ 4–6k", "US$ 6k+"],        // Explainer video
+  ["US$ 500–2k", "US$ 2–5k", "US$ 5k+"],      // Outro
+];
+const OUTRO = ORCS.length - 1;
+const orcChips = t => [...(ORCS[t] || ORCS[OUTRO]), S("naoSei")].map(c => `<button type="button" class="chip">${c}</button>`).join("");
 function afterContato() {
-  $$("[data-chips]").forEach(g => $$(".chip", g).forEach(c => c.addEventListener("click", () => { $$(".chip", g).forEach(x => x.classList.remove("on")); c.classList.add("on"); })));
+  const bind = g => $$(".chip", g).forEach(c => c.addEventListener("click", () => { $$(".chip", g).forEach(x => x.classList.remove("on")); c.classList.add("on"); }));
+  $$("[data-chips]").forEach(bind);
+  /* trocou o tipo: troca as faixas de orçamento com uma animação curta */
+  const tipos = $$("[data-chips]")[0], orc = $("#orcChips");
+  $$(".chip", tipos).forEach((c, i) => c.addEventListener("click", () => {
+    orc.classList.add("swap");
+    setTimeout(() => { orc.innerHTML = orcChips(i); bind(orc); orc.classList.remove("swap"); }, 180);
+    $("#fMsg").placeholder = i === OUTRO ? S("msgObrig") : S("fMsgPh");
+  }));
   /* envia pro Netlify Forms; o Netlify manda por e-mail pro Emanuel */
   $("#cForm").addEventListener("submit", async e => {
     e.preventDefault();
     const note = $("#sendNote"), btn = $(".send-btn");
     const ok = $("#fNome").value.trim() && /\S+@\S+\.\S+/.test($("#fMail").value);
     if (!ok) { note.textContent = S("sendErr"); return; }
+    const tipoOn = $$(".chip", $$("[data-chips]")[0]).findIndex(c => c.classList.contains("on"));
+    if (tipoOn === OUTRO && !$("#fMsg").value.trim()) { note.textContent = S("msgObrig"); $("#fMsg").focus(); return; }
     const chip = i => { const c = $$("[data-chips]")[i]; const on = c && $(".chip.on", c); return on ? on.textContent : ""; };
     const body = new URLSearchParams({ "form-name": "contato", bot: $("#fBot").value, nome: $("#fNome").value.trim(), email: $("#fMail").value.trim(),
       marca: $("#fMarca").value.trim(), tipo: chip(0), orcamento: chip(1), mensagem: $("#fMsg").value.trim() });
