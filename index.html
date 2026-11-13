@@ -525,7 +525,7 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 <!-- formulário "fantasma" pro Netlify reconhecer o contato na publicação; o visível é desenhado pelo script -->
 <form name="contato" method="POST" data-netlify="true" netlify-honeypot="bot" hidden>
   <input type="hidden" name="form-name" value="contato">
-  <input name="bot"><input name="nome"><input name="email"><input name="marca"><input name="tipo"><input name="orcamento"><textarea name="mensagem"></textarea>
+  <input type="hidden" name="subject"><input name="bot"><input name="nome"><input name="email"><input name="marca"><input name="tipo"><input name="orcamento"><textarea name="mensagem"></textarea>
 </form>
 <div id="app"></div>
 <button class="fab" id="fab" type="button" hidden><i></i>Painel de vídeos</button>
@@ -1284,6 +1284,8 @@ function afterContato() {
     const chip = i => { const c = $$("[data-chips]")[i]; const on = c && $(".chip.on", c); return on ? on.textContent : ""; };
     const body = new URLSearchParams({ "form-name": "contato", bot: $("#fBot").value, nome: $("#fNome").value.trim(), email: $("#fMail").value.trim(),
       marca: $("#fMarca").value.trim(), tipo: chip(0), orcamento: chip(1), mensagem: $("#fMsg").value.trim() });
+    /* assunto do e-mail que chega pro Emanuel */
+    body.set("subject", "[Dacosta] Novo pedido · " + [body.get("tipo"), body.get("orcamento"), body.get("nome")].filter(Boolean).join(" · "));
     btn.disabled = true; note.textContent = S("sending");
     try {
       const r = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() });
