@@ -508,8 +508,8 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 .loader.has-video { background: #000; }
 .ld-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity .3s; pointer-events: none; }
 .loader.has-video .ld-video { opacity: 1; }
+.ld-video::-webkit-media-controls, .ld-video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
 .ld-top, .ld-bot { position: relative; z-index: 1; }
-@media (orientation: portrait) { .ld-video { width: 180%; left: -40%; } }
 .ld-top, .ld-bot { display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
 .ld-top span:last-child, .ld-bot > span { color: rgba(245,245,241,.5); }
 .ld-mid { display: flex; justify-content: flex-end; }
@@ -525,6 +525,9 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
   <video class="ld-video" id="ldVideo" muted playsinline webkit-playsinline preload="auto" aria-hidden="true">
     <source src="media/loader.webm" type="video/webm"><source src="media/loader.mp4" type="video/mp4">
   </video>
+  <script>/* celular em pé: usa a versão quadrada do logo, que fica centralizada e maior */
+  (function () { var v = document.getElementById("ldVideo"); if (!v || !matchMedia("(orientation: portrait)").matches) return;
+    v.querySelectorAll("source").forEach(function (s) { s.src = s.getAttribute("src").replace("loader.", "loader-sq."); }); v.load(); })();</script>
 </div>
 <!-- formulário "fantasma" pro Netlify reconhecer o contato na publicação; o visível é desenhado pelo script -->
 <form name="contato" method="POST" data-netlify="true" netlify-honeypot="bot" hidden>
