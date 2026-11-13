@@ -119,8 +119,7 @@ collections:
             summary: "{{fields.nome}}"
             fields:
               - { name: nome, label: "Nome", widget: string }
-              - { name: logo, label: "Logo (PNG transparente ou SVG)", widget: image }
-              - { name: altura, label: "Altura do logo em pixels (ajusta pra todos parecerem do mesmo tamanho, ex: 28)", widget: number, default: 28, value_type: int, min: 12, max: 60 }
+              - { name: logo, label: "Logo: prancheta 600 × 200 px, fundo transparente, logo preto centralizado (PNG ou SVG)", widget: image }
 
       - name: fotos
         label: Fotos (bloco que troca sozinho)

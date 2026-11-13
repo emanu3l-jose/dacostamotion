@@ -2,18 +2,15 @@
   "marcas": [
     {
       "nome": "Workflow Studio",
-      "logo": "media/logo-workflow.png",
-      "altura": 32
+      "logo": "media/logo-workflow.png"
     },
     {
       "nome": "CleverMove",
-      "logo": "media/logo-clevermove.png",
-      "altura": 24
+      "logo": "media/logo-clevermove.png"
     },
     {
       "nome": "Realure",
-      "logo": "media/logo-realure.png",
-      "altura": 25
+      "logo": "media/logo-realure.png"
     }
   ]
 }

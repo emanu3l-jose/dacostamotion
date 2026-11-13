@@ -483,7 +483,8 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 /* ---------- rodada 4 ---------- */
 .stage .pl-l { opacity: 0; transition: opacity .45s ease; }
 .stage .pl-l.on { opacity: 1; }
-.marquee .lg img.fix { max-height: none; max-width: 170px; width: auto; }
+.marquee .lg img.fix { max-height: none; max-width: none; width: 180px; height: auto; aspect-ratio: 3 / 1; }
+@media (max-width: 700px) { .marquee .lg img.fix { width: 132px; } }
 /* fotos trocando no bloco */
 .pstack { position: absolute; inset: 0; overflow: hidden; }
 .pstack img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
@@ -626,7 +627,7 @@ let PROJECTS = [
     solucao: { pt: "Uma montagem que mistura grid, interface e sound design, para o app ser sentido antes de ser explicado.", en: "An edit that blends grid, interface and sound design, so the app is felt before it is explained." } },
 ];
 /* altura de cada logo ajustada pra todos parecerem do mesmo tamanho */
-let LOGOS = [["media/logo-workflow.png", "Workflow Studio", 32], ["media/logo-clevermove.png", "CleverMove", 24], ["media/logo-realure.png", "Realure", 25]];
+let LOGOS = [["media/logo-workflow.png", "Workflow Studio"], ["media/logo-clevermove.png", "CleverMove"], ["media/logo-realure.png", "Realure"]];
 /* depoimentos: textos de exemplo até chegarem os reais */
 let TESTIMONIALS = [
   { q: { pt: "Depoimento de exemplo. Aqui entra o que o cliente falou sobre o projeto, em uma ou duas frases.", en: "Sample testimonial. This is where the client's words about the project go, in one or two sentences." }, n: { pt: "Nome do cliente", en: "Client name" }, r: { pt: "Cargo · Empresa", en: "Role · Company" } },
@@ -785,7 +786,7 @@ const casc = (lines, cls = "display", tag = "p", style = "") => `<${tag} class="
 function inicioHTML() {
   const logos = Array.isArray(MEDIA.logos) && MEDIA.logos.length
     ? MEDIA.logos.map(l => `<div class="lg"><img src="${l.url}" alt=""></div>`)
-    : LOGOS.map(([src, nm, h]) => `<div class="lg"><img class="fix" src="${src}" alt="${esc(nm)}" style="height:${h}px"></div>`);
+    : LOGOS.map(([src, nm, h]) => `<div class="lg"><img class="fix" src="${src}" alt="${esc(nm)}"></div>`);
   let row = []; while (row.length < 10) row = row.concat(logos);
   const set = `<div class="set">${row.join("")}</div>`;
   const reelName = MEDIA.reel ? MEDIA.reel.name : "Workflow Studio";
@@ -1429,7 +1430,7 @@ async function loadContent() {
     SLOTS = SLOTS.filter(s => s.grp !== "Projetos").concat(PROJECTS.map(p => ({ grp: "Projetos", key: "p" + p.id, nome: `${pad(p.id)} · ${p.nome}`, accept: "video/*,image/*" })));
   }
   if (dp && Array.isArray(dp.depoimentos) && dp.depoimentos.length) TESTIMONIALS = dp.depoimentos.map(d => ({ q: d.texto || "", n: d.nome || "", r: d.cargo || "" }));
-  if (mc && Array.isArray(mc.marcas) && mc.marcas.length) LOGOS = mc.marcas.filter(m => m.logo).map(m => [m.logo, m.nome || "", +m.altura || 28]);
+  if (mc && Array.isArray(mc.marcas) && mc.marcas.length) LOGOS = mc.marcas.filter(m => m.logo).map(m => [m.logo, m.nome || ""]);
   if (ft && Array.isArray(ft.fotos) && ft.fotos.length) PHOTO_LIST = ft.fotos.map(f => f.foto || f).filter(Boolean);
   if (gr && gr.video_abertura) GERAL = { ...GERAL, ...gr };
 }

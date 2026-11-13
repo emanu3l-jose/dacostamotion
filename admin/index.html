@@ -98,7 +98,7 @@
   CMS.registerPreviewTemplate("marcas", createClass({ render() {
     const list = data(this.props, "marcas");
     return h("div", {}, h("h2", {}, "Faixa de logos"), h("div", { className: "logos" },
-      list.map((m, i) => m.logo ? h("img", { key: i, src: url(m.logo, this.props.getAsset), alt: m.nome, style: { height: (+m.altura || 28) + "px" } }) : null)));
+      list.map((m, i) => m.logo ? h("img", { key: i, src: url(m.logo, this.props.getAsset), alt: m.nome, style: { width: "180px", height: "60px" } }) : null)));
   } }));
 
   CMS.registerPreviewTemplate("fotos", createClass({ render() {
