@@ -523,7 +523,8 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
   <div class="ld-bot"><span>Always moving</span><div class="ld-bar"><i id="ldBar"></i></div></div>
 </div>
 <!-- formulário "fantasma" pro Netlify reconhecer o contato na publicação; o visível é desenhado pelo script -->
-<form name="contato" data-netlify="true" netlify-honeypot="bot" hidden>
+<form name="contato" method="POST" data-netlify="true" netlify-honeypot="bot" hidden>
+  <input type="hidden" name="form-name" value="contato">
   <input name="bot"><input name="nome"><input name="email"><input name="marca"><input name="tipo"><input name="orcamento"><textarea name="mensagem"></textarea>
 </form>
 <div id="app"></div>
