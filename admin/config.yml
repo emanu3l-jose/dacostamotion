@@ -1,0 +1,141 @@
+# Painel de conteúdo do site (Decap CMS)
+# Login com a conta do GitHub. Só quem tem acesso ao repositório consegue editar.
+backend:
+  name: github
+  repo: emanu3l-jose/dacostamotion
+  branch: main
+  commit_messages:
+    create: "Painel: cria {{collection}} “{{slug}}”"
+    update: "Painel: atualiza {{collection}} “{{slug}}”"
+    delete: "Painel: apaga {{collection}} “{{slug}}”"
+    uploadMedia: "Painel: envia arquivo {{path}}"
+    deleteMedia: "Painel: apaga arquivo {{path}}"
+
+locale: pt
+site_url: https://dacostamotion.com
+display_url: https://dacostamotion.com
+
+# arquivos enviados pelo painel (vídeos, fotos, logos)
+media_folder: media/uploads
+public_folder: media/uploads
+
+collections:
+  - name: conteudo
+    label: Conteúdo do site
+    editor: { preview: false }
+    files:
+      - name: projetos
+        label: Projetos
+        file: content/projetos.json
+        fields:
+          - name: projetos
+            label: Projetos (a ordem aqui é a ordem no site)
+            label_singular: Projeto
+            widget: list
+            summary: "{{fields.nome}} · {{fields.cliente}}"
+            fields:
+              - { name: nome, label: "Nome do projeto", widget: string }
+              - { name: cliente, label: "Cliente", widget: string }
+              - { name: duracao, label: "Duração (ex: 0:40)", widget: string, required: false }
+              - { name: video, label: "Vídeo principal (MP4, 1080p)", widget: file, media_library: { config: { multiple: false } } }
+              - { name: preview, label: "Prévia curta pro grid (MP4 mudo, 5–8 s). Se deixar vazio, usa o principal", widget: file, required: false }
+              - { name: capa, label: "Capa (imagem que aparece antes do vídeo carregar)", widget: image, required: false }
+              - name: frames
+                label: Frames (vídeos curtos na página do projeto)
+                label_singular: Frame
+                widget: list
+                required: false
+                fields:
+                  - { name: video, label: "Vídeo", widget: file }
+              - { name: rodape_escuro, label: "O vídeo tem fundo escuro? (deixa mais visível no rodapé)", widget: boolean, default: false, required: false }
+              - name: tipo
+                label: Tipo
+                widget: object
+                fields:
+                  - { name: pt, label: "Português", widget: string }
+                  - { name: en, label: "Inglês", widget: string }
+              - name: servicos
+                label: Serviços
+                widget: object
+                fields:
+                  - { name: pt, label: "Português", widget: string }
+                  - { name: en, label: "Inglês", widget: string }
+              - name: resumo
+                label: Texto principal do projeto
+                widget: object
+                fields:
+                  - { name: pt, label: "Português", widget: text }
+                  - { name: en, label: "Inglês", widget: text }
+              - name: desafio
+                label: Desafio
+                widget: object
+                fields:
+                  - { name: pt, label: "Português", widget: text }
+                  - { name: en, label: "Inglês", widget: text }
+              - name: solucao
+                label: Solução
+                widget: object
+                fields:
+                  - { name: pt, label: "Português", widget: text }
+                  - { name: en, label: "Inglês", widget: text }
+
+      - name: depoimentos
+        label: Depoimentos
+        file: content/depoimentos.json
+        fields:
+          - name: depoimentos
+            label: Depoimentos
+            label_singular: Depoimento
+            widget: list
+            summary: "{{fields.nome.pt}}"
+            fields:
+              - name: texto
+                label: Depoimento
+                widget: object
+                fields:
+                  - { name: pt, label: "Português", widget: text }
+                  - { name: en, label: "Inglês", widget: text }
+              - name: nome
+                label: Nome
+                widget: object
+                fields:
+                  - { name: pt, label: "Português", widget: string }
+                  - { name: en, label: "Inglês", widget: string }
+              - name: cargo
+                label: Cargo e empresa
+                widget: object
+                fields:
+                  - { name: pt, label: "Português", widget: string }
+                  - { name: en, label: "Inglês", widget: string }
+
+      - name: marcas
+        label: Marcas (faixa de logos)
+        file: content/marcas.json
+        fields:
+          - name: marcas
+            label: Marcas
+            label_singular: Marca
+            widget: list
+            summary: "{{fields.nome}}"
+            fields:
+              - { name: nome, label: "Nome", widget: string }
+              - { name: logo, label: "Logo (PNG transparente ou SVG)", widget: image }
+              - { name: altura, label: "Altura do logo em pixels (ajusta pra todos parecerem do mesmo tamanho, ex: 28)", widget: number, default: 28, value_type: int, min: 12, max: 60 }
+
+      - name: fotos
+        label: Fotos (bloco que troca sozinho)
+        file: content/fotos.json
+        fields:
+          - name: fotos
+            label: Fotos (a primeira é a principal)
+            label_singular: Foto
+            widget: list
+            fields:
+              - { name: foto, label: "Foto (vertical, 3:4)", widget: image }
+
+      - name: geral
+        label: Vídeo de abertura
+        file: content/geral.json
+        fields:
+          - { name: video_abertura, label: "Vídeo de abertura (MP4)", widget: file }
+          - { name: capa_abertura, label: "Capa do vídeo de abertura", widget: image, required: false }

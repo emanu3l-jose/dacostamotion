@@ -1,0 +1,1391 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<script>document.documentElement.classList.add("is-loading")</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DacostaStudio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: portfólio de motion — identidade fixa (papel branco, tinta preta, rodapé escuro). Páginas trocadas por hash; Início guiado pelo scroll. */
+:root {
+  --ink: #111111;
+  --dim: #7c7c78;
+  --paper: #ffffff;
+  --hair: rgba(17,17,17,0.13);
+  --tint: #eef0eb;
+  --hair-light: rgba(255,255,255,0.22);
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --gut: 60px;
+  color-scheme: light;
+}
+@media (max-width: 900px) { :root { --gut: 20px; } }
+* { box-sizing: border-box; }
+html, body { background: var(--paper); }
+body { margin: 0; color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+img, svg, video { max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+p { margin: 0; }
+h1, h2, h3 { margin: 0; font-weight: 400; }
+:focus-visible { outline: 1.5px solid currentColor; outline-offset: 3px; }
+
+.wrap { max-width: 1440px; margin: 0 auto; padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px)); }
+#app { overflow-x: clip; }
+
+/* tipografia DCS */
+.label { font-size: 12px; line-height: 16px; letter-spacing: .05em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; }
+.label .sq { width: 6px; height: 6px; background: currentColor; flex: none; }
+.label .dia { width: 6px; height: 6px; background: currentColor; transform: rotate(45deg); flex: none; margin-inline: 1px; }
+.display { font-size: clamp(42px, 6.7vw, 96px); line-height: 1; letter-spacing: -.045em; }
+.display .fade { color: var(--dim); }
+.h2 { font-size: clamp(24px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -.025em; }
+.dim { color: var(--dim); }
+.marker { position: absolute; width: 6px; height: 6px; background: var(--ink); }
+
+/* ---------- header ---------- */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: rgba(255,255,255,.96); transition: background .35s, color .35s; }
+.site-header.overlay { position: fixed; left: 0; right: 0; }
+.site-header.dark { background: transparent; color: #fff; mix-blend-mode: difference; }
+.site-header .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 24px; }
+.site-header .left { display: flex; align-items: center; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.site-header .left .brand { width: 240px; }
+.site-header .left .local { display: flex; gap: 8px; }
+.site-header .left .local .t2 { color: var(--dim); font-variant-numeric: tabular-nums; }
+.site-header.dark .left .local .t2 { color: rgba(255,255,255,.6); }
+.site-nav { display: flex; gap: 28px; align-items: center; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.site-nav a { color: var(--dim); display: inline-flex; align-items: center; gap: 10px; transition: color .2s; }
+.site-header.dark .site-nav a { color: rgba(255,255,255,.6); }
+.site-nav a:hover, .site-nav a.active, .site-header.dark .site-nav a.active, .site-header.dark .site-nav a:hover { color: inherit; }
+.site-nav a.active::before { content: ""; width: 6px; height: 6px; background: currentColor; transform: rotate(45deg); }
+.socials { display: flex; gap: 24px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+@media (max-width: 900px) {
+  .site-header .left .brand { width: auto; margin-right: 14px; }
+  .site-header .row { flex-wrap: wrap; padding-block: 16px; row-gap: 12px; }
+  .site-nav { order: 3; width: 100%; gap: 20px; }
+  .socials { display: none; }
+}
+
+/* ---------- seções ---------- */
+.sec { padding-block: 120px; }
+.sec-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+.sec-head .sub { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+a.sub:hover { color: var(--ink); }
+
+/* revelar no scroll (estado de repouso é sempre visível; só o que está abaixo da dobra começa escondido) */
+.pre { opacity: 0; transform: translateY(56px); }
+.pre.scale { transform: translateY(40px) scale(.9); }
+.rv { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1); }
+
+/* ===================== INÍCIO ===================== */
+.hero-scroll { position: relative; height: 240vh; }
+.hero-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.hero-title { position: absolute; left: 0; right: 0; top: calc(108px + env(safe-area-inset-top, 0px)); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px; will-change: transform, opacity; padding-inline: 16px; }
+.hero-video { position: absolute; inset: 0; background: #111; --t: 50vh; --s: 60px; --b: 24px; --r: 6px; clip-path: inset(var(--t) var(--s) var(--b) var(--s) round var(--r)); will-change: clip-path; }
+.hero-video > canvas, .hero-video > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-chrome { position: absolute; top: var(--t); left: var(--s); right: var(--s); bottom: var(--b); color: #f5f5f1; pointer-events: none; }
+.hero-chrome .tl, .hero-chrome .tr { position: absolute; top: 24px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.hero-chrome .tl { left: 24px; display: flex; gap: 10px; align-items: center; }
+.hero-chrome .tl .dia { width: 6px; height: 6px; background: #f5f5f1; transform: rotate(45deg); }
+.hero-chrome .tr { right: 24px; color: rgba(245,245,241,.6); }
+.hero-chrome .bot { position: absolute; left: 24px; right: 24px; bottom: 22px; display: flex; flex-direction: column; gap: 14px; }
+.hero-chrome .track { height: 1px; background: rgba(245,245,241,.25); position: relative; }
+.hero-chrome .track i { position: absolute; left: 0; top: 0; height: 1px; background: #f5f5f1; width: 0; }
+.hero-chrome .track i::after { content: ""; position: absolute; right: -3px; top: -3px; width: 6px; height: 6px; background: #f5f5f1; }
+.hero-chrome .row { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.hero-chrome .row .acts { display: flex; gap: 24px; pointer-events: auto; }
+.hero-chrome .play { position: absolute; inset: 0; margin: auto; width: 96px; height: 96px; border-radius: 50%; background: #f5f5f1; display: grid; place-items: center; }
+.hero-chrome .play svg { width: 26px; height: 26px; fill: #111; margin-left: 4px; }
+@media (max-width: 900px) { .hero-chrome .play { width: 64px; height: 64px; } .hero-chrome .play svg { width: 18px; height: 18px; } }
+
+.about { min-height: 92vh; display: grid; place-items: center; padding-block: 120px; }
+.about-in { display: flex; align-items: center; gap: 72px; width: fit-content; max-width: 100%; margin-inline: auto; }
+.about-text { width: 420px; max-width: 100%; flex: 0 1 420px; display: flex; flex-direction: column; gap: 30px; }
+.about-text .label { font-size: 18px; line-height: 24px; gap: 15px; }
+.about-text .label .dia { width: 9px; height: 9px; }
+.about-text p.txt { font-size: 20px; line-height: 29px; font-weight: 300; color: var(--dim); }
+.about-text p.txt b { font-weight: 600; color: var(--ink); }
+.photo-card { border-radius: 12px; width: 240px; aspect-ratio: 199/254; background: var(--tint); position: relative; flex: none; overflow: hidden; }
+.photo-card .ph { position: absolute; inset: 0; display: grid; place-items: center; font-size: 9px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.photo-card .reveal { position: absolute; inset: 0; background: #5f5f5c; clip-path: inset(100% 0 0 0); will-change: clip-path; }
+.photo-card .reveal img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-card .reveal .ph { color: rgba(255,255,255,.55); }
+.photo-card .m { position: absolute; width: 4px; height: 4px; background: var(--ink); z-index: 2; }
+.photo-card .m.a { left: 10px; top: 10px; } .photo-card .m.b { right: 10px; top: 10px; } .photo-card .m.c { left: 10px; bottom: 10px; } .photo-card .m.d { right: 10px; bottom: 10px; }
+@media (max-width: 700px) { .about-in { flex-direction: column; align-items: flex-start; gap: 40px; } }
+
+/* logos em loop */
+.marquee { border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); overflow: hidden; position: relative; }
+.marquee .mk { position: absolute; top: -4px; width: 6px; height: 6px; background: var(--ink); z-index: 2; }
+.marquee .track { display: flex; width: max-content; animation: slide 38s linear infinite; }
+.marquee .set { display: flex; }
+.marquee .lg { width: 220px; height: 132px; border-right: 1px solid var(--hair); display: grid; place-items: center; color: var(--dim); flex: none; }
+.marquee .lg svg { height: 30px; width: auto; }
+.marquee .lg img { max-height: 44px; max-width: 150px; object-fit: contain; filter: grayscale(1); opacity: .75; }
+@keyframes slide { to { transform: translateX(-50%); } }
+@media (max-width: 700px) { .marquee .lg { width: 150px; height: 100px; } }
+
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); position: relative; }
+.work-card { border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 12px; position: relative; }
+.work-card:nth-child(3n+1) { border-left: 0; }
+.work-card::before { content: ""; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
+.work-card:nth-child(3n)::after { content: ""; position: absolute; right: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
+.work-grid::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--hair); }
+.work-cover { aspect-ratio: 3/2; overflow: hidden; position: relative; border-radius: 12px; transform: translateZ(0); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.work-cover > * { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.work-card:hover .work-cover { transform: scale(1.025); }
+.work-card:hover .work-cover > * { transform: scale(1.04); }
+.cap { display: flex; flex-direction: column; gap: 3px; font-size: 12px; line-height: 16px; letter-spacing: .05em; text-transform: uppercase; }
+.cap .l2 { display: flex; justify-content: space-between; color: var(--dim); gap: 12px; }
+.cap .l2 span:first-child { display: flex; gap: 20px; }
+@media (max-width: 900px) {
+  .work-grid { grid-template-columns: repeat(2, 1fr); }
+  .work-card:nth-child(3n+1) { border-left: 1px solid var(--hair); }
+  .work-card:nth-child(2n+1) { border-left: 0; }
+  .work-card:nth-child(3n)::after { display: none; }
+}
+@media (max-width: 560px) { .work-grid { grid-template-columns: 1fr; } .work-card { border-left: 0 !important; } }
+
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+.step { border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); border-left: 1px solid var(--hair); padding: 20px 20px 28px; display: flex; flex-direction: column; gap: 10px; min-height: 230px; position: relative; }
+.step:first-child { border-left: 0; }
+.step::before { content: ""; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
+.step:last-child::after { content: ""; position: absolute; right: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
+.step .n { font-size: 12px; letter-spacing: .05em; color: var(--dim); }
+.step .t { font-size: 28px; line-height: 34px; letter-spacing: -.025em; margin-top: auto; }
+.step .d { font-size: 15px; line-height: 22px; color: var(--dim); }
+@media (max-width: 900px) { .steps { grid-template-columns: repeat(2, 1fr); } .step:nth-child(odd) { border-left: 0; } }
+@media (max-width: 560px) { .steps { grid-template-columns: 1fr; } .step { border-left: 0; } }
+
+.testi { display: flex; gap: 60px; border-top: 1px solid var(--hair); padding-top: 56px; }
+.testi-nav { width: 320px; flex: none; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; }
+.testi-count { display: flex; align-items: baseline; gap: 8px; }
+.testi-count .big { font-size: 72px; line-height: 74px; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.testi-count .of { color: var(--dim); font-size: 16px; }
+.testi-arrows { display: flex; gap: 8px; }
+.testi-arrows button { width: 52px; height: 52px; border: 1px solid var(--hair); display: grid; place-items: center; font-size: 16px; color: var(--dim); }
+.testi-arrows button.next { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.testi-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
+.testi-mark { font-size: 120px; line-height: 56px; height: 56px; letter-spacing: -.045em; }
+.testi-swap { display: flex; flex-direction: column; gap: 28px; transition: opacity .45s, transform .45s; }
+.testi-swap.out { opacity: 0; transform: translateY(12px); }
+.testi-text { font-size: clamp(22px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -.025em; }
+.testi-author { display: flex; align-items: center; gap: 16px; }
+.testi-author .pic { width: 52px; height: 52px; border-radius: 50%; background: var(--tint); flex: none; }
+.testi-author .name { font-size: 16px; }
+.testi-author .role { font-size: 15px; color: var(--dim); }
+.testi-progress { display: flex; gap: 8px; }
+.testi-progress button { flex: 1; height: 2px; background: var(--hair); position: relative; overflow: hidden; }
+.testi-progress button i { position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left; }
+.testi-progress button.done i { transform: scaleX(1); }
+.testi-progress button.on i { animation: fill 6s linear forwards; }
+@keyframes fill { to { transform: scaleX(1); } }
+@media (max-width: 900px) { .testi { flex-direction: column; gap: 32px; } .testi-nav { width: 100%; flex-direction: row; align-items: flex-end; } }
+
+/* ===================== SOBRE ===================== */
+.quem { display: grid; grid-template-columns: 440px 1fr; gap: 60px; padding-top: 96px; }
+.quem-photo { height: 560px; background: var(--tint); position: relative; overflow: hidden; border-radius: 14px; }
+.quem-photo .ph { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.quem-photo .reveal { position: absolute; inset: 0; background: #5f5f5c; clip-path: inset(100% 0 0 0); }
+.quem-photo .reveal img { width: 100%; height: 100%; object-fit: cover; }
+.quem-photo .m { position: absolute; width: 6px; height: 6px; background: var(--ink); z-index: 2; }
+.quem-text { display: flex; flex-direction: column; gap: 20px; }
+.quem-text .bio { font-size: 16px; line-height: 24px; color: var(--dim); max-width: 520px; }
+.lists { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 40px; position: relative; border-bottom: 1px solid var(--hair); }
+.lists .cell { border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 10px; position: relative; }
+.lists .cell:first-child { border-left: 0; }
+.lists .cell::before { content: ""; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
+.lists .cell:last-child::after { content: ""; position: absolute; right: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
+.lists .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+.lists .cell span:not(.fl) { font-size: 15px; line-height: 22px; }
+.principles { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--hair); }
+.pr { border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); padding: 20px 20px 28px; display: flex; flex-direction: column; gap: 10px; position: relative; }
+.pr:first-child { border-left: 0; }
+.pr::before { content: ""; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
+.pr:last-child::after { content: ""; position: absolute; right: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
+.pr .n { font-size: 12px; letter-spacing: .05em; color: var(--dim); margin-bottom: 16px; }
+.orbit { width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--ink); position: relative; margin-bottom: 16px; animation: spin 12s linear infinite; }
+.orbit::after { content: ""; position: absolute; width: 7px; height: 7px; background: var(--ink); top: -4px; left: calc(50% - 3.5px); }
+.pr:nth-child(2) .orbit { animation-duration: 9s; } .pr:nth-child(3) .orbit { animation-duration: 15s; animation-direction: reverse; } .pr:nth-child(4) .orbit { animation-duration: 11s; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.pr .t { font-size: 28px; line-height: 34px; letter-spacing: -.025em; }
+.pr .d { font-size: 15px; line-height: 22px; color: var(--dim); }
+@media (max-width: 900px) {
+  .quem { grid-template-columns: 1fr; }
+  .quem-photo { height: 420px; }
+  .lists { grid-template-columns: 1fr; } .lists .cell { border-left: 0; }
+  .principles { grid-template-columns: repeat(2, 1fr); } .pr:nth-child(odd) { border-left: 0; }
+}
+@media (max-width: 560px) { .principles { grid-template-columns: 1fr; } .pr { border-left: 0; } }
+
+/* ===================== CONTATO ===================== */
+.c-hero { height: 460px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; text-align: center; position: relative; overflow: hidden; }
+.c-hero .arc { position: absolute; width: 800px; height: 800px; border-radius: 50%; border: 1px solid var(--hair); top: -200px; }
+.c-hero .arc.l { left: -560px; } .c-hero .arc.r { right: -560px; }
+.c-hero .sub16 { font-size: 16px; color: var(--dim); }
+.c-grid { display: grid; grid-template-columns: 1fr 420px; gap: 80px; padding-block: 48px 150px; }
+.form { border-top: 1px solid var(--hair); padding-top: 40px; display: flex; flex-direction: column; gap: 36px; }
+.form .head { display: flex; justify-content: space-between; }
+.form .row2 { display: flex; gap: 32px; flex-wrap: wrap; }
+.field { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 14px; }
+.field .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.field input, .field textarea { font-family: var(--sans); font-size: clamp(20px, 2vw, 28px); line-height: 34px; letter-spacing: -.025em; border: 0; border-bottom: 1px solid var(--ink); background: transparent; padding: 0 0 14px; color: var(--ink); width: 100%; resize: none; border-radius: 0; }
+.field textarea { height: 140px; }
+.field input::placeholder, .field textarea::placeholder { color: var(--dim); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--hair); border-radius: 999px; padding: 10px 16px; font-size: 15px; }
+.chip.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.send { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.send-btn { background: var(--ink); color: var(--paper); padding: 18px 26px; display: inline-flex; gap: 12px; align-items: center; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.channels { border-top: 1px solid var(--hair); padding-top: 40px; }
+.channel { border-bottom: 1px solid var(--hair); padding-block: 20px; display: flex; flex-direction: column; gap: 8px; }
+.channel .top { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.channel .top b { color: var(--ink); font-weight: 400; }
+.channel .val { font-size: 16px; line-height: 24px; }
+@media (max-width: 900px) { .c-grid { grid-template-columns: 1fr; gap: 48px; } .c-hero { height: auto; padding-block: 80px; } }
+
+/* ===================== TRABALHOS (tela cheia) ===================== */
+.stage { position: fixed; inset: 0; background: #111; z-index: 10; }
+.stage.idle { cursor: none; }
+.stage .layer { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.stage .ui { position: absolute; inset: 0; transition: opacity .5s ease; }
+.stage.idle .ui { opacity: 0; pointer-events: none; }
+.stage .shade-top, .stage .shade-bot { position: absolute; left: 0; right: 0; pointer-events: none; }
+.stage .shade-top { top: 0; height: 180px; background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,0)); }
+.stage .shade-bot { bottom: 0; height: 380px; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.7)); }
+.stage .topbar { position: absolute; top: 0; left: 0; right: 0; height: 88px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
+  padding-top: env(safe-area-inset-top,0px); padding-left: max(var(--gut), env(safe-area-inset-left,0px)); padding-right: max(var(--gut), env(safe-area-inset-right,0px)); color: #fff; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.stage .nav-mid { display: flex; gap: 28px; }
+.stage .nav-mid a { color: rgba(255,255,255,.6); }
+.stage .nav-mid a:hover { color: #fff; }
+.stage .nav-mid .on { display: inline-flex; gap: 8px; align-items: center; }
+.stage .nav-mid .on::before { content: ""; width: 6px; height: 6px; background: #fff; transform: rotate(45deg); }
+.stage .pill { justify-self: end; padding: 9px 16px; border: 1px solid rgba(255,255,255,.4); background: rgba(255,255,255,.08); border-radius: 999px; }
+.stage .bottombar { position: absolute; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 24px;
+  padding-bottom: calc(52px + env(safe-area-inset-bottom,0px)); padding-left: max(var(--gut), env(safe-area-inset-left,0px)); padding-right: max(var(--gut), env(safe-area-inset-right,0px)); color: #fff; }
+.stage .meta { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; min-width: 0; }
+.stage .meta .kicker { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.stage .meta h1 { font-size: clamp(36px, 5vw, 72px); line-height: 1.03; letter-spacing: -.04em; }
+.stage .meta .svc { font-size: 15px; line-height: 22px; margin-bottom: 4px; }
+.stage .meta .open { background: #fff; color: #111; padding: 14px 22px; display: inline-flex; gap: 10px; align-items: center; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.stage .thumbs { display: flex; align-items: center; gap: 20px; padding-bottom: 6px; }
+.stage .thumbrow { display: flex; gap: 6px; }
+.stage .thumb { width: 66px; height: 44px; overflow: hidden; border-radius: 8px; opacity: .55; outline: 1px solid transparent; outline-offset: 2px; transition: opacity .2s, outline-color .2s; position: relative; }
+.stage .thumb > * { width: 100%; height: 100%; object-fit: cover; display: block; }
+.stage .thumb:hover { opacity: .85; }
+.stage .thumb.on { opacity: 1; outline-color: #fff; }
+.stage .count { font-size: 12px; letter-spacing: .05em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stage .ctrls { justify-self: end; display: flex; gap: 8px; }
+.stage .ctrl { width: 48px; height: 48px; border-radius: 50%; border: 1px solid #fff; display: grid; place-items: center; color: #fff; }
+.stage .ctrl.solid { background: #fff; color: #111; }
+.stage .ctrl svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.stage .progress { position: absolute; left: 0; right: 0; bottom: env(safe-area-inset-bottom,0px); height: 2px; background: rgba(255,255,255,.18); }
+.stage .progress i { display: block; height: 100%; width: 0; background: #fff; }
+.stage .hint { position: absolute; top: calc(96px + env(safe-area-inset-top,0px)); left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.85); padding: 6px 12px; border-radius: 999px; background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.2); white-space: nowrap; transition: opacity .6s; pointer-events: none; }
+@media (max-width: 900px) {
+  .stage .nav-mid { display: none; }
+  .stage .topbar { grid-template-columns: 1fr auto; }
+  .stage .bottombar { grid-template-columns: 1fr; gap: 18px; padding-bottom: calc(28px + env(safe-area-inset-bottom,0px)); }
+  .stage .thumbs { flex-wrap: wrap; gap: 10px; }
+  .stage .thumb { width: 40px; height: 27px; }
+  .stage .ctrls { justify-self: start; }
+  .stage .ctrl { width: 42px; height: 42px; }
+}
+
+/* ===================== PROJETO ===================== */
+.p-top { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); padding-top: 56px; }
+.p-top a:hover { color: var(--ink); }
+.ficha { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); margin-top: 48px; }
+.ficha div, .credits div { padding: 20px 20px 20px 0; display: flex; flex-direction: column; gap: 8px; font-size: 16px; }
+.ficha .fl, .credits .fl, .cs .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.p-video { margin-top: 40px; aspect-ratio: 1320/742; background: #111; position: relative; overflow: hidden; }
+.p-video > canvas, .p-video > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.p-video .vol { position: absolute; right: 32px; bottom: 32px; width: 48px; height: 48px; border-radius: 50%; border: 1px solid #fff; color: #fff; display: grid; place-items: center; }
+.p-video .vol svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.p-about { display: flex; gap: 60px; margin-top: 120px; }
+.p-about .lbl { width: 320px; flex: none; }
+.p-about .copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 40px; }
+.cs { display: flex; gap: 40px; flex-wrap: wrap; }
+.cs > div { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 24px; }
+.frames { margin-top: 120px; display: flex; flex-direction: column; gap: 40px; }
+.frames .big { aspect-ratio: 1320/743; overflow: hidden; }
+.frames .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.frames .two > div { aspect-ratio: 640/427; overflow: hidden; }
+.frames .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.frames .three > div { aspect-ratio: 1; overflow: hidden; }
+.frames .tinted { background: var(--tint); padding: 5%; }
+.credits { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); margin-top: 120px; }
+.outros { margin-top: 120px; padding-bottom: 150px; display: flex; flex-direction: column; gap: 28px; }
+.outros .head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--hair); padding-bottom: 16px; }
+.outros .grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.outros .card { display: flex; flex-direction: column; gap: 12px; }
+.outros .cover { aspect-ratio: 3/2; overflow: hidden; opacity: .55; transition: opacity .3s; }
+.outros .cover > * { width: 100%; height: 100%; object-fit: cover; display: block; }
+.outros .card:hover .cover { opacity: 1; }
+.outros .lg { display: flex; gap: 10px; }
+.outros .lg .n, .outros .lg .cl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.outros .lg .nm { font-size: 16px; line-height: 24px; }
+@media (max-width: 900px) {
+  .p-about { flex-direction: column; gap: 24px; } .p-about .lbl { width: auto; }
+  .frames .two, .frames .three { grid-template-columns: 1fr; gap: 20px; }
+  .outros .grid5 { grid-template-columns: repeat(2, 1fr); }
+  .ficha { grid-template-columns: repeat(2, 1fr); } .credits { grid-template-columns: 1fr; }
+}
+
+/* ===================== capas placeholder (CSS) ===================== */
+.art { width: 100%; height: 100%; }
+.ca-1 { background: #f0553a; background-image: radial-gradient(circle at 8% 50%, #f5f5f1 0 7%, transparent 7.3%), radial-gradient(circle at 92% 50%, #f5f5f1 0 7%, transparent 7.3%), repeating-conic-gradient(from 11.25deg at 50% 50%, #f5f5f1 0deg 9deg, transparent 9deg 45deg); }
+.ca-2 { background: #f2e94e; background-image: radial-gradient(circle at 50% 120%, #111 0 30%, #f2e94e 30.5% 42%, #111 42.5% 60%, transparent 60.5%), linear-gradient(90deg, transparent 82%, #111 82% 86%, transparent 86%); }
+.ca-3 { background: #eceae2; background-image: radial-gradient(circle at 50% 50%, #111 0 13%, transparent 13.4%), radial-gradient(circle at 50% 50%, transparent 0 33%, rgba(17,17,17,.6) 33.2% 33.6%, transparent 33.8%), radial-gradient(circle at 83% 50%, #f0553a 0 3%, transparent 3.3%); }
+.ca-4 { background-color: #4c8df5; background-image: radial-gradient(ellipse 40% 26% at 50% 50%, #0d1d4a 98%, transparent 100%); background-size: 26% 22%; }
+.ca-5 { background: #0e0e0e; background-image: linear-gradient(90deg, transparent 10%, #f7cc1b 10% 18%, transparent 18% 40%, #f7cc1b 40% 48%, transparent 48%), radial-gradient(ellipse 4% 28% at 28% 55%, #f7cc1b 99%, transparent), radial-gradient(ellipse 4% 20% at 62% 60%, #f7cc1b 99%, transparent), radial-gradient(ellipse 4% 40% at 84% 50%, #f7cc1b 99%, transparent); }
+.ca-6 { background: #b9a9d9; background-image: linear-gradient(rgba(232,230,236,.92), rgba(232,230,236,.92)), linear-gradient(#2c2a30, #2c2a30); background-size: 46% 56%, 46% 56%; background-position: 70% 85%, 30% 25%; background-repeat: no-repeat; }
+
+/* ===================== RODAPÉ ===================== */
+.foot { background: var(--ink); color: var(--paper); }
+.foot-video { position: relative; height: 680px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; overflow: hidden; text-align: center; background: radial-gradient(ellipse at center, #333 0%, #222 50%, #111 100%); }
+.foot-video > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.foot-video .arc { position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); }
+.foot-video .arc.a { width: 1088px; height: 1088px; left: calc(50% - 1502px); top: -204px; }
+.foot-video .arc.b { width: 1088px; height: 1088px; left: calc(50% + 414px); top: -204px; }
+.foot-video .arc.c { width: 520px; height: 520px; left: calc(50% - 260px); top: 80px; animation: pulse 6s ease-in-out infinite; }
+.foot-video .arc.d { width: 340px; height: 340px; left: calc(50% - 170px); top: 170px; animation: pulse 6s ease-in-out infinite reverse; }
+@keyframes pulse { 50% { transform: scale(1.05); opacity: .6; } }
+.foot-video .ln { position: absolute; left: 0; right: 0; height: 1px; background: rgba(255,255,255,.5); }
+.foot-video .ln.t { top: 120px; } .foot-video .ln.b { top: 560px; }
+.foot-video .mk { position: absolute; width: 6px; height: 6px; background: #fff; }
+.foot-video .tag { position: absolute; top: 44px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; display: flex; gap: 10px; align-items: center; }
+.foot-video .tag.l { left: max(var(--gut), env(safe-area-inset-left,0px)); } .foot-video .tag.r { right: max(var(--gut), env(safe-area-inset-right,0px)); }
+.foot-video .tag i { width: 6px; height: 6px; border-radius: 50%; background: #f0553a; }
+.foot-video > *:not(video):not(.arc):not(.ln):not(.mk):not(.tag) { position: relative; }
+.foot-video .display .fade { color: var(--dim); }
+.foot .acts { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.foot .b1 { background: #fff; color: var(--ink); padding: 14px 22px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.foot .b2 { border: 1px solid #fff; padding: 14px 22px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.foot-cols { border-top: 1px solid #fff; display: flex; gap: 60px; padding-block: 64px; flex-wrap: wrap; }
+.foot-cols .col { display: flex; flex-direction: column; gap: 12px; width: 200px; }
+.foot-cols .col.main { flex: 1; min-width: 260px; gap: 16px; }
+.foot-cols .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.foot-cols .mail { font-size: clamp(22px, 2.4vw, 34px); letter-spacing: -.025em; }
+.foot-cols a, .foot-cols .item { font-size: 16px; }
+.foot-bar { border-top: 1px solid #fff; display: flex; justify-content: space-between; gap: 12px; padding-block: 28px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; flex-wrap: wrap; }
+@media (max-width: 700px) { .foot-video { height: 560px; } .foot-video .ln, .foot-video .mk { display: none; } }
+
+/* ===================== painel de mídia ===================== */
+.fab { position: fixed; z-index: 60; right: env(safe-area-inset-right,0px); top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; background: var(--ink); color: #fff; border: 1px solid rgba(255,255,255,.25); border-right: 0; border-radius: 8px 0 0 8px; padding: 16px 9px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; display: flex; gap: 8px; align-items: center; box-shadow: 0 6px 24px rgba(0,0,0,.18); transition: opacity .4s; }
+.fab i { width: 6px; height: 6px; background: #f0553a; border-radius: 50%; }
+body.player-idle .fab { opacity: 0; pointer-events: none; }
+.fab[hidden] { display: none; }
+.panel { position: fixed; z-index: 70; top: 0; right: 0; bottom: 0; width: min(400px, 100%); background: var(--paper); color: var(--ink); border-left: 1px solid var(--hair); box-shadow: -20px 0 60px rgba(0,0,0,.12); display: flex; flex-direction: column; transform: translateX(105%); transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+.panel.open { transform: none; }
+.panel .ph { display: flex; justify-content: space-between; align-items: center; padding: calc(20px + env(safe-area-inset-top,0px)) 22px 16px; border-bottom: 1px solid var(--hair); }
+.panel .ph h2 { font-size: 20px; letter-spacing: -.02em; }
+.panel .ph button { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.panel .note { padding: 14px 22px; font-size: 13px; line-height: 19px; color: var(--dim); border-bottom: 1px solid var(--hair); }
+.panel .list { overflow-y: auto; flex: 1; padding-bottom: calc(24px + env(safe-area-inset-bottom,0px)); }
+.panel .grp { padding: 16px 22px 6px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+.slot { display: flex; align-items: center; gap: 12px; padding: 12px 22px; border-bottom: 1px solid var(--hair); }
+.slot .sw { width: 48px; height: 32px; flex: none; overflow: hidden; background: var(--tint); }
+.slot .sw > * { width: 100%; height: 100%; object-fit: cover; display: block; }
+.slot .info { flex: 1; min-width: 0; }
+.slot .nm { font-size: 14px; }
+.slot .st { font-size: 12px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.slot .st.ok { color: #2e7d4f; }
+.slot label { font-size: 11px; letter-spacing: .05em; text-transform: uppercase; border: 1px solid var(--ink); padding: 7px 10px; cursor: pointer; white-space: nowrap; }
+.slot label input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.slot label:focus-within { outline: 1.5px solid var(--ink); outline-offset: 2px; }
+.slot .rm { font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee .track, .orbit, .foot-video .arc { animation: none; }
+  .rv { transition: none; }
+}
+/* idioma + conteúdo real */
+.site-header .right { display: flex; align-items: center; gap: 28px; }
+.lang { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.lang span { opacity: .35; }
+.lang button { opacity: .45; padding: 4px 0; transition: opacity .2s; }
+.lang button:hover { opacity: .8; }
+.lang button.on { opacity: 1; }
+.stage .tb-right { justify-self: end; display: flex; align-items: center; gap: 20px; }
+.stage .tb-right .pill { justify-self: auto; }
+.frames .big, .frames .two > div { aspect-ratio: 16/9; background: #111; }
+.frames video, .p-video > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.foot-video { background: #111; }
+.foot-video > video { opacity: .45; filter: grayscale(1) blur(14px); transform: scale(1.08); }
+.work-cover, .outros .cover { background: #f2f2ef; }
+.stage .layer[hidden] { display: none; }
+@media (max-width: 700px) { .site-header .right { gap: 0; } }
+@media (max-width: 900px) { .about-text { width: auto; flex: none; } }
+
+/* ---------- rodada 3 ---------- */
+/* título do início: palavras sobem em cascata (entrada e scroll) */
+.hero-title .display .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.hero-title .display .w > span { display: inline-block; will-change: transform; animation: rise 1.1s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i) * 110ms + 150ms); }
+.hero-title .label { animation: fadeUp .9s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes rise { from { transform: translateY(105%); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } }
+/* títulos em cascata quando aparecem */
+.casc .cz { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.casc .cz > span { display: inline-block; transform: translateY(105%); transition: transform 1.1s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--i) * 140ms); }
+.casc.in .cz > span { transform: none; }
+/* controles do vídeo de abertura: ícones, invertem sobre fundo claro */
+.hero-chrome { color: #fff; mix-blend-mode: difference; }
+.hero-chrome .tr { color: #fff; opacity: .7; }
+.hero-chrome .row { justify-content: flex-end; }
+.ic-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid currentColor; display: grid; place-items: center; transition: transform .25s, background .25s, color .25s; }
+.ic-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ic-btn:hover { background: #fff; color: #000; transform: scale(1.08); }
+.hero-chrome .row .acts { gap: 10px; }
+/* player: textos invertem sobre vídeo claro */
+.stage .topbar > a:first-child, .stage .nav-mid, .stage .lang, .stage .meta .kicker, .stage .meta h1, .stage .meta .svc, .stage .count { mix-blend-mode: difference; color: #fff; }
+/* botões: efeito ao passar o mouse */
+.foot .b1, .foot .b2, .send-btn, .stage .meta .open, .stage .ctrl, .stage .pill, .chip, .testi-arrows button, .channel b button { transition: background .3s, color .3s, border-color .3s, transform .3s; }
+.foot .b1:hover { background: transparent; color: #fff; box-shadow: inset 0 0 0 1px #fff; }
+.foot .b2:hover, .stage .pill:hover { background: #fff; color: var(--ink); }
+.send-btn:hover { background: #333; }
+.send-btn span, .stage .meta .open span { transition: transform .3s; }
+.send-btn:hover span, .stage .meta .open:hover span { transform: translateX(5px); }
+.stage .meta .open:hover { background: #111; color: #fff; }
+.stage .ctrl:hover { background: #fff; color: #111; transform: scale(1.06); }
+.stage .ctrl.solid:hover { background: transparent; color: #fff; }
+.testi-arrows button:hover { transform: scale(1.08); }
+.foot .b1, .foot .b2, .send-btn, .stage .meta .open { border-radius: 999px; }
+/* rodapé: vídeos das marcas alternando */
+.foot-video > video { opacity: 0; filter: none; transform: none; transition: opacity 1.2s ease; }
+.foot-video > video.on { opacity: .2; }
+.foot-video .display .fade { color: rgba(255,255,255,.6); }
+.foot-video > video.on[data-dark] { opacity: .5; }
+.hero-video.full .hero-chrome .tl, .hero-video.full .hero-chrome .tr { opacity: 0; }
+.hero-chrome .tl, .hero-chrome .tr { transition: opacity .3s; }
+.foot-video .tag.r { transition: opacity .4s; }
+@media (prefers-reduced-motion: reduce) { .hero-title .display .w > span, .hero-title .label { animation: none; } .casc .cz > span { transform: none; transition: none; } }
+
+/* ---------- celular ---------- */
+@media (max-aspect-ratio: 1/1) {
+  .hero-video, .stage { background: #000; }
+  .hero-video > video { object-fit: contain; }
+  .stage .layer { object-fit: contain; object-position: center 30%; }
+}
+@media (max-width: 700px) {
+  .fab { display: none; }
+  .ic-btn { width: 44px; height: 44px; }
+}
+@media (hover: none) { .stage .hint { display: none; } }
+
+/* ---------- rodada 4 ---------- */
+.stage .pl-l { opacity: 0; transition: opacity .45s ease; }
+.stage .pl-l.on { opacity: 1; }
+.marquee .lg img.fix { max-height: none; max-width: 170px; width: auto; }
+/* fotos trocando no bloco */
+.pstack { position: absolute; inset: 0; overflow: hidden; }
+.pstack img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  clip-path: inset(100% 0 0 0); transform: scale(1.18) translateY(6%);
+  transition: clip-path 1.2s cubic-bezier(.76,0,.24,1), transform 1.6s cubic-bezier(.2,.7,.2,1); }
+.pstack img.on { clip-path: inset(0 0 0 0); transform: none; }
+.pstack img.top { z-index: 2; }
+.pstack img.old { transform: scale(1.06) translateY(-4%); transition: transform 1.3s cubic-bezier(.76,0,.24,1); }
+/* loading */
+.loader { position: fixed; inset: 0; z-index: 200; background: #0b0b0b; color: #f5f5f1; display: flex; flex-direction: column; justify-content: space-between; padding: 28px var(--gut); transition: transform 1.1s cubic-bezier(.76,0,.24,1); }
+.loader.done { transform: translateY(-100%); }
+.ld-top, .ld-bot { display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+.ld-top span:last-child, .ld-bot > span { color: rgba(245,245,241,.5); }
+.ld-mid { display: flex; justify-content: flex-end; }
+.ld-n { font-size: clamp(96px, 22vw, 320px); line-height: .8; letter-spacing: -.06em; font-weight: 300; font-variant-numeric: tabular-nums; }
+.ld-bar { flex: 1; max-width: 420px; height: 1px; background: rgba(245,245,241,.2); }
+.ld-bar i { display: block; height: 100%; background: #f5f5f1; transform: scaleX(0); transform-origin: left; }
+.is-loading .hero-title .display .w > span, .is-loading .hero-title .label { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .pstack img { transition: none; } }
+.photo-card .m, .quem-photo .m { background: #fff; mix-blend-mode: difference; z-index: 3; }
+</style>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="ld-top"><span>DacostaStudio</span><span>Motion for brands</span></div>
+  <div class="ld-mid"><span class="ld-n" id="ldN">0</span></div>
+  <div class="ld-bot"><span>Always moving</span><div class="ld-bar"><i id="ldBar"></i></div></div>
+</div>
+<div id="app"></div>
+<button class="fab" id="fab" type="button" hidden><i></i>Painel de vídeos</button>
+<aside class="panel" id="panel" aria-label="Painel de vídeos">
+  <div class="ph"><h2>Painel de vídeos</h2><button type="button" id="panelClose">Fechar</button></div>
+  <p class="note">Escolhe teus arquivos pra ver como fica cada parte do site. Fica salvo só neste navegador, ninguém mais vê.</p>
+  <div class="list" id="panelList"></div>
+</aside>
+
+<script>
+/* =========== idioma (PT / EN) =========== */
+let L = "pt";
+try { const s = localStorage.getItem("dcs-lang"); if (s === "pt" || s === "en") L = s; else if (!/^pt/i.test(navigator.language || "pt")) L = "en"; } catch (e) { if (!/^pt/i.test(navigator.language || "pt")) L = "en"; }
+const tx = v => (v && typeof v === "object" && !Array.isArray(v)) ? (v[L] ?? v.pt) : v;
+const STR = {
+  nav: { inicio: { pt: "Início", en: "Home" }, trabalhos: { pt: "Trabalhos", en: "Work" }, sobre: { pt: "Sobre", en: "About" }, contato: { pt: "Contato", en: "Contact" } },
+  brasil: { pt: "Brasil", en: "Brazil" },
+  heroLabel: { pt: "Emanuel Costa · Founder DacostaStudio", en: "Emanuel Costa · Founder DacostaStudio" },
+  reelTl: { pt: "Demo reel", en: "Demo reel" },
+  som: { pt: "Som", en: "Sound" }, mudo: { pt: "Mudo", en: "Mute" }, telaCheia: { pt: "Tela cheia", en: "Fullscreen" },
+  aboutTxt: { pt: "A natureza não para e o relógio está sempre correndo. Uma marca parada vai contra isso. Meu trabalho é dar a ela ritmo, peso e intenção, até o <b>movimento virar emoção.</b>",
+              en: "Nature never stops and the clock is always running. A still brand goes against that. My job is to give it rhythm, weight and intention, until <b>motion turns into emotion.</b>" },
+  trabalheiCom: { pt: "Trabalhei com", en: "Worked with" }, marcas: { pt: "Marcas e estúdios", en: "Brands and studios" },
+  selecionados: { pt: "Trabalhos selecionados", en: "Selected work" }, todos: { pt: "Todos os trabalhos →", en: "All work →" },
+  comoTrabalho: { pt: "Como eu trabalho", en: "How I work" }, doBrief: { pt: "Do brief à entrega", en: "From brief to delivery" },
+  depoimentos: { pt: "Depoimentos", en: "Testimonials" }, oQueDizem: { pt: "O que dizem os clientes", en: "What clients say" },
+  depAnt: { pt: "Depoimento anterior", en: "Previous testimonial" }, depProx: { pt: "Próximo depoimento", en: "Next testimonial" }, dep: { pt: "Depoimento", en: "Testimonial" },
+  footLabel: { pt: "A vida não para. E você?", en: "Life doesn't stop. Do you?" },
+  footD1: { pt: "Movimente", en: "Move" }, footD2: { pt: "sua marca.", en: "your brand." },
+  entrar: { pt: "Entrar em contato", en: "Get in touch" }, verTrab: { pt: "Ver trabalhos", en: "See work" },
+  respondo: { pt: "Respondo em até 24h · Baseado no Brasil", en: "Reply within 24h · Based in Brazil" },
+  redes: { pt: "Redes", en: "Social" }, navegacao: { pt: "Navegação", en: "Navigation" }, contatoL: { pt: "Contato", en: "Contact" },
+  topo: { pt: "Voltar ao topo ↑", en: "Back to top ↑" },
+  /* sobre */
+  quemLabel: { pt: "Emanuel · Motion designer", en: "Emanuel · Motion designer" },
+  quemH: { pt: "Sou Emanuel, motion designer. O DacostaStudio existe para colocar marcas em movimento.", en: "I'm Emanuel, a motion designer. DacostaStudio exists to put brands in motion." },
+  quemBio: { pt: "A natureza não para e o relógio está sempre correndo. Uma marca parada vai contra isso. Meu trabalho é dar a ela ritmo, peso e intenção, até o movimento virar emoção.",
+             en: "Nature never stops and the clock is always running. A still brand goes against that. My job is to give it rhythm, weight and intention, until motion turns into emotion." },
+  whatIDo: { pt: "O que faço", en: "What I do" }, clients: { pt: "Clientes", en: "Clients" }, tools: { pt: "Ferramentas", en: "Tools" },
+  principios: { pt: "Princípios", en: "Principles" }, guia: { pt: "O que guia cada animação", en: "What guides every animation" },
+  /* contato */
+  cH1: { pt: "Vamos colocar", en: "Let's put" }, cH2: { pt: "sua marca em movimento.", en: "your brand in motion." },
+  cSub: { pt: "Conta um pouco do projeto. Respondo em até 24h.", en: "Tell me a bit about the project. I reply within 24h." },
+  novo: { pt: "Novo projeto", en: "New project" }, leva: { pt: "Leva 2 minutos", en: "Takes 2 minutes" },
+  fNome: { pt: "Seu nome", en: "Your name" }, fNomePh: { pt: "Como posso te chamar?", en: "What should I call you?" },
+  fMail: { pt: "E-mail", en: "Email" }, fMailPh: { pt: "voce@empresa.com", en: "you@company.com" },
+  fMarca: { pt: "Marca / empresa", en: "Brand / company" }, fMarcaPh: { pt: "Nome da marca", en: "Brand name" },
+  fTipo: { pt: "Tipo de projeto", en: "Project type" }, fOrc: { pt: "Orçamento", en: "Budget" },
+  tipos: { pt: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Outro"], en: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Other"] },
+  orcs: { pt: ["Até R$ 5 mil", "R$ 5–15 mil", "Acima de R$ 15 mil", "Ainda não sei"], en: ["Up to R$ 5k", "R$ 5–15k", "Over R$ 15k", "Not sure yet"] },
+  fMsg: { pt: "Mensagem", en: "Message" }, fMsgPh: { pt: "Conta a ideia, o prazo e onde o vídeo vai aparecer.", en: "Share the idea, the deadline and where the video will live." },
+  enviar: { pt: "Enviar mensagem", en: "Send message" }, ouEscreve: { pt: "Ou escreve direto pro e-mail ao lado.", en: "Or write straight to the email on the side." },
+  sendOk: { pt: "Pronto. No site no ar, isso chega no teu e-mail.", en: "Done. On the live site this lands in my inbox." },
+  sendErr: { pt: "Preenche nome e um e-mail válido.", en: "Please fill in your name and a valid email." },
+  canais: { pt: "Canais", en: "Channels" }, copiar: { pt: "Copiar", en: "Copy" }, copiado: { pt: "Copiado", en: "Copied" }, selecione: { pt: "Selecione o e-mail", en: "Select the email" },
+  abrir: { pt: "Abrir ↗", en: "Open ↗" }, base: { pt: "Base", en: "Based in" }, remoto: { pt: "Brasil · atendo remoto", en: "Brazil · working remotely" },
+  /* projeto */
+  voltar: { pt: "← Todos os trabalhos", en: "← All work" }, cliente: { pt: "Cliente", en: "Client" }, servicos: { pt: "Serviços", en: "Services" },
+  duracao: { pt: "Duração", en: "Length" }, formato: { pt: "Formato", en: "Format" }, oProjeto: { pt: "O projeto", en: "The project" },
+  desafio: { pt: "Desafio", en: "Challenge" }, solucao: { pt: "Solução", en: "Solution" }, quadros: { pt: "Quadros do vídeo", en: "Stills from the film" },
+  direcao: { pt: "Direção e animação", en: "Direction and animation" }, outros: { pt: "Outros projetos", en: "Other projects" }, verTodos: { pt: "Ver todos →", en: "See all →" },
+  /* trabalhos */
+  verProjeto: { pt: "Ver projeto", en: "View project" }, hint: { pt: "Para o mouse por 2 s e a interface some", en: "Stop the mouse for 2 s and the interface fades" },
+  ativarSom: { pt: "Ativar som", en: "Turn sound on" }, silenciar: { pt: "Silenciar", en: "Mute" }, projAnt: { pt: "Projeto anterior", en: "Previous project" }, projProx: { pt: "Próximo projeto", en: "Next project" },
+  idioma: { pt: "Idioma", en: "Language" },
+};
+const S = k => tx(STR[k]);
+
+/* =========== conteúdo real =========== */
+/* conteúdo padrão: é substituído pelo que está em /content (editado pelo painel /admin) */
+let GERAL = { video_abertura: "media/reel.mp4", capa_abertura: "media/poster-workflow.jpg" };
+let PROJECTS = [
+  { id: 1, slug: "workflow", dark: true, nome: "Workflow Studio", cliente: "Workflow Studio", duracao: "0:40",
+    video: "media/reel.mp4", preview: "media/prev-workflow.mp4", poster: "media/poster-workflow.jpg",
+    frames: ["media/ws-logo.mp4", "media/ws-2.mp4", "media/ws-3.mp4", "media/ws-4.mp4", "media/ws-5.mp4"],
+    tipo: { pt: "Identidade em movimento", en: "Motion identity" },
+    servicos: { pt: "Logo animation · Motion identity · Aplicações", en: "Logo animation · Motion identity · Brand applications" },
+    lede: { pt: "A Workflow Studio é um estúdio de identidade de marca. O símbolo de três círculos ganhou movimento e virou o fio que liga cada peça, do logo à placa na rua.",
+            en: "Workflow Studio is a brand identity studio. Its three-circle symbol was put in motion and became the thread that ties every piece together, from the logo to the sign on the street." },
+    desafio: { pt: "Mostrar o conceito “Work From Within” sem explicar demais: a marca nasce de dentro pra fora.", en: "Show the “Work From Within” idea without over-explaining it: the brand grows from the inside out." },
+    solucao: { pt: "O símbolo se monta a partir dos círculos e se desdobra nas aplicações (papelaria, sinalização e outdoor) num ritmo calmo e preciso.", en: "The symbol builds itself from the circles and unfolds into the applications (stationery, signage and billboards) at a calm, precise pace." } },
+  { id: 2, slug: "clevermove", nome: "CleverMove", cliente: "CleverMove", duracao: "0:21",
+    video: "media/clevermove.mp4", preview: "media/prev-clevermove.mp4", poster: "media/poster-clevermove.jpg",
+    frames: ["media/cm-1.mp4", "media/cm-2.mp4", "media/cm-3.mp4", "media/cm-4.mp4"],
+    tipo: { pt: "Identidade visual", en: "Visual identity" },
+    servicos: { pt: "Logo animation · Apresentação de marca", en: "Logo animation · Brand presentation" },
+    lede: { pt: "A CleverMove queria parecer exatamente o que promete: intencional e à frente. O cavalo do símbolo conduz o vídeo, do logo até a fachada.",
+            en: "CleverMove wanted to look exactly like what it promises: intentional and ahead. The horse in the symbol leads the film, from the logo to the storefront." },
+    desafio: { pt: "Uma marca nova que precisava parecer sólida desde o primeiro contato.", en: "A new brand that had to feel solid from the very first contact." },
+    solucao: { pt: "Uma apresentação em movimento da identidade (símbolo, papelaria, embalagem e loja) com transições que mantêm o mesmo passo firme do início ao fim.", en: "A moving presentation of the identity (symbol, stationery, packaging and store) with transitions that keep the same steady pace from start to finish." } },
+  { id: 3, slug: "realure", nome: "Realure", cliente: "Felipe Rufino", duracao: "0:48",
+    video: "media/realure.mp4", preview: "media/prev-realure.mp4", poster: "media/poster-realure.jpg",
+    frames: ["media/fr-som.mp4", "media/fr-grid.mp4", "media/fr-montagem.mp4"],
+    tipo: { pt: "Motion para app", en: "App motion" },
+    servicos: { pt: "Motion de interface · Sound design", en: "UI motion · Sound design" },
+    lede: { pt: "Realure é um app com uma ideia simples: viver mais leve. O vídeo apresenta a marca e a interface no mesmo ritmo tranquilo.",
+            en: "Realure is an app built on a simple idea: to live a lighter life. The film introduces the brand and the interface at the same unhurried pace." },
+    desafio: { pt: "Mostrar as telas do app sem virar um tutorial.", en: "Show the app screens without turning it into a tutorial." },
+    solucao: { pt: "Uma montagem que mistura grid, interface e sound design, para o app ser sentido antes de ser explicado.", en: "An edit that blends grid, interface and sound design, so the app is felt before it is explained." } },
+];
+/* altura de cada logo ajustada pra todos parecerem do mesmo tamanho */
+let LOGOS = [["media/logo-workflow.png", "Workflow Studio", 32], ["media/logo-clevermove.png", "CleverMove", 24], ["media/logo-realure.png", "Realure", 25]];
+/* depoimentos: textos de exemplo até chegarem os reais */
+let TESTIMONIALS = [
+  { q: { pt: "Depoimento de exemplo. Aqui entra o que o cliente falou sobre o projeto, em uma ou duas frases.", en: "Sample testimonial. This is where the client's words about the project go, in one or two sentences." }, n: { pt: "Nome do cliente", en: "Client name" }, r: { pt: "Cargo · Empresa", en: "Role · Company" } },
+  { q: { pt: "Segundo depoimento de exemplo. Prazo, processo, resultado: o que mais marcou pra quem contratou.", en: "Second sample testimonial. Deadline, process, result: whatever stood out to whoever hired you." }, n: { pt: "Nome do cliente", en: "Client name" }, r: { pt: "Cargo · Empresa", en: "Role · Company" } },
+  { q: { pt: "Terceiro depoimento de exemplo. Troca por uma frase real assim que tiver.", en: "Third sample testimonial. Swap it for a real quote as soon as you have one." }, n: { pt: "Nome do cliente", en: "Client name" }, r: { pt: "Cargo · Empresa", en: "Role · Company" } },
+];
+const STEPS = [
+  ["01", "Briefing", { pt: "Uma conversa para entender a marca, o objetivo e onde a peça vai viver.", en: "A conversation to understand the brand, the goal and where the piece will live." }],
+  ["02", "Storyboard", { pt: "Roteiro, quadros de estilo e storyboard, aprovados antes de animar.", en: "Script, style frames and storyboard, signed off before animating." }],
+  [{ pt: "03", en: "03" }, { pt: "Animação", en: "Animation" }, { pt: "O movimento ganha ritmo e peso, com prévias a cada etapa.", en: "Motion gains rhythm and weight, with previews at every step." }],
+  ["04", { pt: "Entrega", en: "Delivery" }, { pt: "Arquivos finais em todos os formatos, prontos para publicar.", en: "Final files in every format, ready to publish." }],
+];
+
+const ICON_MUTED = '<path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l4 6M21 9l-4 6"/>';
+const ICON_SOUND = '<path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 8.5a5 5 0 010 7M19.5 6a8.5 8.5 0 010 12"/>';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const pad = n => String(n).padStart(2, "0");
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = t => 1 - Math.pow(1 - t, 3);
+const REDUCE = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* vídeo padrão: sempre mudo, em loop, tocando sozinho */
+/* no celular usa versões mais leves (720p) dos vídeos principais */
+const SMALL = Math.min(innerWidth, (screen && screen.width) || innerWidth) < 900;
+const HD = src => SMALL ? src.replace(/^media\/(reel|clevermove|realure)\.mp4$/, "media/$1-720.mp4") : src;
+const V = (src, o = {}) => `<video src="${HD(src)}" muted webkit-playsinline ${o.poster ? `poster="${o.poster}"` : ""} autoplay muted loop playsinline preload="${o.preload || "metadata"}" ${o.id ? `id="${o.id}"` : ""}></video>`;
+
+/* =========== mídia do painel (IndexedDB, só neste navegador) =========== */
+const MEDIA = {};
+let SLOTS = [
+  { grp: "Início", key: "reel", nome: "Vídeo de abertura", accept: "video/*" },
+  { grp: "Início", key: "foto", nome: "Tua foto (About e Sobre)", accept: "image/*" },
+  { grp: "Início", key: "logos", nome: "Logos dos clientes", accept: "image/*", multi: true },
+  { grp: "Início", key: "rodape", nome: "Vídeo de fundo do rodapé", accept: "video/*" },
+  ...PROJECTS.map(p => ({ grp: "Projetos", key: "p" + p.id, nome: `${pad(p.id)} · ${p.nome}`, accept: "video/*,image/*" })),
+];
+const DB = {
+  db: null,
+  open() {
+    return new Promise(res => {
+      try {
+        const r = indexedDB.open("dcs-media", 1);
+        r.onupgradeneeded = () => r.result.createObjectStore("m");
+        r.onsuccess = () => { DB.db = r.result; res(true); };
+        r.onerror = () => res(false);
+      } catch (e) { res(false); }
+    });
+  },
+  tx(mode) { return DB.db.transaction("m", mode).objectStore("m"); },
+  all() {
+    return new Promise(res => {
+      if (!DB.db) return res({});
+      try {
+        const out = {}; const st = DB.tx("readonly"); const c = st.openCursor();
+        c.onsuccess = () => { const cur = c.result; if (cur) { out[cur.key] = cur.value; cur.continue(); } else res(out); };
+        c.onerror = () => res(out);
+      } catch (e) { res({}); }
+    });
+  },
+  put(k, v) { return new Promise(res => { try { const r = DB.tx("readwrite").put(v, k); r.onsuccess = () => res(true); r.onerror = () => res(false); } catch (e) { res(false); } }); },
+  del(k) { return new Promise(res => { try { const r = DB.tx("readwrite").delete(k); r.onsuccess = () => res(true); r.onerror = () => res(false); } catch (e) { res(false); } }); },
+};
+function toMedia(v) {
+  const one = x => ({ url: URL.createObjectURL(x.blob), type: x.type, name: x.name });
+  return Array.isArray(v) ? v.map(one) : one(v);
+}
+async function loadMedia() {
+  Object.values(MEDIA).forEach(m => (Array.isArray(m) ? m : [m]).forEach(x => { try { URL.revokeObjectURL(x.url); } catch (e) {} }));
+  Object.keys(MEDIA).forEach(k => delete MEDIA[k]);
+  const all = await DB.all();
+  Object.entries(all).forEach(([k, v]) => { try { MEDIA[k] = toMedia(v); } catch (e) {} });
+}
+/* mídia de um espaço: o que foi escolhido no painel, senão o arquivo real do site */
+function mediaHTML(key, fallback, opts = {}) {
+  const m = MEDIA[key];
+  if (m && !Array.isArray(m)) {
+    if (m.type.startsWith("video")) return V(m.url, opts);
+    return `<img src="${m.url}" alt="">`;
+  }
+  return fallback;
+}
+const coverHTML = p => mediaHTML("p" + p.id, V(p.preview, { poster: p.poster }));
+const projVideo = p => { const m = MEDIA["p" + p.id]; return m ? m : { url: HD(p.video), type: "video/mp4" }; };
+const fotoURL = () => MEDIA.foto ? MEDIA.foto.url : PHOTO_LIST[0];
+/* fotos do bloco: trocam sozinhas, cada uma subindo pela máscara */
+let PHOTO_LIST = ["media/emanuel.jpg", "media/foto-estudio.jpg", "media/foto-silhueta.jpg"];
+const PHOTOS = () => MEDIA.foto ? [MEDIA.foto.url, ...PHOTO_LIST.slice(1)] : PHOTO_LIST;
+const photoStack = () => `<div class="pstack">${PHOTOS().map((src, i) => `<img src="${src}" alt="Emanuel Costa" class="${i ? "" : "on"}" ${i ? 'loading="lazy"' : ""}>`).join("")}</div>`;
+function setupPhotoCycle() {
+  const timers = $$(".pstack").map(st => {
+    const ims = $$("img", st); if (ims.length < 2) return 0;
+    let i = 0;
+    return setInterval(() => {
+      const prev = ims[i]; i = (i + 1) % ims.length; const next = ims[i];
+      ims.forEach(im => im.classList.remove("top"));
+      prev.classList.add("old"); next.classList.remove("old");
+      next.classList.add("top"); void next.offsetWidth; next.classList.add("on");
+      setTimeout(() => { prev.classList.remove("on", "old"); }, 1300);
+    }, 3800);
+  });
+  onCleanup(() => timers.forEach(t => clearInterval(t)));
+}
+
+/* =========== relógio de Brasília =========== */
+function brTime() {
+  try { return new Intl.DateTimeFormat(L === "pt" ? "pt-BR" : "en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" }).format(new Date()); }
+  catch (e) { return ""; }
+}
+setInterval(() => $$(".js-clock").forEach(el => el.textContent = brTime()), 20000);
+
+/* =========== header e rodapé =========== */
+const langHTML = () => `<div class="lang" role="group" aria-label="${S("idioma")}"><button type="button" data-lang="pt" class="${L === "pt" ? "on" : ""}" aria-pressed="${L === "pt"}">PT</button><span>/</span><button type="button" data-lang="en" class="${L === "en" ? "on" : ""}" aria-pressed="${L === "en"}">EN</button></div>`;
+function headerHTML(active, extra = "") {
+  const items = ["inicio", "trabalhos", "sobre", "contato"];
+  return `<header class="site-header ${extra}" id="siteHeader"><div class="wrap row">
+    <div class="left"><a class="brand" href="#inicio">DacostaStudio</a><span class="local"><span>${S("brasil")}</span><span class="t2 js-clock">${brTime()}</span></span></div>
+    <nav class="site-nav">${items.map(k => `<a href="#${k}" class="${k === active ? "active" : ""}">${tx(STR.nav[k])}</a>`).join("")}</nav>
+    <div class="right"><div class="socials"><a href="#" data-noop>Instagram</a><a href="#" data-noop>Behance</a></div>${langHTML()}</div>
+  </div></header>`;
+}
+function footerHTML() {
+  return `<footer class="foot">
+    <div class="foot-video">
+      ${MEDIA.rodape ? mediaHTML("rodape", "").replace("<video ", '<video class="on" ') : PROJECTS.map((p, i) => `<video class="${i ? "" : "on"}" src="${p.preview}" poster="${p.poster}" muted loop playsinline webkit-playsinline autoplay preload="auto" data-brand="${esc(p.nome)}" ${p.dark ? "data-dark" : ""}></video>`).join("")}
+      <span class="arc a"></span><span class="arc b"></span><span class="arc c"></span><span class="arc d"></span>
+      <span class="ln t"></span><span class="ln b"></span>
+      <span class="mk" style="left:calc(50% - 483px);top:117px"></span><span class="mk" style="left:calc(50% + 477px);top:117px"></span>
+      <span class="mk" style="left:calc(50% - 483px);top:557px"></span><span class="mk" style="left:calc(50% + 477px);top:557px"></span>
+      <span class="tag l"><i></i>DacostaStudio</span><span class="tag r" id="footBrand">${MEDIA.rodape ? "" : esc(PROJECTS[0].nome)}</span>
+      <p class="label"><span class="sq"></span>${S("footLabel")}</p>
+      ${casc([S("footD1"), S("footD2")])}
+      <div class="acts"><a class="b1" href="#contato">${S("entrar")}</a><a class="b2" href="#trabalhos">${S("verTrab")}</a></div>
+    </div>
+    <div class="wrap foot-cols">
+      <div class="col main"><span class="fl">${S("contatoL")}</span><span class="mail">contato@dacostastudio.com</span><span class="item" style="font-size:15px">${S("respondo")}</span></div>
+      <div class="col"><span class="fl">${S("redes")}</span><a href="#" data-noop>Instagram ↗</a><a href="#" data-noop>Behance ↗</a><a href="#" data-noop>Vimeo ↗</a><a href="#" data-noop>LinkedIn ↗</a></div>
+      <div class="col"><span class="fl">${S("navegacao")}</span>${["inicio", "trabalhos", "sobre", "contato"].map(k => `<a href="#${k}">${tx(STR.nav[k])}</a>`).join("")}</div>
+    </div>
+    <div class="wrap foot-bar"><span>© 2026 DacostaStudio</span><span>${L === "pt" ? "Em motion" : "In motion"} · Always moving</span><button type="button" data-top>${S("topo")}</button></div>
+  </footer>`;
+}
+
+/* =========== títulos =========== */
+const HERO_LINES = [["Motion", "for", "brands"], ["Always", "moving"]];
+function heroWords() {
+  let k = 0;
+  return HERO_LINES.map((ws, li) => `<span class="${li ? "fade" : ""}">${ws.map(w => `<span class="w"><span style="--i:${k++}">${w}</span></span>`).join(" ")}</span>`).join("<br>");
+}
+/* título em cascata: cada linha sobe quando aparece na tela */
+const casc = (lines, cls = "display", tag = "p", style = "") => `<${tag} class="${cls} casc" ${style ? `style="${style}"` : ""}>${lines.map((l, i) => `<span class="cz${i ? " fade" : ""}"><span style="--i:${i}">${l}</span></span>`).join("")}</${tag}>`;
+
+/* =========== INÍCIO =========== */
+function inicioHTML() {
+  const logos = Array.isArray(MEDIA.logos) && MEDIA.logos.length
+    ? MEDIA.logos.map(l => `<div class="lg"><img src="${l.url}" alt=""></div>`)
+    : LOGOS.map(([src, nm, h]) => `<div class="lg"><img class="fix" src="${src}" alt="${esc(nm)}" style="height:${h}px"></div>`);
+  let row = []; while (row.length < 10) row = row.concat(logos);
+  const set = `<div class="set">${row.join("")}</div>`;
+  const reelName = MEDIA.reel ? MEDIA.reel.name : "Workflow Studio";
+  return `${headerHTML("inicio", "overlay")}
+  <main>
+    <section class="hero-scroll" id="heroScroll">
+      <div class="hero-sticky">
+        <div class="hero-title" id="heroTitle">
+          <p class="label"><span class="dia"></span>${S("heroLabel")}</p>
+          <h1 class="display">${heroWords()}</h1>
+        </div>
+        <div class="hero-video" id="heroVideo">
+          ${mediaHTML("reel", V(GERAL.video_abertura, { id: "reelVideo", poster: GERAL.capa_abertura, preload: "auto" }), { id: "reelVideo" })}
+          <div class="hero-chrome">
+            <p class="tl"><span class="dia"></span>${S("reelTl")}</p>
+            <p class="tr">${esc(reelName)}</p>
+            <div class="bot">
+              <div class="track"><i id="reelBar"></i></div>
+              <div class="row"><span class="acts"><button type="button" class="ic-btn" id="reelSound" aria-label="${S("ativarSom")}"><svg viewBox="0 0 24 24" id="reelSoundIc">${ICON_MUTED}</svg></button><button type="button" class="ic-btn" id="reelFs" aria-label="${S("telaCheia")}"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about wrap" id="about">
+      <div class="about-in">
+        <div class="about-text" data-rv>
+          <p class="label"><span class="dia"></span>About</p>
+          <p class="txt">${S("aboutTxt")}</p>
+        </div>
+        <div class="photo-card" data-mask>
+          <div class="reveal">${photoStack()}</div>
+          <span class="m a"></span><span class="m b"></span><span class="m c"></span><span class="m d"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" style="padding-bottom:110px">
+      <div class="sec-head" data-rv><p class="label"><span class="sq"></span>${S("trabalheiCom")}</p><p class="sub">${S("marcas")}</p></div>
+      <div class="marquee" data-rv>
+        <div class="track">${set}${set}</div>
+      </div>
+    </section>
+
+    <section class="wrap" style="padding-bottom:120px">
+      <div class="sec-head" data-rv><p class="label"><span class="sq"></span>${S("selecionados")}</p><a class="sub" href="#trabalhos">${S("todos")}</a></div>
+      <div class="work-grid">
+        ${PROJECTS.map((p, i) => `<a class="work-card" href="#projeto-${p.id}" data-rv="scale" style="transition-delay:${(i % 3) * 90}ms">
+          <div class="work-cover">${coverHTML(p)}</div>
+          <div class="cap"><span>${pad(p.id)} / ${esc(p.nome)}</span><span class="l2"><span><span>${esc(p.cliente)}</span><span>${esc(tx(p.tipo))}</span></span><span>${p.duracao}</span></span></div>
+        </a>`).join("")}
+      </div>
+    </section>
+
+    <section class="wrap" style="padding-bottom:120px">
+      <div class="sec-head" data-rv><p class="label"><span class="sq"></span>${S("comoTrabalho")}</p><p class="sub">${S("doBrief")}</p></div>
+      <div class="steps">
+        ${STEPS.map(([n, t, d], i) => `<div class="step" data-rv style="transition-delay:${i * 90}ms"><span class="n">${tx(n)}</span><span class="t">${tx(t)}</span><span class="d">${tx(d)}</span></div>`).join("")}
+      </div>
+    </section>
+
+    <section class="wrap" style="padding-bottom:140px">
+      <div class="sec-head" data-rv><p class="label"><span class="sq"></span>${S("depoimentos")}</p><p class="sub">${S("oQueDizem")}</p></div>
+      <div class="testi" id="testi" data-rv>
+        <div class="testi-nav">
+          <div class="testi-count"><span class="big" id="tN">01</span><span class="of">/ ${pad(TESTIMONIALS.length)}</span></div>
+          <div class="testi-arrows"><button type="button" id="tPrev" aria-label="${S("depAnt")}">←</button><button type="button" class="next" id="tNext" aria-label="${S("depProx")}">→</button></div>
+        </div>
+        <div class="testi-body">
+          <p class="testi-mark">“</p>
+          <div class="testi-swap" id="tSwap">
+            <p class="testi-text" id="tText"></p>
+            <div class="testi-author"><div class="pic"></div><div><div class="name" id="tName"></div><div class="role" id="tRole"></div></div></div>
+          </div>
+          <div class="testi-progress" id="tProg">${TESTIMONIALS.map((_, i) => `<button type="button" aria-label="${S("dep")} ${i + 1}"><i></i></button>`).join("")}</div>
+        </div>
+      </div>
+    </section>
+  </main>
+  ${footerHTML()}`;
+}
+
+/* =========== SOBRE =========== */
+function sobreHTML() {
+  const pr = [
+    ["01", `<span class="dim">In </span>motion`, { pt: "Toda marca tem um ritmo próprio. Meu trabalho começa encontrando o dela.", en: "Every brand has its own rhythm. My work starts by finding it." }],
+    ["02", "Always moving", { pt: "Nada fica parado: cada quadro puxa o próximo, do primeiro ao último segundo.", en: "Nothing stands still: every frame pulls the next, from the first second to the last." }],
+    ["03", "Intention", { pt: "Nenhum movimento é por acaso. Tudo se mexe por um motivo.", en: "No movement is random. Everything moves for a reason." }],
+    ["04", `<span class="dim">E</span>motion`, { pt: "Quando ritmo e intenção se encaixam, a marca deixa de ser vista e passa a ser sentida.", en: "When rhythm and intention click, the brand stops being seen and starts being felt." }],
+  ];
+  return `${headerHTML("sobre")}
+  <main>
+    <section class="wrap quem">
+      <div class="quem-photo" data-mask="intro">
+        <div class="reveal">${photoStack()}</div>
+        <span class="m" style="left:20px;top:20px"></span><span class="m" style="right:20px;top:20px"></span><span class="m" style="left:20px;bottom:20px"></span><span class="m" style="right:20px;bottom:20px"></span>
+      </div>
+      <div class="quem-text">
+        <p class="label" data-rv><span class="sq"></span>${S("quemLabel")}</p>
+        <h1 class="h2" style="max-width:470px" data-rv>${S("quemH")}</h1>
+        <p class="bio" data-rv>${S("quemBio")}</p>
+        <div class="lists">
+          <div class="cell" data-rv><span class="fl">${S("whatIDo")}</span><span>Logo animation</span><span>Motion identity</span><span>Social media motion</span><span>Explainer videos</span></div>
+          <div class="cell" data-rv style="transition-delay:90ms"><span class="fl">${S("clients")}</span><span>Workflow Studio</span><span>CleverMove</span><span>Realure</span></div>
+          <div class="cell" data-rv style="transition-delay:180ms"><span class="fl">${S("tools")}</span><span>After Effects</span><span>Illustrator</span><span>Figma</span><span>Cinema 4D</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="wrap sec">
+      <div class="sec-head" data-rv><p class="label"><span class="sq"></span>${S("principios")}</p><p class="sub">${S("guia")}</p></div>
+      <div class="principles">
+        ${pr.map(([n, t, d], i) => `<div class="pr" data-rv="scale" style="transition-delay:${i * 100}ms"><span class="n">${n}</span><div class="orbit"></div><span class="t">${t}</span><span class="d">${tx(d)}</span></div>`).join("")}
+      </div>
+    </section>
+  </main>
+  ${footerHTML()}`;
+}
+
+/* =========== CONTATO =========== */
+function contatoHTML() {
+  return `${headerHTML("contato")}
+  <main>
+    <section class="c-hero">
+      <span class="arc l"></span><span class="arc r"></span>
+      <p class="label"><span class="sq"></span>${S("contatoL")}</p>
+      ${casc([S("cH1"), S("cH2")], "display", "h1")}
+      <p class="sub16">${S("cSub")}</p>
+    </section>
+    <section class="wrap c-grid">
+      <form class="form" id="cForm" novalidate>
+        <div class="head"><p class="label"><span class="sq"></span>${S("novo")}</p><p class="label dim">${S("leva")}</p></div>
+        <div class="row2">
+          <label class="field" for="fNome"><span class="fl">${S("fNome")}</span><input id="fNome" placeholder="${S("fNomePh")}"></label>
+          <label class="field" for="fMail"><span class="fl">${S("fMail")}</span><input id="fMail" type="email" placeholder="${S("fMailPh")}"></label>
+        </div>
+        <label class="field" for="fMarca"><span class="fl">${S("fMarca")}</span><input id="fMarca" placeholder="${S("fMarcaPh")}"></label>
+        <div class="field"><span class="fl">${S("fTipo")}</span><div class="chips" data-chips>${S("tipos").map((c, i) => `<button type="button" class="chip${i === 1 ? " on" : ""}">${c}</button>`).join("")}</div></div>
+        <div class="field"><span class="fl">${S("fOrc")}</span><div class="chips" data-chips>${S("orcs").map(c => `<button type="button" class="chip">${c}</button>`).join("")}</div></div>
+        <label class="field" for="fMsg"><span class="fl">${S("fMsg")}</span><textarea id="fMsg" placeholder="${S("fMsgPh")}"></textarea></label>
+        <div class="send"><button class="send-btn" type="submit">${S("enviar")} <span>→</span></button><span class="dim" style="font-size:15px" id="sendNote">${S("ouEscreve")}</span></div>
+      </form>
+      <div class="channels">
+        <p class="label"><span class="sq"></span>${S("canais")}</p>
+        <div style="height:24px"></div>
+        <div class="channel"><div class="top"><span>${S("fMail")}</span><b><button type="button" id="copyMail">${S("copiar")}</button></b></div><div class="val">contato@dacostastudio.com</div></div>
+        <div class="channel"><div class="top"><span>WhatsApp</span><b>${S("abrir")}</b></div><div class="val">+55 (00) 00000-0000</div></div>
+        <div class="channel"><div class="top"><span>Instagram</span><b>${S("abrir")}</b></div><div class="val">@dacostastudio</div></div>
+        <div class="channel"><div class="top"><span>Behance</span><b>${S("abrir")}</b></div><div class="val">behance.net/dacostastudio</div></div>
+        <div class="channel"><div class="top"><span>${S("base")}</span><b class="js-clock">${brTime()}</b></div><div class="val">${S("remoto")}</div></div>
+      </div>
+    </section>
+  </main>
+  ${footerHTML()}`;
+}
+
+/* =========== PROJETO =========== */
+function projetoHTML(id) {
+  const p = PROJECTS.find(x => x.id === id) || PROJECTS[0];
+  const i = PROJECTS.indexOf(p);
+  const outros = PROJECTS.filter(x => x.id !== p.id);
+  const fr = src => V(src);
+  /* frames: o primeiro grande, depois em pares; se sobrar um, ele vai grande */
+  const fl = p.frames || []; const rest = fl.slice(1); let rows = fl.length ? `<div class="big" data-rv="scale">${fr(fl[0])}</div>` : "";
+  for (let k = 0; k < rest.length; k += 2) {
+    rows += rest[k + 1]
+      ? `<div class="two"><div data-rv="scale">${fr(rest[k])}</div><div data-rv="scale" style="transition-delay:90ms">${fr(rest[k + 1])}</div></div>`
+      : `<div class="big" data-rv="scale">${fr(rest[k])}</div>`;
+  }
+  const mv = projVideo(p);
+  const main = mv.type.startsWith("video") ? `<video src="${mv.url}" poster="${p.poster}" autoplay muted loop playsinline webkit-playsinline preload="auto" id="pVideo"></video>` : `<img src="${mv.url}" alt="">`;
+  return `${headerHTML("trabalhos")}
+  <main class="wrap">
+    <div class="p-top"><a href="#trabalhos">${S("voltar")}</a><span>${pad(i + 1)} / ${pad(PROJECTS.length)}</span></div>
+    <p class="label" style="margin-top:40px"><span class="sq"></span>${esc(p.cliente)} · ${esc(tx(p.tipo))}</p>
+    ${casc([esc(p.nome)], "display", "h1", "margin-top:20px")}
+    <div class="ficha">
+      <div><span class="fl">${S("cliente")}</span>${esc(p.cliente)}</div><div><span class="fl">${S("servicos")}</span>${esc(tx(p.servicos))}</div>
+      <div><span class="fl">${S("duracao")}</span>${p.duracao}</div><div><span class="fl">${S("formato")}</span>1920 × 1080 · 16:9</div>
+    </div>
+    <div class="p-video">
+      ${main}
+      <button type="button" class="vol" id="pVol" aria-label="${S("som")}"><svg viewBox="0 0 24 24" id="pVolIc"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l4 6M21 9l-4 6"/></svg></button>
+    </div>
+    <div class="p-about">
+      <div class="lbl"><p class="label"><span class="sq"></span>${S("oProjeto")}</p></div>
+      <div class="copy">
+        <p class="h2" data-rv>${esc(tx(p.lede))}</p>
+        <div class="cs" data-rv><div><span class="fl">${S("desafio")}</span>${esc(tx(p.desafio))}</div><div><span class="fl">${S("solucao")}</span>${esc(tx(p.solucao))}</div></div>
+      </div>
+    </div>
+    <div class="frames" ${(p.frames || []).length ? "" : "hidden"}>
+      <div class="sec-head" style="margin:0"><p class="label"><span class="sq"></span>Frames</p><p class="sub">${S("quadros")}</p></div>
+      ${rows}
+    </div>
+    <div class="credits">
+      <div><span class="fl">${S("direcao")}</span>Emanuel Costa</div><div><span class="fl">${S("cliente")}</span>${esc(p.cliente)}</div><div><span class="fl">Studio</span>DacostaStudio</div>
+    </div>
+    <div class="outros">
+      <div class="head"><p class="label"><span class="sq"></span>${S("outros")}</p><a class="label" href="#trabalhos">${S("verTodos")}</a></div>
+      <div class="grid5">
+        ${outros.map((o, k) => `<a class="card" href="#projeto-${o.id}" data-rv style="transition-delay:${k * 70}ms">
+          <div class="cover">${coverHTML(o)}</div>
+          <div class="lg"><span class="n">${pad(o.id)}</span><div><div class="nm">${esc(o.nome)}</div><div class="cl">${esc(o.cliente)} · ${esc(tx(o.tipo))}</div></div></div>
+        </a>`).join("")}
+      </div>
+    </div>
+  </main>
+  ${footerHTML()}`;
+}
+
+/* =========== TRABALHOS (tela cheia) =========== */
+let plIndex = 0;
+function trabalhosHTML() {
+  return `<div class="stage" id="stage">
+    ${PROJECTS.map((p, i) => { const m = projVideo(p); return m.type.startsWith("video")
+      ? `<video class="layer pl-l" data-i="${i}" src="${m.url}" poster="${p.poster}" playsinline webkit-playsinline muted preload="${SMALL && i !== plIndex ? "metadata" : "auto"}"></video>`
+      : `<img class="layer pl-l" data-i="${i}" src="${m.url}" alt="">`; }).join("")}
+    <div class="ui">
+      <div class="shade-top"></div><div class="shade-bot"></div>
+      <div class="topbar">
+        <a href="#inicio">DacostaStudio</a>
+        <nav class="nav-mid"><a href="#inicio">${tx(STR.nav.inicio)}</a><span class="on">${tx(STR.nav.trabalhos)}</span><a href="#sobre">${tx(STR.nav.sobre)}</a></nav>
+        <div class="tb-right">${langHTML()}<a class="pill" href="#contato">${tx(STR.nav.contato)} ↗</a></div>
+      </div>
+      <div class="bottombar">
+        <div class="meta">
+          <p class="kicker" id="plKicker"></p>
+          <h1 id="plTitle"></h1>
+          <p class="svc" id="plSvc"></p>
+          <button type="button" class="open" id="plOpen">${S("verProjeto")} <span>→</span></button>
+        </div>
+        <div class="thumbs">
+          <div class="thumbrow" id="plThumbs">${PROJECTS.map((p, i) => `<button type="button" class="thumb" data-i="${i}" aria-label="${esc(p.nome)}"><img src="${p.poster}" alt=""></button>`).join("")}</div>
+          <span class="count" id="plCount"></span>
+        </div>
+        <div class="ctrls">
+          <button type="button" class="ctrl" id="plMute" aria-label="${S("ativarSom")}"><svg viewBox="0 0 24 24" id="plMuteIc"></svg></button>
+          <button type="button" class="ctrl" id="plFs" aria-label="${S("telaCheia")}"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+          <button type="button" class="ctrl" id="plPrev" aria-label="${S("projAnt")}"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button type="button" class="ctrl solid" id="plNext" aria-label="${S("projProx")}"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="hint" id="plHint">${S("hint")}</div>
+    <div class="progress"><i id="plBar"></i></div>
+  </div>`;
+}
+
+/* =========== scroll: revelar + efeitos do Início =========== */
+let cleanups = [];
+function onCleanup(fn) { cleanups.push(fn); }
+function setupReveal() {
+  const els = $$("[data-rv]");
+  if (REDUCE || !("IntersectionObserver" in window)) { $$(".casc").forEach(c => c.classList.add("in")); return; }
+  els.forEach((el, k) => {
+    el.classList.add("rv", "pre"); if (el.dataset.rv === "scale") el.classList.add("scale");
+  });
+  const cs = $$(".casc");
+  let n = 0;
+  const io = new IntersectionObserver(es => {
+    const vis = es.filter(e => e.isIntersecting);
+    vis.forEach((e, k) => {
+      const t = e.target; io.unobserve(t);
+      const r = t.getBoundingClientRect();
+      if (r.top < innerHeight && !t.style.transitionDelay && t.classList.contains("pre")) t.style.transitionDelay = (k * 90) + "ms";
+      requestAnimationFrame(() => requestAnimationFrame(() => { t.classList.remove("pre"); t.classList.add("in"); }));
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  els.forEach(el => io.observe(el));
+  cs.forEach(el => io.observe(el));
+  onCleanup(() => io.disconnect());
+}
+/* vídeos fora da tela ficam pausados (poupa bateria e banda) */
+function setupVideoPause() {
+  if (!("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) playV(v); else v.pause();
+  }), { rootMargin: "200px 0px" });
+  $$("main video, .foot-video video").forEach(v => io.observe(v));
+  onCleanup(() => io.disconnect());
+}
+function scrollFx() {
+  const vh = innerHeight;
+  const hs = $("#heroScroll");
+  if (hs) {
+    const hv = $("#heroVideo"), ht = $("#heroTitle"), hd = $("#siteHeader");
+    const r = hs.getBoundingClientRect();
+    const total = Math.max(1, r.height - vh);
+    const p = REDUCE ? 0 : clamp(-r.top / total);
+    const e = ease(clamp(p / .62));
+    const gut = innerWidth < 900 ? 20 : 60;
+    const t0 = ht.offsetTop + ht.offsetHeight + (innerWidth < 900 ? 36 : 48);
+    hv.style.setProperty("--t", lerp(Math.min(t0, vh * .62), 0, e) + "px");
+    hv.style.setProperty("--s", lerp(gut, 0, e) + "px");
+    hv.style.setProperty("--b", lerp(innerWidth < 900 ? 20 : 24, 0, e) + "px");
+    hv.style.setProperty("--r", lerp(6, 0, e) + "px");
+    ht.style.transform = `translateY(${-e * 40}px)`;
+    const ws = $$(".display .w > span", ht), lb = $(".label", ht);
+    if (lb) lb.style.opacity = String(clamp(1 - e * 4));
+    ws.forEach((w, k) => {
+      const q = clamp(e * 2.2 - k * .16);
+      if (q > 0) { w.style.animation = "none"; w.style.transform = `translateY(${-q * 105}%)`; }
+      else w.style.transform = "";
+    });
+    if (hd) hd.classList.toggle("dark", e > .7 && r.bottom > 90);
+    hv.classList.toggle("full", e > .7);
+  }
+  $$("[data-mask]").forEach(card => {
+    const r = card.getBoundingClientRect();
+    const rev = $(".reveal", card);
+    if (!rev) return;
+    if (card.dataset.mask === "intro") return;
+    const q = REDUCE ? 1 : clamp((vh * .95 - r.top) / (vh * .55));
+    rev.style.clipPath = `inset(${(1 - ease(q)) * 100}% 0 0 0)`;
+  });
+}
+let scrollRaf = null;
+function queueScroll() { if (!scrollRaf) scrollRaf = requestAnimationFrame(() => { scrollRaf = null; scrollFx(); }); }
+addEventListener("scroll", queueScroll, { passive: true });
+addEventListener("resize", queueScroll);
+
+/* =========== router =========== */
+function route(keepScroll) {
+  const y = keepScroll ? scrollY : 0;
+  cleanups.forEach(fn => { try { fn(); } catch (e) {} }); cleanups = [];
+  document.body.classList.remove("player-idle");
+  document.documentElement.lang = L === "pt" ? "pt-BR" : "en";
+  const h = (location.hash || "#inicio").slice(1);
+  const app = $("#app");
+  if (h === "sobre") app.innerHTML = sobreHTML();
+  else if (h === "contato") app.innerHTML = contatoHTML();
+  else if (h === "trabalhos") app.innerHTML = trabalhosHTML();
+  else if (h.startsWith("projeto-")) app.innerHTML = projetoHTML(parseInt(h.split("-")[1], 10));
+  else app.innerHTML = inicioHTML();
+  window.scrollTo(0, y);
+  $$("[data-noop]").forEach(a => a.addEventListener("click", e => e.preventDefault()));
+  $$("[data-top]").forEach(b => b.addEventListener("click", () => window.scrollTo({ top: 0, behavior: REDUCE ? "auto" : "smooth" })));
+  $$("[data-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+  kickVideos();
+  if (h === "trabalhos") afterTrabalhos();
+  else {
+    $$('[data-mask="intro"] .reveal').forEach(rev => {
+      rev.style.transition = REDUCE ? "none" : "clip-path 1.4s cubic-bezier(.7,0,.2,1) .15s";
+      requestAnimationFrame(() => requestAnimationFrame(() => rev.style.clipPath = "inset(0 0 0 0)"));
+    });
+    setupFootCycle();
+    setupPhotoCycle();
+    if (h === "contato") afterContato();
+    if (h.startsWith("projeto-")) afterProjeto();
+    if (!["sobre", "contato"].includes(h) && !h.startsWith("projeto-")) afterInicio();
+    setupReveal();
+    setupVideoPause();
+    scrollFx();
+  }
+}
+/* iPhone/iPad: alguns servidores não entregam vídeo do jeito que o Safari exige (em pedaços).
+   Então no iOS o vídeo é baixado inteiro e tocado a partir da memória. */
+const IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) || /[?&]ios=1/.test(location.search);
+const BLOBS = new Map();
+function blobSrc(src) {
+  if (!BLOBS.has(src)) BLOBS.set(src, fetch(src).then(r => { if (!r.ok) throw new Error(r.status); return r.blob(); }).then(b => URL.createObjectURL(b.type ? b : new Blob([b], { type: "video/mp4" }))));
+  return BLOBS.get(src);
+}
+function prep(v) {
+  if (!IOS || v.dataset.blob) return Promise.resolve();
+  const s = v.getAttribute("src");
+  if (!s || !/^\/?media\//.test(s)) return Promise.resolve();
+  v.dataset.blob = "1";
+  return blobSrc(s).then(u => { v.src = u; v.muted = true; try { v.load(); } catch (e) {} }).catch(() => { v.dataset.blob = ""; });
+}
+function playV(v) {
+  return prep(v).then(() => { if (!document.body.contains(v)) return; const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); });
+}
+/* garante vídeo mudo e tocando; no primeiro toque na tela, toca o que estiver parado */
+function kickVideos() {
+  $$("video").forEach(v => {
+    v.muted = true; v.defaultMuted = true; v.playsInline = true;
+    if (v.classList.contains("pl-l") || !v.hasAttribute("autoplay")) return;
+    const r = v.getBoundingClientRect();
+    if (r.bottom > -200 && r.top < innerHeight + 200) playV(v);
+  });
+}
+["touchstart", "pointerdown", "scroll"].forEach(ev => addEventListener(ev, () => kickVideos(), { passive: true, once: true }));
+function setLang(l) {
+  if (l === L) return;
+  L = l; try { localStorage.setItem("dcs-lang", l); } catch (e) {}
+  route(true);
+}
+addEventListener("hashchange", () => route());
+
+/* =========== Início =========== */
+function afterInicio() {
+  const v = $("#reelVideo");
+  let raf;
+  const fmt = s => `${pad(Math.floor(s / 60))}:${pad(Math.floor(s % 60))}`;
+  function tick() {
+    if (!document.body.contains($("#reelBar"))) return;
+    if (v && v.duration) $("#reelBar").style.width = (v.currentTime / v.duration * 100) + "%";
+    raf = requestAnimationFrame(tick);
+  }
+  raf = requestAnimationFrame(tick);
+  onCleanup(() => cancelAnimationFrame(raf));
+  $("#reelSound").addEventListener("click", e => {
+    if (!v) return;
+    v.muted = !v.muted; $("#reelSoundIc").innerHTML = v.muted ? ICON_MUTED : ICON_SOUND;
+    e.currentTarget.setAttribute("aria-label", v.muted ? S("ativarSom") : S("silenciar"));
+    if (!v.muted) v.play().catch(() => {});
+  });
+  $("#reelFs").addEventListener("click", async () => {
+    const el = v || $("#heroVideo");
+    try { await (el.requestFullscreen ? el.requestFullscreen() : el.webkitEnterFullscreen()); } catch (e) {}
+  });
+  /* depoimentos: passam sozinhos a cada 6 s, param com o mouse em cima */
+  const box = $("#testi"); let i = 0, timer, paused = false;
+  function show(n, instant) {
+    i = (n + TESTIMONIALS.length) % TESTIMONIALS.length;
+    const d = TESTIMONIALS[i];
+    const swap = $("#tSwap");
+    const apply = () => {
+      if (!document.body.contains(swap)) return;
+      $("#tN").textContent = pad(i + 1); $("#tText").textContent = tx(d.q); $("#tName").textContent = tx(d.n); $("#tRole").textContent = tx(d.r);
+      $$("#tProg button").forEach((b, k) => { b.classList.remove("on", "done"); void b.offsetWidth; if (k < i) b.classList.add("done"); if (k === i) b.classList.add("on"); });
+      swap.classList.remove("out");
+    };
+    if (instant || REDUCE) apply(); else { swap.classList.add("out"); setTimeout(apply, 380); }
+    restart();
+  }
+  function restart() { clearTimeout(timer); if (!paused) timer = setTimeout(() => show(i + 1), 6000); }
+  $("#tPrev").addEventListener("click", () => show(i - 1));
+  $("#tNext").addEventListener("click", () => show(i + 1));
+  $$("#tProg button").forEach((b, k) => b.addEventListener("click", () => show(k)));
+  show(0, true);
+  onCleanup(() => clearTimeout(timer));
+}
+
+/* =========== rodapé: alterna os vídeos das marcas a cada 5 s =========== */
+function setupFootCycle() {
+  const vs = $$(".foot-video > video[data-brand]"), tag = $("#footBrand");
+  if (vs.length < 2) return;
+  let i = 0;
+  const t = setInterval(() => {
+    vs[i].classList.remove("on"); i = (i + 1) % vs.length;
+    const v = vs[i]; try { v.currentTime = 0; } catch (e) {}
+    playV(v);
+    v.classList.add("on");
+    if (tag) { tag.style.opacity = 0; setTimeout(() => { tag.textContent = v.dataset.brand; tag.style.opacity = 1; }, 400); }
+  }, 5000);
+  onCleanup(() => clearInterval(t));
+}
+
+/* =========== Contato =========== */
+function afterContato() {
+  $$("[data-chips]").forEach(g => $$(".chip", g).forEach(c => c.addEventListener("click", () => { $$(".chip", g).forEach(x => x.classList.remove("on")); c.classList.add("on"); })));
+  $("#cForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const ok = $("#fNome").value.trim() && /\S+@\S+\.\S+/.test($("#fMail").value);
+    $("#sendNote").textContent = ok ? S("sendOk") : S("sendErr");
+  });
+  $("#copyMail").addEventListener("click", async e => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText("contato@dacostastudio.com"); b.textContent = S("copiado"); }
+    catch (err) { b.textContent = S("selecione"); }
+    setTimeout(() => b.textContent = S("copiar"), 1800);
+  });
+}
+
+/* =========== Projeto =========== */
+function afterProjeto() {
+  const v = $("#pVideo");
+  $("#pVol").addEventListener("click", () => {
+    if (!v) return;
+    v.muted = !v.muted; if (!v.muted) v.play().catch(() => {});
+    $("#pVolIc").innerHTML = v.muted ? ICON_MUTED : ICON_SOUND;
+  });
+}
+
+/* =========== Trabalhos =========== */
+function afterTrabalhos() {
+  const stage = $("#stage"), layers = $$(".pl-l", stage);
+  let cur = plIndex, muted = true, raf, idleT, imgT = 0, last = performance.now();
+  const active = () => layers[cur];
+  const muteIcon = () => {
+    $("#plMuteIc").innerHTML = muted ? ICON_MUTED : ICON_SOUND;
+    $("#plMute").setAttribute("aria-label", muted ? S("ativarSom") : S("silenciar"));
+  };
+  function go(n) {
+    cur = plIndex = (n + PROJECTS.length) % PROJECTS.length; imgT = 0;
+    const p = PROJECTS[cur];
+    $("#plKicker").textContent = `${p.cliente} · ${tx(p.tipo)}`;
+    $("#plTitle").textContent = p.nome;
+    $("#plSvc").textContent = tx(p.servicos);
+    $("#plCount").textContent = `${pad(cur + 1)} / ${pad(PROJECTS.length)}`;
+    $$("#plThumbs .thumb").forEach((t, k) => t.classList.toggle("on", k === cur));
+    layers.forEach((l, k) => {
+      const on = k === cur;
+      l.classList.toggle("on", on);
+      if (l.tagName !== "VIDEO") return;
+      if (on) { try { l.currentTime = 0; } catch (e) {} prep(l).then(() => { if (l !== layers[cur]) return; l.muted = muted; const pr = l.play(); if (pr && pr.catch) pr.catch(() => {}); }); }
+      else l.pause();
+    });
+  }
+  layers.forEach((l, k) => l.tagName === "VIDEO" && l.addEventListener("ended", () => { if (k === cur) go(cur + 1); }));
+  $$("#plThumbs .thumb").forEach(t => t.addEventListener("click", () => go(+t.dataset.i)));
+  $("#plOpen").addEventListener("click", () => location.hash = "projeto-" + PROJECTS[cur].id);
+  $("#plPrev").addEventListener("click", () => go(cur - 1));
+  $("#plNext").addEventListener("click", () => go(cur + 1));
+  $("#plMute").addEventListener("click", () => { muted = !muted; const v = active(); if (v.tagName === "VIDEO") { v.muted = muted; if (!muted) v.play().catch(() => {}); } muteIcon(); });
+  $("#plFs").addEventListener("click", async () => { try { document.fullscreenElement ? await document.exitFullscreen() : await stage.requestFullscreen(); } catch (e) {} });
+  function idle(on) { stage.classList.toggle("idle", on); document.body.classList.toggle("player-idle", on); }
+  function wake() { idle(false); clearTimeout(idleT); idleT = setTimeout(() => idle(true), 2000); }
+  const onFs = () => { if (document.fullscreenElement) { clearTimeout(idleT); idle(true); } };
+  ["mousemove", "pointerdown", "wheel", "keydown"].forEach(ev => addEventListener(ev, wake, { passive: true }));
+  document.addEventListener("fullscreenchange", onFs);
+  const onKey = e => { if (e.key === "ArrowRight") go(cur + 1); if (e.key === "ArrowLeft") go(cur - 1); };
+  addEventListener("keydown", onKey);
+  function loop(now) {
+    const dt = Math.min(.1, (now - last) / 1000); last = now;
+    const v = active(); let f = 0;
+    if (v.tagName === "VIDEO") { if (v.duration) f = v.currentTime / v.duration; }
+    else { imgT += dt; f = imgT / 10; if (imgT >= 10) go(cur + 1); }
+    $("#plBar").style.width = (f * 100) + "%";
+    raf = requestAnimationFrame(loop);
+  }
+  muteIcon(); go(cur); wake();
+  raf = requestAnimationFrame(loop);
+  const hintT = setTimeout(() => { const h = $("#plHint"); if (h) h.style.opacity = 0; }, 5000);
+  onCleanup(() => {
+    cancelAnimationFrame(raf); clearTimeout(idleT); clearTimeout(hintT);
+    ["mousemove", "pointerdown", "wheel", "keydown"].forEach(ev => removeEventListener(ev, wake));
+    removeEventListener("keydown", onKey);
+    document.removeEventListener("fullscreenchange", onFs);
+    layers.forEach(l => { try { l.pause && l.pause(); } catch (e) {} });
+  });
+}
+
+/* =========== painel de vídeos =========== */
+function renderPanel() {
+  let g = "";
+  $("#panelList").innerHTML = SLOTS.map(s => {
+    const m = MEDIA[s.key];
+    const has = Array.isArray(m) ? m.length : !!m;
+    const st = !has ? "Usando o arquivo do site" : Array.isArray(m) ? `${m.length} logo(s)` : m.name;
+    const one = Array.isArray(m) ? m[0] : m;
+    const sw = !has ? "" : one.type.startsWith("video") ? `<video src="${one.url}" muted></video>` : `<img src="${one.url}" alt="">`;
+    const head = s.grp !== g ? `<div class="grp">${s.grp}</div>` : ""; g = s.grp;
+    return `${head}<div class="slot">
+      <div class="sw">${sw}</div>
+      <div class="info"><div class="nm">${s.nome}</div><div class="st${has ? " ok" : ""}">${esc(st)}</div></div>
+      ${has ? `<button type="button" class="rm" data-rm="${s.key}">Tirar</button>` : ""}
+      <label>${has ? "Trocar" : "Testar outro"}<input type="file" accept="${s.accept}" ${s.multi ? "multiple" : ""} data-slot="${s.key}"></label>
+    </div>`;
+  }).join("");
+  $$("#panelList input[type=file]").forEach(inp => inp.addEventListener("change", async () => {
+    const files = [...inp.files]; if (!files.length) return;
+    const key = inp.dataset.slot, multi = SLOTS.find(s => s.key === key).multi;
+    const rec = f => ({ name: f.name, type: f.type || "application/octet-stream", blob: f });
+    if (DB.db) await DB.put(key, multi ? files.map(rec) : rec(files[0]));
+    else MEDIA[key] = toMedia(multi ? files.map(rec) : rec(files[0]));
+    if (DB.db) await loadMedia();
+    renderPanel(); route();
+  }));
+  $$("#panelList [data-rm]").forEach(b => b.addEventListener("click", async () => {
+    if (DB.db) { await DB.del(b.dataset.rm); await loadMedia(); } else delete MEDIA[b.dataset.rm];
+    renderPanel(); route();
+  }));
+}
+$("#fab").addEventListener("click", () => { renderPanel(); $("#panel").classList.add("open"); });
+$("#panelClose").addEventListener("click", () => $("#panel").classList.remove("open"));
+addEventListener("keydown", e => { if (e.key === "Escape") $("#panel").classList.remove("open"); });
+
+/* =========== início =========== */
+/* loading: conta até 100 enquanto o vídeo de abertura carrega (no máximo ~2,6 s) */
+function runLoader() {
+  const el = $("#loader");
+  if (!el) return;
+  if (REDUCE) { el.remove(); document.documentElement.classList.remove("is-loading"); return; }
+  const t0 = performance.now(); let ready = false, shown = 0;
+  const v = $("#reelVideo");
+  if (v) { if (v.readyState >= 3) ready = true; else v.addEventListener("canplay", () => ready = true, { once: true }); } else ready = true;
+  (function step(now) {
+    const el2 = now - t0;
+    const target = ready ? Math.min(100, el2 / 14) : Math.min(90, el2 / 22);
+    shown += (Math.max(target, el2 > 2600 ? 100 : 0) - shown) * .12;
+    const n = Math.min(100, Math.round(shown));
+    $("#ldN").textContent = n; $("#ldBar").style.transform = `scaleX(${n / 100})`;
+    if (n >= 100) {
+      el.classList.add("done"); document.documentElement.classList.remove("is-loading");
+      setTimeout(() => el.remove(), 1200); return;
+    }
+    requestAnimationFrame(step);
+  })(t0);
+}
+
+/* lê o conteúdo editado no painel (/content/*.json); se falhar, usa o padrão acima */
+async function loadContent() {
+  const get = f => fetch("content/" + f + ".json", { cache: "no-cache" }).then(r => r.ok ? r.json() : null).catch(() => null);
+  const [pj, dp, mc, ft, gr] = await Promise.all(["projetos", "depoimentos", "marcas", "fotos", "geral"].map(get));
+  if (pj && Array.isArray(pj.projetos) && pj.projetos.length) {
+    PROJECTS = pj.projetos.map((x, i) => ({
+      id: i + 1, nome: x.nome || "", cliente: x.cliente || "", duracao: x.duracao || "",
+      video: x.video, preview: x.preview || x.video, poster: x.capa || "",
+      frames: (x.frames || []).map(f => f && (f.video || f)).filter(Boolean), dark: !!x.rodape_escuro,
+      tipo: x.tipo || "", servicos: x.servicos || "", lede: x.resumo || "", desafio: x.desafio || "", solucao: x.solucao || "",
+    }));
+    SLOTS = SLOTS.filter(s => s.grp !== "Projetos").concat(PROJECTS.map(p => ({ grp: "Projetos", key: "p" + p.id, nome: `${pad(p.id)} · ${p.nome}`, accept: "video/*,image/*" })));
+  }
+  if (dp && Array.isArray(dp.depoimentos) && dp.depoimentos.length) TESTIMONIALS = dp.depoimentos.map(d => ({ q: d.texto || "", n: d.nome || "", r: d.cargo || "" }));
+  if (mc && Array.isArray(mc.marcas) && mc.marcas.length) LOGOS = mc.marcas.filter(m => m.logo).map(m => [m.logo, m.nome || "", +m.altura || 28]);
+  if (ft && Array.isArray(ft.fotos) && ft.fotos.length) PHOTO_LIST = ft.fotos.map(f => f.foto || f).filter(Boolean);
+  if (gr && gr.video_abertura) GERAL = { ...GERAL, ...gr };
+}
+
+(async () => {
+  if (/[?&]painel=1/.test(location.search)) $("#fab").hidden = false;
+  await loadContent();
+  route();
+  runLoader();
+  if (await DB.open()) { await loadMedia(); if (Object.keys(MEDIA).length) route(); }
+})();
+</script>
+</html>

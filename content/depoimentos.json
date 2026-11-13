@@ -1,0 +1,46 @@
+{
+  "depoimentos": [
+    {
+      "texto": {
+        "pt": "Depoimento de exemplo. Aqui entra o que o cliente falou sobre o projeto, em uma ou duas frases.",
+        "en": "Sample testimonial. This is where the client's words about the project go, in one or two sentences."
+      },
+      "nome": {
+        "pt": "Nome do cliente",
+        "en": "Client name"
+      },
+      "cargo": {
+        "pt": "Cargo · Empresa",
+        "en": "Role · Company"
+      }
+    },
+    {
+      "texto": {
+        "pt": "Segundo depoimento de exemplo. Prazo, processo, resultado: o que mais marcou pra quem contratou.",
+        "en": "Second sample testimonial. Deadline, process, result: whatever stood out to whoever hired you."
+      },
+      "nome": {
+        "pt": "Nome do cliente",
+        "en": "Client name"
+      },
+      "cargo": {
+        "pt": "Cargo · Empresa",
+        "en": "Role · Company"
+      }
+    },
+    {
+      "texto": {
+        "pt": "Terceiro depoimento de exemplo. Troca por uma frase real assim que tiver.",
+        "en": "Third sample testimonial. Swap it for a real quote as soon as you have one."
+      },
+      "nome": {
+        "pt": "Nome do cliente",
+        "en": "Client name"
+      },
+      "cargo": {
+        "pt": "Cargo · Empresa",
+        "en": "Role · Company"
+      }
+    }
+  ]
+}

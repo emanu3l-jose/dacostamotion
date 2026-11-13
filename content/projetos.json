@@ -1,0 +1,133 @@
+{
+  "projetos": [
+    {
+      "nome": "Workflow Studio",
+      "cliente": "Workflow Studio",
+      "duracao": "0:40",
+      "video": "media/reel.mp4",
+      "preview": "media/prev-workflow.mp4",
+      "capa": "media/poster-workflow.jpg",
+      "frames": [
+        {
+          "video": "media/ws-logo.mp4"
+        },
+        {
+          "video": "media/ws-2.mp4"
+        },
+        {
+          "video": "media/ws-3.mp4"
+        },
+        {
+          "video": "media/ws-4.mp4"
+        },
+        {
+          "video": "media/ws-5.mp4"
+        }
+      ],
+      "rodape_escuro": true,
+      "tipo": {
+        "pt": "Identidade em movimento",
+        "en": "Motion identity"
+      },
+      "servicos": {
+        "pt": "Logo animation · Motion identity · Aplicações",
+        "en": "Logo animation · Motion identity · Brand applications"
+      },
+      "resumo": {
+        "pt": "A Workflow Studio é um estúdio de identidade de marca. O símbolo de três círculos ganhou movimento e virou o fio que liga cada peça, do logo à placa na rua.",
+        "en": "Workflow Studio is a brand identity studio. Its three-circle symbol was put in motion and became the thread that ties every piece together, from the logo to the sign on the street."
+      },
+      "desafio": {
+        "pt": "Mostrar o conceito “Work From Within” sem explicar demais: a marca nasce de dentro pra fora.",
+        "en": "Show the “Work From Within” idea without over-explaining it: the brand grows from the inside out."
+      },
+      "solucao": {
+        "pt": "O símbolo se monta a partir dos círculos e se desdobra nas aplicações (papelaria, sinalização e outdoor) num ritmo calmo e preciso.",
+        "en": "The symbol builds itself from the circles and unfolds into the applications (stationery, signage and billboards) at a calm, precise pace."
+      }
+    },
+    {
+      "nome": "CleverMove",
+      "cliente": "CleverMove",
+      "duracao": "0:21",
+      "video": "media/clevermove.mp4",
+      "preview": "media/prev-clevermove.mp4",
+      "capa": "media/poster-clevermove.jpg",
+      "frames": [
+        {
+          "video": "media/cm-1.mp4"
+        },
+        {
+          "video": "media/cm-2.mp4"
+        },
+        {
+          "video": "media/cm-3.mp4"
+        },
+        {
+          "video": "media/cm-4.mp4"
+        }
+      ],
+      "rodape_escuro": false,
+      "tipo": {
+        "pt": "Identidade visual",
+        "en": "Visual identity"
+      },
+      "servicos": {
+        "pt": "Logo animation · Apresentação de marca",
+        "en": "Logo animation · Brand presentation"
+      },
+      "resumo": {
+        "pt": "A CleverMove queria parecer exatamente o que promete: intencional e à frente. O cavalo do símbolo conduz o vídeo, do logo até a fachada.",
+        "en": "CleverMove wanted to look exactly like what it promises: intentional and ahead. The horse in the symbol leads the film, from the logo to the storefront."
+      },
+      "desafio": {
+        "pt": "Uma marca nova que precisava parecer sólida desde o primeiro contato.",
+        "en": "A new brand that had to feel solid from the very first contact."
+      },
+      "solucao": {
+        "pt": "Uma apresentação em movimento da identidade (símbolo, papelaria, embalagem e loja) com transições que mantêm o mesmo passo firme do início ao fim.",
+        "en": "A moving presentation of the identity (symbol, stationery, packaging and store) with transitions that keep the same steady pace from start to finish."
+      }
+    },
+    {
+      "nome": "Realure",
+      "cliente": "Felipe Rufino",
+      "duracao": "0:48",
+      "video": "media/realure.mp4",
+      "preview": "media/prev-realure.mp4",
+      "capa": "media/poster-realure.jpg",
+      "frames": [
+        {
+          "video": "media/fr-som.mp4"
+        },
+        {
+          "video": "media/fr-grid.mp4"
+        },
+        {
+          "video": "media/fr-montagem.mp4"
+        }
+      ],
+      "rodape_escuro": false,
+      "tipo": {
+        "pt": "Motion para app",
+        "en": "App motion"
+      },
+      "servicos": {
+        "pt": "Motion de interface · Sound design",
+        "en": "UI motion · Sound design"
+      },
+      "resumo": {
+        "pt": "Realure é um app com uma ideia simples: viver mais leve. O vídeo apresenta a marca e a interface no mesmo ritmo tranquilo.",
+        "en": "Realure is an app built on a simple idea: to live a lighter life. The film introduces the brand and the interface at the same unhurried pace."
+      },
+      "desafio": {
+        "pt": "Mostrar as telas do app sem virar um tutorial.",
+        "en": "Show the app screens without turning it into a tutorial."
+      },
+      "solucao": {
+        "pt": "Uma montagem que mistura grid, interface e sound design, para o app ser sentido antes de ser explicado.",
+        "en": "An edit that blends grid, interface and sound design, so the app is felt before it is explained."
+      }
+    }
+  ]
+}
