@@ -545,8 +545,12 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 .cli-ov.on li { opacity: 1; transform: none; }
 /* equipe do projeto */
 .team { margin-top: 120px; }
-.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 24px; margin-top: 40px; }
-.tm { display: flex; flex-direction: column; border-top: 1px solid var(--hair); padding-top: 16px; }
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 24px; margin-top: 40px; }
+.tm { display: flex; flex-direction: column; gap: 16px; }
+.tm-pic { aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: var(--tint); display: grid; place-items: center; }
+.tm-pic img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1); transition: filter .5s, transform .8s cubic-bezier(.2,.7,.2,1); }
+.tm:hover .tm-pic img { filter: none; transform: scale(1.03); }
+.tm-pic .ini { font-size: clamp(32px, 4vw, 56px); letter-spacing: -.04em; color: var(--dim); }
 .tm-txt { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
 .tm-txt .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
 .tm-txt a { color: var(--dim); font-size: 14px; }
@@ -1047,17 +1051,19 @@ function contatoHTML() {
 }
 
 /* =========== PROJETO =========== */
-/* equipe: função, nome e @ do Instagram (sem fotos) */
+/* equipe: foto (ou iniciais), função, nome e @ do Instagram */
 function teamHTML(p) {
   const cr = p.creditos && p.creditos.length ? p.creditos
-    : [{ funcao: { pt: "Motion design", en: "Motion design" }, nome: "Emanuel Costa · @dacostamotion" }];
+    : [{ funcao: { pt: "Motion design", en: "Motion design" }, nome: "Emanuel Costa · @dacostamotion", foto: "media/eq-emanuel.jpg" }];
   return cr.map((c, k) => {
     const raw = String(c.nome || "");
     const m = /@([\w.]+)/.exec(raw);
     const name = raw.replace(/·?\s*@[\w.]+/, "").replace(/\s*·\s*$/, "").trim() || (m ? "@" + m[1] : raw);
+    const ini = name.replace(/^@/, "").split(/[\s.]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+    const pic = c.foto ? `<img src="${esc(c.foto)}" alt="${esc(name)}" loading="lazy">` : `<span class="ini">${esc(ini)}</span>`;
     const handle = m && name !== "@" + m[1] ? `<a href="https://www.instagram.com/${m[1]}/" target="_blank" rel="noopener">@${m[1]}</a>` : "";
     const nm = m && name === "@" + m[1] ? `<a href="https://www.instagram.com/${m[1]}/" target="_blank" rel="noopener" style="color:inherit;font-size:16px">${esc(name)}</a>` : esc(name);
-    return `<div class="tm" data-rv style="transition-delay:${(k % 4) * 80}ms"><div class="tm-txt"><span class="fl">${esc(tx(c.funcao))}</span><span>${nm}</span>${handle}</div></div>`;
+    return `<div class="tm" data-rv style="transition-delay:${(k % 4) * 80}ms"><div class="tm-pic">${pic}</div><div class="tm-txt"><span class="fl">${esc(tx(c.funcao))}</span><span>${nm}</span>${handle}</div></div>`;
   }).join("");
 }
 const didHTML = p => (p.entregas || []).length
