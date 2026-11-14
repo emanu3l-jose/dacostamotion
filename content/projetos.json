@@ -26,7 +26,7 @@
       ],
       "rodape_escuro": true,
       "tipo": {
-        "pt": "Brand motion · Manifesto",
+        "pt": "Motion de marca · Manifesto",
         "en": "Brand motion · Manifesto"
       },
       "servicos": {
@@ -51,21 +51,34 @@
             "pt": "Direção criativa e de marca",
             "en": "Brand & creative direction"
           },
-          "nome": "Workflow Studio · @madebyworkflow"
+          "nome": "Stephen Jennings · @madebyworkflow",
+          "foto": "media/eq-stephen.jpg"
         },
         {
           "funcao": {
-            "pt": "Motion design",
-            "en": "Motion design"
+            "pt": "Motion design e efeitos sonoros",
+            "en": "Motion design & sound effects"
           },
-          "nome": "Emanuel Costa · @dacostamotion"
+          "nome": "Emanuel Costa · @dacostamotion",
+          "foto": "media/eq-emanuel.jpg"
+        }
+      ],
+      "entregas": [
+        {
+          "pt": "Conceito visual construído a partir dos três círculos do símbolo",
+          "en": "Visual concept built from the symbol's three circles"
         },
         {
-          "funcao": {
-            "pt": "Efeitos sonoros",
-            "en": "Sound effects"
-          },
-          "nome": "Emanuel Costa · @dacostamotion"
+          "pt": "Animação completa do manifesto “Work From Within”",
+          "en": "Full animation of the “Work From Within” manifesto"
+        },
+        {
+          "pt": "Cada movimento sincronizado com a música",
+          "en": "Every movement synced to the music"
+        },
+        {
+          "pt": "Efeitos sonoros criados sob medida pra cada cena",
+          "en": "Custom sound effects for every scene"
         }
       ]
     },
@@ -92,7 +105,7 @@
       ],
       "rodape_escuro": false,
       "tipo": {
-        "pt": "Brand motion · Showreel",
+        "pt": "Motion de marca · Apresentação",
         "en": "Brand motion · Showreel"
       },
       "servicos": {
@@ -124,7 +137,8 @@
             "pt": "Direção criativa e estratégia",
             "en": "Creative direction & strategy"
           },
-          "nome": "Felipe Rufino · @ofeliperufino"
+          "nome": "Felipe Rufino · @ofeliperufino",
+          "foto": "media/eq-felipe.jpg"
         },
         {
           "funcao": {
@@ -135,34 +149,87 @@
         },
         {
           "funcao": {
-            "pt": "Motion design e SFX",
-            "en": "Motion design & SFX"
+            "pt": "Motion design e efeitos sonoros",
+            "en": "Motion design & sound effects"
           },
-          "nome": "Emanuel Costa · @dacostamotion"
+          "nome": "Emanuel Costa · @dacostamotion",
+          "foto": "media/eq-emanuel.jpg"
+        }
+      ],
+      "entregas": [
+        {
+          "pt": "Cavalo do xadrez animado quadro a quadro",
+          "en": "Chess knight animated frame by frame"
+        },
+        {
+          "pt": "Transição do cavalo para o logotipo CleverMove",
+          "en": "Transition from the knight into the CleverMove logotype"
+        },
+        {
+          "pt": "Apresentação das aplicações da marca em movimento",
+          "en": "The brand's applications presented in motion"
+        },
+        {
+          "pt": "Cortes e passos no tempo exato da música",
+          "en": "Cuts and strides timed exactly to the music"
+        },
+        {
+          "pt": "Efeitos sonoros",
+          "en": "Sound effects"
         }
       ]
     },
     {
       "nome": "Realure",
       "cliente": "Realure",
-      "duracao": "0:48",
+      "duracao": "1:32",
       "video": "media/realure.mp4",
       "preview": "media/prev-realure.mp4",
       "capa": "media/poster-realure.jpg",
       "frames": [
         {
-          "video": "media/fr-som.mp4"
+          "video": "media/re-5.mp4"
         },
         {
-          "video": "media/fr-grid.mp4"
+          "video": "media/re-1.mp4"
         },
         {
-          "video": "media/fr-montagem.mp4"
+          "video": "media/re-2.mp4"
+        },
+        {
+          "video": "media/re-3.mp4"
+        },
+        {
+          "video": "media/re-4.mp4"
+        },
+        {
+          "video": "media/re-6.mp4"
+        },
+        {
+          "video": "media/re-10.mp4"
+        },
+        {
+          "video": "media/re-7.mp4"
+        },
+        {
+          "video": "media/re-8.mp4"
+        },
+        {
+          "video": "media/re-9.mp4"
+        },
+        {
+          "video": "media/re-11.mp4"
+        },
+        {
+          "video": "media/re-12.mp4"
+        },
+        {
+          "video": "media/re-13.mp4"
         }
       ],
       "rodape_escuro": false,
       "tipo": {
-        "pt": "Brand motion · Manifesto",
+        "pt": "Motion de marca · Manifesto",
         "en": "Brand motion · Manifesto"
       },
       "servicos": {
@@ -187,14 +254,219 @@
             "pt": "Direção criativa",
             "en": "Creative direction"
           },
-          "nome": "Felipe Rufino · @ofeliperufino"
+          "nome": "Felipe Rufino · @ofeliperufino",
+          "foto": "media/eq-felipe.jpg"
         },
         {
           "funcao": {
             "pt": "Motion design e sound design",
             "en": "Motion & sound design"
           },
-          "nome": "Emanuel Costa · @dacostamotion"
+          "nome": "Emanuel Costa · @dacostamotion",
+          "foto": "media/eq-emanuel.jpg"
+        }
+      ],
+      "entregas": [
+        {
+          "pt": "Animação do manifesto, fase por fase do ciclo",
+          "en": "Manifesto animation, phase by phase of the cycle"
+        },
+        {
+          "pt": "Colagens, texturas e ilustrações científicas em movimento",
+          "en": "Collages, textures and scientific illustrations in motion"
+        },
+        {
+          "pt": "Aplicações da marca: app, produto e embalagem",
+          "en": "Brand applications: app, product and packaging"
+        },
+        {
+          "pt": "Símbolo da marca em versões 2D e 3D",
+          "en": "Brand symbol in 2D and 3D versions"
+        },
+        {
+          "pt": "Sound design inteiro tirado de uma única música",
+          "en": "Entire sound design pulled from a single song"
+        }
+      ]
+    },
+    {
+      "nome": "idea.ai",
+      "cliente": "idea.ai",
+      "duracao": "0:53",
+      "video": "media/idea.mp4",
+      "preview": "media/prev-idea.mp4",
+      "capa": "media/poster-idea.jpg",
+      "frames": [
+        {
+          "video": "media/idea-logo1.mp4"
+        },
+        {
+          "video": "media/idea-1.mp4"
+        },
+        {
+          "video": "media/idea-2.mp4"
+        },
+        {
+          "video": "media/idea-3.mp4"
+        },
+        {
+          "video": "media/idea-4.mp4"
+        },
+        {
+          "video": "media/idea-5.mp4"
+        },
+        {
+          "video": "media/idea-6.mp4"
+        },
+        {
+          "video": "media/idea-logo2.mp4"
+        }
+      ],
+      "rodape_escuro": false,
+      "tipo": {
+        "pt": "Filme de lançamento · Rebranding",
+        "en": "Launch film · Rebrand"
+      },
+      "servicos": {
+        "pt": "Storyboard · Animação · Sound design",
+        "en": "Storyboard · Animation · Sound design"
+      },
+      "resumo": {
+        "pt": "A idea.ai é uma plataforma de IA que transforma ideias em vídeo, imagem, 3D e áudio, feita para a nova classe criativa. Depois do rebranding assinado pela Produx Design, eu criei o filme de lançamento da nova marca.",
+        "en": "idea.ai is an AI platform that turns ideas into video, images, 3D and audio, built for the new creative class. After the rebrand by Produx Design, I made the launch film for the new brand."
+      },
+      "desafio": {
+        "pt": "Apresentar uma plataforma cheia de recursos sem virar tutorial, e chegar ao dia do lançamento com uma peça forte o bastante pra falar sozinha.",
+        "en": "Introduce a feature-packed platform without turning it into a tutorial, and reach launch day with a piece strong enough to speak for itself."
+      },
+      "solucao": {
+        "pt": "Comecei pelo storyboard, aprovado antes de animar: primeiro o filme, depois a revelação do logo, com telas da plataforma, cards e mockups ganhando vida. A primeira versão tinha locução com voz de IA, mas soou artificial. Tiramos a voz e deixamos a música e efeitos sonoros fortes conduzirem tudo, apoiados na ideia central da campanha: a ideia basta.",
+        "en": "I started with the storyboard, signed off before animating: the film first, then the logo reveal, with platform screens, cards and mockups coming to life. The first cut had an AI voice-over, but it felt artificial. We dropped the voice and let the music and bold sound effects carry everything, backed by the campaign's core idea: the idea is enough."
+      },
+      "entregas": [
+        {
+          "pt": "Storyboard e estrutura do filme",
+          "en": "Storyboard and film structure"
+        },
+        {
+          "pt": "Animação das telas da plataforma, cards e mockups",
+          "en": "Animation of platform screens, cards and mockups"
+        },
+        {
+          "pt": "Revelação do novo logo",
+          "en": "Reveal of the new logo"
+        },
+        {
+          "pt": "Versões curtas do logo animado",
+          "en": "Short animated logo versions"
+        },
+        {
+          "pt": "Música e efeitos sonoros, sem locução",
+          "en": "Music and sound effects, no voice-over"
+        }
+      ],
+      "creditos": [
+        {
+          "funcao": {
+            "pt": "Rebranding e direção",
+            "en": "Rebrand & direction"
+          },
+          "nome": "Produx Design",
+          "foto": "media/eq-produx.jpg"
+        },
+        {
+          "funcao": {
+            "pt": "Storyboard, motion e sound design",
+            "en": "Storyboard, motion & sound design"
+          },
+          "nome": "Emanuel Costa · @dacostamotion",
+          "foto": "media/eq-emanuel.jpg"
+        }
+      ]
+    },
+    {
+      "nome": "Fonzi",
+      "cliente": "Fonzi",
+      "duracao": "0:52",
+      "video": "media/fonzi.mp4",
+      "preview": "media/prev-fonzi.mp4",
+      "capa": "media/poster-fonzi.jpg",
+      "frames": [
+        {
+          "video": "media/fz-section.mp4"
+        },
+        {
+          "video": "media/fz-mascote.mp4"
+        },
+        {
+          "video": "media/fz-familia.mp4"
+        },
+        {
+          "video": "media/fz-patch.mp4"
+        },
+        {
+          "video": "media/fz-patch2.mp4"
+        },
+        {
+          "video": "media/fz-balao.mp4"
+        },
+        {
+          "video": "media/fz-bolsa.mp4"
+        },
+        {
+          "video": "media/fz-posters.mp4"
+        },
+        {
+          "video": "media/fz-sketch.mp4"
+        }
+      ],
+      "rodape_escuro": false,
+      "tipo": {
+        "pt": "Motion de marca · Lançamento",
+        "en": "Brand motion · Launch"
+      },
+      "servicos": {
+        "pt": "Animação · Motion de interface",
+        "en": "Animation · UI motion"
+      },
+      "resumo": {
+        "pt": "A Fonzi inverte a lógica da busca por emprego em tecnologia: você se candidata uma vez e as empresas é que vêm até você. O filme apresenta essa virada com o mascote verde da marca tomando a cidade, do patch na jaqueta ao balão gigante entre os prédios.",
+        "en": "Fonzi flips the tech job hunt: you apply once and companies come to you. The film introduces that shift with the brand's green mascot taking over the city, from a patch on a jacket to a giant balloon between the buildings."
+      },
+      "desafio": {
+        "pt": "Explicar a ideia em poucos segundos e com personalidade: uma plataforma de recrutamento que precisava soar ousada, jovem e nada corporativa.",
+        "en": "Explain the idea in a few seconds and with personality: a hiring platform that had to feel bold, young and nothing like corporate."
+      },
+      "solucao": {
+        "pt": "Uma montagem rápida, no ritmo da música, que alterna mundo real e marca: o mascote ganha vida, a frase “Now they apply to you” ocupa cartazes e outdoors, e a plataforma aparece em uso numa seção animada feita para o site.",
+        "en": "A fast edit, on the music's beat, that cuts between the real world and the brand: the mascot comes to life, the line “Now they apply to you” takes over posters and billboards, and the platform shows up in use in an animated section built for the website."
+      },
+      "entregas": [
+        {
+          "pt": "Filme de marca com o mascote em cena",
+          "en": "Brand film with the mascot on screen"
+        },
+        {
+          "pt": "Animação do mascote e da família de personagens",
+          "en": "Animation of the mascot and its character family"
+        },
+        {
+          "pt": "Seção animada para o site, com a plataforma em uso",
+          "en": "Animated website section showing the platform in use"
+        },
+        {
+          "pt": "Edição no tempo da música",
+          "en": "Edit cut to the music"
+        }
+      ],
+      "creditos": [
+        {
+          "funcao": {
+            "pt": "Motion design",
+            "en": "Motion design"
+          },
+          "nome": "Emanuel Costa · @dacostamotion",
+          "foto": "media/eq-emanuel.jpg"
         }
       ]
     }

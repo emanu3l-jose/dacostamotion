@@ -11,6 +11,18 @@
     {
       "nome": "Realure",
       "logo": "media/logo-realure.png"
+    },
+    {
+      "nome": "idea.ai",
+      "logo": "media/logo-idea.png"
+    },
+    {
+      "nome": "Fonzi",
+      "logo": "media/logo-fonzi.png"
+    },
+    {
+      "nome": "Produx Design",
+      "logo": "media/logo-produx.png"
     }
   ]
 }

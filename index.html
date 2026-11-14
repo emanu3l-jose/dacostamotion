@@ -518,6 +518,32 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 .ld-bar i { display: block; height: 100%; background: #f5f5f1; transform: scaleX(0); transform-origin: left; }
 .is-loading .hero-title .display .w > span, .is-loading .hero-title .label { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .pstack img { transition: none; } }
+/* fotos: nada de fundo cinza antes da imagem; toque troca a foto */
+.photo-card .reveal, .quem-photo .reveal { background: transparent; }
+.pstack { cursor: pointer; }
+/* equipe do projeto */
+.team { margin-top: 120px; }
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 24px; margin-top: 40px; }
+.tm { display: flex; flex-direction: column; gap: 16px; }
+.tm-pic { aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: var(--tint); display: grid; place-items: center; }
+.tm-pic img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1); transition: filter .5s, transform .8s cubic-bezier(.2,.7,.2,1); }
+.tm:hover .tm-pic img { filter: none; transform: scale(1.03); }
+.tm-pic .ini { font-size: clamp(32px, 4vw, 56px); letter-spacing: -.04em; color: var(--dim); }
+.tm-txt { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+.tm-txt .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.tm-txt a { color: var(--dim); font-size: 14px; }
+.tm-txt a:hover { color: var(--ink); }
+@media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; } }
+/* o que eu fiz */
+.did { display: flex; flex-direction: column; gap: 12px; }
+.did .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.did ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hair); }
+.did li { padding: 14px 0; border-bottom: 1px solid var(--hair); font-size: 16px; line-height: 24px; display: flex; gap: 16px; }
+.did li span { color: var(--dim); font-variant-numeric: tabular-nums; min-width: 24px; }
+/* celular em pé: o vídeo de abertura fica exatamente dentro da moldura */
+@media (orientation: portrait) {
+  .hero-video > video.fit, .hero-video > canvas.fit { inset: auto; object-fit: cover; }
+}
 .photo-card .m, .quem-photo .m { background: #fff; mix-blend-mode: difference; z-index: 3; }
 </style>
 
@@ -552,8 +578,10 @@ const STR = {
   brasil: { pt: "Brasil", en: "Brazil" },
   heroLabel: { pt: "Emanuel Costa · Motion designer", en: "Emanuel Costa · Motion designer" },
   /* palavras que trocam depois de "Motion for" */
-  rotWords: { pt: ["brands", "products", "SaaS", "startups", "apps"], en: ["brands", "products", "SaaS", "startups", "apps"] },
-  reelTl: { pt: "Demo reel", en: "Demo reel" },
+  rotWords: { pt: ["marcas", "produtos", "SaaS", "startups", "apps"], en: ["brands", "products", "SaaS", "startups", "apps"] },
+  reelTl: { pt: "Vídeo de apresentação", en: "Demo reel" },
+  sobreL: { pt: "Sobre", en: "About" }, framesL: { pt: "Quadros", en: "Frames" }, sempre: { pt: "Sempre em movimento", en: "Always moving" },
+  equipe: { pt: "Equipe", en: "Team" }, quemFez: { pt: "Quem fez o projeto", en: "Who made it" }, oQueFiz: { pt: "O que eu fiz", en: "What I did" },
   som: { pt: "Som", en: "Sound" }, mudo: { pt: "Mudo", en: "Mute" }, telaCheia: { pt: "Tela cheia", en: "Fullscreen" },
   aboutTxt: { pt: "Toda marca tem algo a dizer. Eu faço ela se mover: imagem e som no mesmo compasso, cada quadro com intenção, até o <b>motion virar emotion.</b>",
               en: "Every brand has something to say. I make it move: image and sound on the same beat, every frame with intent, until <b>motion becomes emotion.</b>" },
@@ -570,11 +598,12 @@ const STR = {
   topo: { pt: "Voltar ao topo ↑", en: "Back to top ↑" },
   /* sobre */
   quemLabel: { pt: "José Emanuel Silva Costa · Motion designer", en: "José Emanuel Silva Costa · Motion designer" },
-  quemH: { pt: "Motion designer para marcas. Transformo identidade em motion, e motion em emotion.", en: "Motion designer for brands. I turn identity into motion, and motion into emotion." },
-  quemBio: { pt: "Tudo começou em 2019, numa sala de aula, brincando com o que eu tinha nas mãos. A fotografia me ensinou a enxergar; o movimento me ensinou a sentir. Em 2021 animei meu primeiro logo e entendi na hora: era isso. Ver algo parado ganhar vida virou obsessão. Dos logos vieram os posts, os flyers animados e, quadro a quadro, o brand motion. Hoje trabalho lado a lado com estúdios e marcas pra transformar identidade em movimento, com imagem e som nascendo juntos. Porque marca boa não é só vista. É sentida.",
-             en: "It all started in 2019, in a classroom, playing with whatever I had in my hands. Photography taught me how to see; motion taught me how to feel. In 2021 I animated my first logo and knew right away: this was it. Watching something still come to life became an obsession. Logos led to posts, animated flyers and, frame by frame, to brand motion. Today I work side by side with studios and brands to turn identity into movement, with image and sound born together. Because a great brand isn't just seen. It's felt." },
-  oQueFaco: { pt: ["Logo animation", "Identidade visual em movimento", "Vídeos de marca e manifestos", "Motion para SaaS e produtos", "Sound design"],
-              en: ["Logo animation", "Motion identity", "Brand films and manifestos", "Motion for SaaS and products", "Sound design"] },
+  quemH: { pt: "Motion designer brasileiro. Faço filmes de marca, lançamentos de produto e manifestos, com animação e som saindo da mesma mão.",
+           en: "Brazilian motion designer. I make brand films, product launches and manifestos, with animation and sound coming from the same hands." },
+  quemBio: { pt: "Comecei em 2019 pela fotografia: aprendi a enquadrar antes de aprender a animar. Em 2021 animei meu primeiro logo e não parei mais. Hoje entro quando a identidade já está pronta e precisa ganhar vida, ao lado de estúdios de branding como Workflow Studio, Oddside e Produx Design. Foi assim no manifesto da Workflow, construído a partir de três círculos; no cavalo da CleverMove, animado quadro a quadro; no ciclo da Realure; e no lançamento da idea.ai, que dispensou locução. Em todos eles o som também é meu. Imagem e efeitos nascem na mesma timeline, então cada corte cai exatamente na batida.",
+             en: "I started in 2019 through photography: I learned to frame before I learned to animate. In 2021 I animated my first logo and never stopped. Today I step in when the identity is done and needs to come alive, alongside branding studios like Workflow Studio, Oddside and Produx Design. That's how it went with Workflow's manifesto, built out of three circles; CleverMove's knight, animated frame by frame; Realure's cycle; and idea.ai's launch, which needed no voice-over. In every one of them, the sound is mine too. Picture and effects are born on the same timeline, so every cut lands right on the beat." },
+  oQueFaco: { pt: ["Animação de logo", "Identidade visual em movimento", "Filmes de marca e manifestos", "Lançamentos de SaaS e produtos", "Sound design"],
+              en: ["Logo animation", "Motion identity", "Brand films and manifestos", "SaaS and product launches", "Sound design"] },
   whatIDo: { pt: "O que faço", en: "What I do" }, clients: { pt: "Clientes", en: "Clients" }, tools: { pt: "Ferramentas", en: "Tools" },
   principios: { pt: "Princípios", en: "Principles" }, guia: { pt: "O que guia cada animação", en: "What guides every animation" },
   /* contato */
@@ -585,7 +614,7 @@ const STR = {
   fMail: { pt: "E-mail", en: "Email" }, fMailPh: { pt: "voce@empresa.com", en: "you@company.com" },
   fMarca: { pt: "Marca / empresa", en: "Brand / company" }, fMarcaPh: { pt: "Nome da marca", en: "Brand name" },
   fTipo: { pt: "Tipo de projeto", en: "Project type" }, fOrc: { pt: "Orçamento", en: "Budget" },
-  tipos: { pt: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Outro"], en: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Other"] },
+  tipos: { pt: ["Animação de logo", "Identidade em movimento", "Motion para redes sociais", "Vídeo explicativo", "Outro"], en: ["Logo animation", "Motion identity", "Social media motion", "Explainer video", "Other"] },
   naoSei: { pt: "Ainda não sei", en: "Not sure yet" },
   msgObrig: { pt: "Conta a tua ideia na mensagem pra eu entender o projeto.", en: "Tell me your idea in the message so I can understand the project." },
   fMsg: { pt: "Mensagem", en: "Message" }, fMsgPh: { pt: "Conta a ideia, o prazo e onde o vídeo vai aparecer.", en: "Share the idea, the deadline and where the video will live." },
@@ -599,7 +628,7 @@ const STR = {
   /* projeto */
   voltar: { pt: "← Todos os trabalhos", en: "← All work" }, cliente: { pt: "Cliente", en: "Client" }, servicos: { pt: "Serviços", en: "Services" },
   duracao: { pt: "Duração", en: "Length" }, formato: { pt: "Formato", en: "Format" }, oProjeto: { pt: "O projeto", en: "The project" },
-  desafio: { pt: "Desafio", en: "Challenge" }, solucao: { pt: "Solução", en: "Solution" }, quadros: { pt: "Quadros do vídeo", en: "Stills from the film" },
+  desafio: { pt: "Desafio", en: "Challenge" }, solucao: { pt: "Solução", en: "Solution" }, quadros: { pt: "Cenas do filme", en: "Stills from the film" },
   direcao: { pt: "Direção e animação", en: "Direction and animation" }, outros: { pt: "Outros projetos", en: "Other projects" }, verTodos: { pt: "Ver todos →", en: "See all →" },
   /* trabalhos */
   verProjeto: { pt: "Ver projeto", en: "View project" }, hint: { pt: "Para o mouse por 2 s e a interface some", en: "Stop the mouse for 2 s and the interface fades" },
@@ -640,7 +669,7 @@ let PROJECTS = [
     solucao: { pt: "Uma apresentação em movimento da identidade (símbolo, papelaria, embalagem e loja) com transições que mantêm o mesmo passo firme do início ao fim.", en: "A moving presentation of the identity (symbol, stationery, packaging and store) with transitions that keep the same steady pace from start to finish." } },
   { id: 3, slug: "realure", nome: "Realure", cliente: "Felipe Rufino", duracao: "0:48",
     video: "media/realure.mp4", preview: "media/prev-realure.mp4", poster: "media/poster-realure.jpg",
-    frames: ["media/fr-som.mp4", "media/fr-grid.mp4", "media/fr-montagem.mp4"],
+    frames: ["media/re-5.mp4", "media/re-1.mp4", "media/re-2.mp4", "media/re-3.mp4", "media/re-4.mp4"],
     tipo: { pt: "Motion para app", en: "App motion" },
     servicos: { pt: "Motion de interface · Sound design", en: "UI motion · Sound design" },
     lede: { pt: "Realure é um app com uma ideia simples: viver mais leve. O vídeo apresenta a marca e a interface no mesmo ritmo tranquilo.",
@@ -677,7 +706,7 @@ const REDUCE = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)
 /* vídeo padrão: sempre mudo, em loop, tocando sozinho */
 /* no celular usa versões mais leves (720p) dos vídeos principais */
 const SMALL = Math.min(innerWidth, (screen && screen.width) || innerWidth) < 900;
-const HD = src => SMALL ? src.replace(/^media\/(reel|clevermove|realure)\.mp4$/, "media/$1-720.mp4") : src;
+const HD = src => SMALL ? src.replace(/^media\/(reel|clevermove|realure|idea|fonzi)\.mp4$/, "media/$1-720.mp4") : src;
 const V = (src, o = {}) => `<video src="${HD(src)}" muted webkit-playsinline ${o.poster ? `poster="${o.poster}"` : ""} autoplay muted loop playsinline preload="${o.preload || "metadata"}" ${o.id ? `id="${o.id}"` : ""}></video>`;
 
 /* =========== mídia do painel (IndexedDB, só neste navegador) =========== */
@@ -740,23 +769,34 @@ const fotoURL = () => MEDIA.foto ? MEDIA.foto.url : PHOTO_LIST[0];
 /* fotos do bloco: trocam sozinhas, cada uma subindo pela máscara */
 let PHOTO_LIST = ["media/emanuel.jpg", "media/foto-estudio.jpg", "media/foto-silhueta.jpg"];
 const PHOTOS = () => MEDIA.foto ? [MEDIA.foto.url, ...PHOTO_LIST.slice(1)] : PHOTO_LIST;
-const photoStack = () => `<div class="pstack">${PHOTOS().map((src, i) => `<img src="${src}" alt="Emanuel Costa" class="${i ? "" : "on"}" ${i ? 'loading="lazy"' : ""}>`).join("")}</div>`;
+const photoStack = () => `<div class="pstack">${PHOTOS().map((src, i) => `<img src="${src}" alt="Emanuel Costa" class="${i ? "" : "on"}" decoding="async" ${i ? "" : 'fetchpriority="high"'}>`).join("")}</div>`;
+const preloadPhotos = () => PHOTOS().forEach(src => { const im = new Image(); im.decoding = "async"; im.src = src; });
 function setupPhotoCycle() {
   const timers = $$(".pstack").map(st => {
     const ims = $$("img", st); if (ims.length < 2) return 0;
-    let i = 0;
-    return setInterval(() => {
-      const prev = ims[i]; i = (i + 1) % ims.length; const next = ims[i];
+    let i = 0, busy = false, t = 0;
+    const ready = im => im.complete && im.naturalWidth > 0;
+    const step = () => {
+      const n = (i + 1) % ims.length; const next = ims[n];
+      if (busy || !ready(next)) return;           // só troca quando a próxima foto já está carregada
+      busy = true; const prev = ims[i]; i = n;
       ims.forEach(im => im.classList.remove("top"));
       prev.classList.add("old"); next.classList.remove("old");
       next.classList.add("top"); void next.offsetWidth; next.classList.add("on");
-      setTimeout(() => { prev.classList.remove("on", "old"); }, 1300);
-    }, 3800);
+      setTimeout(() => { prev.classList.remove("on", "old"); busy = false; }, 1300);
+    };
+    st.addEventListener("click", () => { step(); clearInterval(t); t = setInterval(step, 3800); });
+    t = setInterval(step, 3800);
+    return () => clearInterval(t);
   });
-  onCleanup(() => timers.forEach(t => clearInterval(t)));
+  onCleanup(() => timers.forEach(fn => fn && fn()));
 }
 
 /* =========== relógio de Brasília =========== */
+document.addEventListener("loadedmetadata", e => {
+  const v = e.target, b = v && v.closest && v.closest(".frames .big");
+  if (b && v.videoWidth) { const r = v.videoWidth / v.videoHeight; if (Math.abs(r - 16 / 9) > .05) b.style.aspectRatio = String(r); }
+}, true);
 function brTime() {
   try { return new Intl.DateTimeFormat(L === "pt" ? "pt-BR" : "en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" }).format(new Date()); }
   catch (e) { return ""; }
@@ -791,16 +831,16 @@ function footerHTML() {
       <div class="col"><span class="fl">${S("redes")}</span><a href="${LINKS.instagram}" target="_blank" rel="noopener">Instagram ↗</a><a href="${LINKS.behance}" target="_blank" rel="noopener">Behance ↗</a><a href="${LINKS.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a><a href="${LINKS.whatsapp}" target="_blank" rel="noopener">WhatsApp ↗</a></div>
       <div class="col"><span class="fl">${S("navegacao")}</span>${["inicio", "trabalhos", "sobre", "contato"].map(k => `<a href="#${k}">${tx(STR.nav[k])}</a>`).join("")}</div>
     </div>
-    <div class="wrap foot-bar"><span>© 2026 DacostaStudio</span><span>${L === "pt" ? "Em motion" : "In motion"} · Always moving</span><button type="button" data-top>${S("topo")}</button></div>
+    <div class="wrap foot-bar"><span>© 2026 DacostaStudio</span><span>${S("sempre")}</span><button type="button" data-top>${S("topo")}</button></div>
   </footer>`;
 }
 
 /* =========== títulos =========== */
-const HERO_LINES = [["Motion", "for", "brands"], ["Always", "moving"]];
+const HERO_LINES = { pt: [["Motion", "para", "marcas"], ["Sempre", "em", "movimento"]], en: [["Motion", "for", "brands"], ["Always", "moving"]] };
 function heroWords() {
   let k = 0;
-  const word = w => w === "brands" ? `<span class="rot" id="rot"><span class="rot-w">${w}</span></span>` : w;
-  return HERO_LINES.map((ws, li) => `<span class="${li ? "fade" : ""}">${ws.map(w => `<span class="w"><span style="--i:${k++}">${word(w)}</span></span>`).join(" ")}</span>`).join("<br>");
+  const word = (w, li, wi) => !li && wi === 2 ? `<span class="rot" id="rot"><span class="rot-w">${w}</span></span>` : w;
+  return tx(HERO_LINES).map((ws, li) => `<span class="${li ? "fade" : ""}">${ws.map((w, wi) => `<span class="w"><span style="--i:${k++}">${word(w, li, wi)}</span></span>`).join(" ")}</span>`).join("<br>");
 }
 /* título em cascata: cada linha sobe quando aparece na tela */
 const casc = (lines, cls = "display", tag = "p", style = "") => `<${tag} class="${cls} casc" ${style ? `style="${style}"` : ""}>${lines.map((l, i) => `<span class="cz${i ? " fade" : ""}"><span style="--i:${i}">${l}</span></span>`).join("")}</${tag}>`;
@@ -838,7 +878,7 @@ function inicioHTML() {
     <section class="about wrap" id="about">
       <div class="about-in">
         <div class="about-text" data-rv>
-          <p class="label"><span class="dia"></span>About</p>
+          <p class="label"><span class="dia"></span>${S("sobreL")}</p>
           <p class="txt">${S("aboutTxt")}</p>
         </div>
         <div class="photo-card" data-mask>
@@ -897,10 +937,10 @@ function inicioHTML() {
 function sobreHTML() {
   /* princípios */
   const pr = [
-    ["01", "Concept", { pt: "O conceito nasce antes do primeiro movimento. Motion sem planejamento não ganha voz.", en: "The concept is born before the first movement. Motion without a plan never finds its voice." }],
-    ["02", "Craft", { pt: "O detalhe que ninguém percebe é o que faz todo mundo sentir.", en: "The detail no one notices is what makes everyone feel it." }],
-    ["03", "Value", { pt: "Uma marca parada é vista. Uma marca em movimento é lembrada.", en: "A still brand gets seen. A brand in motion gets remembered." }],
-    ["04", `<span class="dim">E</span>motion`, { pt: "Motion é a distância entre ver uma marca e sentir uma marca.", en: "Motion is the distance between seeing a brand and feeling it." }],
+    ["01", { pt: "Conceito", en: "Concept" }, { pt: "O conceito nasce antes do primeiro movimento. Motion sem planejamento não ganha voz.", en: "The concept is born before the first movement. Motion without a plan never finds its voice." }],
+    ["02", { pt: "Ofício", en: "Craft" }, { pt: "O detalhe que ninguém percebe é o que faz todo mundo sentir.", en: "The detail no one notices is what makes everyone feel it." }],
+    ["03", { pt: "Valor", en: "Value" }, { pt: "Uma marca parada é vista. Uma marca em movimento é lembrada.", en: "A still brand gets seen. A brand in motion gets remembered." }],
+    ["04", { pt: "Emoção", en: `<span class="dim">E</span>motion` }, { pt: "Motion é a distância entre ver uma marca e sentir uma marca.", en: "Motion is the distance between seeing a brand and feeling it." }],
   ];
   return `${headerHTML("sobre")}
   <main>
@@ -915,7 +955,7 @@ function sobreHTML() {
         <p class="bio" data-rv>${S("quemBio")}</p>
         <div class="lists">
           <div class="cell" data-rv><span class="fl">${S("whatIDo")}</span>${S("oQueFaco").map(t => `<span>${t}</span>`).join("")}</div>
-          <div class="cell" data-rv style="transition-delay:90ms"><span class="fl">${S("clients")}</span><span>Workflow Studio</span><span>CleverMove</span><span>Realure</span><span>Oddside</span></div>
+          <div class="cell" data-rv style="transition-delay:90ms"><span class="fl">${S("clients")}</span><span>Workflow Studio</span><span>Oddside</span><span>Produx Design</span><span>CleverMove</span><span>Realure</span><span>idea.ai</span><span>Fonzi</span></div>
           <div class="cell" data-rv style="transition-delay:180ms"><span class="fl">${S("tools")}</span><span>After Effects</span><span>Illustrator</span><span>Figma</span><span>Cinema 4D</span></div>
         </div>
       </div>
@@ -923,7 +963,7 @@ function sobreHTML() {
     <section class="wrap sec">
       <div class="sec-head" data-rv><p class="label"><span class="sq"></span>${S("principios")}</p><p class="sub">${S("guia")}</p></div>
       <div class="principles">
-        ${pr.map(([n, t, d], i) => `<div class="pr" data-rv="scale" style="transition-delay:${i * 100}ms"><span class="n">${n}</span><div class="orbit"></div><span class="t">${t}</span><span class="d">${tx(d)}</span></div>`).join("")}
+        ${pr.map(([n, t, d], i) => `<div class="pr" data-rv="scale" style="transition-delay:${i * 100}ms"><span class="n">${n}</span><div class="orbit"></div><span class="t">${tx(t)}</span><span class="d">${tx(d)}</span></div>`).join("")}
       </div>
     </section>
   </main>
@@ -970,16 +1010,23 @@ function contatoHTML() {
 }
 
 /* =========== PROJETO =========== */
-/* créditos: cada linha tem função e nome; @usuario vira link pro Instagram */
-function creditsHTML(p) {
+/* equipe: foto (ou iniciais), função, nome e @ do Instagram */
+function teamHTML(p) {
   const cr = p.creditos && p.creditos.length ? p.creditos
-    : [{ funcao: { pt: "Direção e animação", en: "Direction and animation" }, nome: "Emanuel Costa" }, { funcao: { pt: "Cliente", en: "Client" }, nome: p.cliente }];
-  const who = n => {
-    const m = /@([\w.]+)/.exec(n || "");
-    return m ? esc(n).replace("@" + m[1], `<a href="https://www.instagram.com/${m[1]}/" target="_blank" rel="noopener">@${m[1]}</a>`) : esc(n);
-  };
-  return cr.map(c => `<div><span class="fl">${esc(tx(c.funcao))}</span><span>${who(c.nome)}</span></div>`).join("");
+    : [{ funcao: { pt: "Motion design", en: "Motion design" }, nome: "Emanuel Costa · @dacostamotion", foto: "media/eq-emanuel.jpg" }];
+  return cr.map((c, k) => {
+    const raw = String(c.nome || "");
+    const m = /@([\w.]+)/.exec(raw);
+    const name = raw.replace(/·?\s*@[\w.]+/, "").replace(/\s*·\s*$/, "").trim() || (m ? "@" + m[1] : raw);
+    const ini = name.replace(/^@/, "").split(/[\s.]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+    const pic = c.foto ? `<img src="${esc(c.foto)}" alt="${esc(name)}" loading="lazy">` : `<span class="ini">${esc(ini)}</span>`;
+    const handle = m && name !== "@" + m[1] ? `<a href="https://www.instagram.com/${m[1]}/" target="_blank" rel="noopener">@${m[1]}</a>` : "";
+    const nm = m && name === "@" + m[1] ? `<a href="https://www.instagram.com/${m[1]}/" target="_blank" rel="noopener" style="color:inherit;font-size:16px">${esc(name)}</a>` : esc(name);
+    return `<div class="tm" data-rv style="transition-delay:${(k % 4) * 80}ms"><div class="tm-pic">${pic}</div><div class="tm-txt"><span class="fl">${esc(tx(c.funcao))}</span><span>${nm}</span>${handle}</div></div>`;
+  }).join("");
 }
+const didHTML = p => (p.entregas || []).length
+  ? `<div class="did" data-rv><span class="fl">${S("oQueFiz")}</span><ul>${p.entregas.map((e, k) => `<li><span>${pad(k + 1)}</span>${esc(tx(e))}</li>`).join("")}</ul></div>` : "";
 function projetoHTML(id) {
   const p = PROJECTS.find(x => x.id === id) || PROJECTS[0];
   const i = PROJECTS.indexOf(p);
@@ -1012,14 +1059,16 @@ function projetoHTML(id) {
       <div class="copy">
         <p class="h2" data-rv>${esc(tx(p.lede))}</p>
         <div class="cs" data-rv><div><span class="fl">${S("desafio")}</span>${esc(tx(p.desafio))}</div><div><span class="fl">${S("solucao")}</span>${esc(tx(p.solucao))}</div></div>
+        ${didHTML(p)}
       </div>
     </div>
     <div class="frames" ${(p.frames || []).length ? "" : "hidden"}>
-      <div class="sec-head" style="margin:0"><p class="label"><span class="sq"></span>Frames</p><p class="sub">${S("quadros")}</p></div>
+      <div class="sec-head" style="margin:0"><p class="label"><span class="sq"></span>${S("framesL")}</p><p class="sub">${S("quadros")}</p></div>
       ${rows}
     </div>
-    <div class="credits">
-      ${creditsHTML(p)}
+    <div class="team">
+      <div class="sec-head" style="margin:0" data-rv><p class="label"><span class="sq"></span>${S("equipe")}</p><p class="sub">${S("quemFez")}</p></div>
+      <div class="team-grid">${teamHTML(p)}</div>
     </div>
     <div class="outros">
       <div class="head"><p class="label"><span class="sq"></span>${S("outros")}</p><a class="label" href="#trabalhos">${S("verTodos")}</a></div>
@@ -1117,10 +1166,23 @@ function scrollFx() {
     const e = ease(clamp(p / .62));
     const gut = innerWidth < 900 ? 20 : 60;
     const t0 = ht.offsetTop + ht.offsetHeight + (innerWidth < 900 ? 36 : 48);
-    hv.style.setProperty("--t", lerp(Math.min(t0, vh * .62), 0, e) + "px");
-    hv.style.setProperty("--s", lerp(gut, 0, e) + "px");
-    hv.style.setProperty("--b", lerp(innerWidth < 900 ? 20 : 24, 0, e) + "px");
-    hv.style.setProperty("--r", lerp(6, 0, e) + "px");
+    const W = innerWidth, mv = $$(":scope > video, :scope > canvas", hv);
+    if (vh > W) {
+      /* em pé: a moldura começa com o formato exato do vídeo (16:9, sem sobra) e abre pra tela toda;
+         o vídeo acompanha e termina ocupando a largura inteira, no centro */
+      const w0 = W - gut * 2, h0 = w0 * 9 / 16, h1 = W * 9 / 16;
+      const top0 = Math.min(t0, vh - h0 - 20), side = lerp(gut, 0, e);
+      hv.style.setProperty("--t", lerp(top0, 0, e) + "px"); hv.style.setProperty("--s", side + "px");
+      hv.style.setProperty("--b", lerp(Math.max(0, vh - top0 - h0), 0, e) + "px"); hv.style.setProperty("--r", lerp(6, 0, e) + "px");
+      const vt = lerp(top0, (vh - h1) / 2, e), h = lerp(h0, h1, e);
+      mv.forEach(m => { m.classList.add("fit"); Object.assign(m.style, { top: vt + "px", left: side + "px", width: (W - side * 2) + "px", height: h + "px" }); });
+    } else {
+      mv.forEach(m => { if (m.classList.contains("fit")) { m.classList.remove("fit"); m.style.top = m.style.left = m.style.width = m.style.height = ""; } });
+      hv.style.setProperty("--t", lerp(Math.min(t0, vh * .62), 0, e) + "px");
+      hv.style.setProperty("--s", lerp(gut, 0, e) + "px");
+      hv.style.setProperty("--b", lerp(innerWidth < 900 ? 20 : 24, 0, e) + "px");
+      hv.style.setProperty("--r", lerp(6, 0, e) + "px");
+    }
     ht.style.transform = `translateY(${-e * 40}px)`;
     const ws = $$(".display .w > span", ht), lb = $(".label", ht);
     if (lb) lb.style.opacity = String(clamp(1 - e * 4));
@@ -1168,7 +1230,10 @@ function route(keepScroll) {
   else {
     $$('[data-mask="intro"] .reveal').forEach(rev => {
       rev.style.transition = REDUCE ? "none" : "clip-path 1.4s cubic-bezier(.7,0,.2,1) .15s";
-      requestAnimationFrame(() => requestAnimationFrame(() => rev.style.clipPath = "inset(0 0 0 0)"));
+      const go = () => requestAnimationFrame(() => requestAnimationFrame(() => rev.style.clipPath = "inset(0 0 0 0)"));
+      const im = $("img", rev);                    // a foto sobe já carregada
+      if (!im || (im.complete && im.naturalWidth)) go();
+      else { im.addEventListener("load", go, { once: true }); im.addEventListener("error", go, { once: true }); setTimeout(go, 2500); }
     });
     setupFootCycle();
     setupPhotoCycle();
@@ -1488,12 +1553,14 @@ async function loadContent() {
       frames: (x.frames || []).map(f => f && (f.video || f)).filter(Boolean), dark: !!x.rodape_escuro,
       tipo: x.tipo || "", servicos: x.servicos || "", lede: x.resumo || "", desafio: x.desafio || "", solucao: x.solucao || "",
       creditos: (x.creditos || []).filter(c => c && c.nome),
+      entregas: (x.entregas || []).filter(e => e && (e.pt || e.en)),
     }));
     SLOTS = SLOTS.filter(s => s.grp !== "Projetos").concat(PROJECTS.map(p => ({ grp: "Projetos", key: "p" + p.id, nome: `${pad(p.id)} · ${p.nome}`, accept: "video/*,image/*" })));
   }
   if (dp && Array.isArray(dp.depoimentos) && dp.depoimentos.length) TESTIMONIALS = dp.depoimentos.map(d => ({ q: d.texto || "", n: d.nome || "", r: d.cargo || "" }));
   if (mc && Array.isArray(mc.marcas) && mc.marcas.length) LOGOS = mc.marcas.filter(m => m.logo).map(m => [m.logo, m.nome || ""]);
   if (ft && Array.isArray(ft.fotos) && ft.fotos.length) PHOTO_LIST = ft.fotos.map(f => f.foto || f).filter(Boolean);
+  preloadPhotos();
   if (gr && gr.video_abertura) GERAL = { ...GERAL, ...gr };
 }
 
