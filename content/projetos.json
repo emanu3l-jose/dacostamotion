@@ -1,295 +1,6 @@
 {
   "projetos": [
     {
-      "nome": "Work From Within",
-      "cliente": "Workflow Studio",
-      "duracao": "0:40",
-      "video": "media/reel.mp4",
-      "preview": "media/prev-workflow.mp4",
-      "capa": "media/poster-workflow.jpg",
-      "frames": [
-        {
-          "video": "media/ws-logo.mp4"
-        },
-        {
-          "video": "media/ws-2.mp4"
-        },
-        {
-          "video": "media/ws-3.mp4"
-        },
-        {
-          "video": "media/ws-4.mp4"
-        },
-        {
-          "video": "media/ws-5.mp4"
-        }
-      ],
-      "rodape_escuro": true,
-      "tipo": {
-        "pt": "Motion de marca · Manifesto",
-        "en": "Brand motion · Manifesto"
-      },
-      "servicos": {
-        "pt": "Animação · Sound design",
-        "en": "Animation · Sound design"
-      },
-      "resumo": {
-        "pt": "“Work From Within” é o manifesto da Workflow Studio em movimento. A missão era clara: um filme que prendesse o olhar desde o primeiro segundo. A resposta já estava no próprio símbolo, três círculos.",
-        "en": "“Work From Within” is Workflow Studio's manifesto in motion. The brief was clear: a film that grabs attention from the very first second. The answer was already in the symbol itself, three circles."
-      },
-      "desafio": {
-        "pt": "Fazer um manifesto impossível de pular. Cada segundo precisava segurar a atenção sem perder a elegância de um estúdio de branding.",
-        "en": "Make a manifesto impossible to skip. Every second had to hold attention without losing the elegance of a branding studio."
-      },
-      "solucao": {
-        "pt": "Os círculos viraram o conceito visual do filme inteiro: se encontram, se separam e reorganizam a cena, sempre no tempo da música. Animação e efeitos sonoros foram construídos juntos, então cada movimento tem um som e cada batida tem uma imagem.",
-        "en": "The circles became the visual concept of the whole film: they meet, split apart and rebuild the scene, always on the music's beat. Animation and sound effects were built together, so every movement has a sound and every beat has an image."
-      },
-      "creditos": [
-        {
-          "funcao": {
-            "pt": "Direção criativa e de marca",
-            "en": "Brand & creative direction"
-          },
-          "nome": "Stephen Jennings · @madebyworkflow",
-          "foto": "media/eq-stephen.jpg"
-        },
-        {
-          "funcao": {
-            "pt": "Motion design e efeitos sonoros",
-            "en": "Motion design & sound effects"
-          },
-          "nome": "Emanuel Costa · @dacostamotion",
-          "foto": "media/eq-emanuel.jpg"
-        }
-      ],
-      "entregas": [
-        {
-          "pt": "Conceito visual construído a partir dos três círculos do símbolo",
-          "en": "Visual concept built from the symbol's three circles"
-        },
-        {
-          "pt": "Animação completa do manifesto “Work From Within”",
-          "en": "Full animation of the “Work From Within” manifesto"
-        },
-        {
-          "pt": "Cada movimento sincronizado com a música",
-          "en": "Every movement synced to the music"
-        },
-        {
-          "pt": "Efeitos sonoros criados sob medida pra cada cena",
-          "en": "Custom sound effects for every scene"
-        }
-      ]
-    },
-    {
-      "nome": "CleverMove",
-      "cliente": "CleverMove",
-      "duracao": "0:21",
-      "video": "media/clevermove.mp4",
-      "preview": "media/prev-clevermove.mp4",
-      "capa": "media/poster-clevermove.jpg",
-      "frames": [
-        {
-          "video": "media/cm-1.mp4"
-        },
-        {
-          "video": "media/cm-2.mp4"
-        },
-        {
-          "video": "media/cm-3.mp4"
-        },
-        {
-          "video": "media/cm-4.mp4"
-        }
-      ],
-      "rodape_escuro": false,
-      "tipo": {
-        "pt": "Motion de marca · Apresentação",
-        "en": "Brand motion · Showreel"
-      },
-      "servicos": {
-        "pt": "Motion design · Efeitos sonoros",
-        "en": "Motion design · Sound effects"
-      },
-      "resumo": {
-        "pt": "Um showreel pra apresentar o universo visual da CleverMove, criado com o estúdio Oddside. A CleverMove é uma das peças de um ecossistema maior, e o seu símbolo é o cavalo do xadrez: estratégia em cada jogada.",
-        "en": "A showreel introducing CleverMove's visual world, made with Oddside studio. CleverMove is one piece of a larger ecosystem, and its symbol is the chess knight: strategy in every move."
-      },
-      "desafio": {
-        "pt": "Mostrar a identidade inteira num só filme e fazer o cavalo carregar a ideia de estratégia sem precisar de uma palavra.",
-        "en": "Show the whole identity in a single film and let the knight carry the idea of strategy without a single word."
-      },
-      "solucao": {
-        "pt": "O cavalo foi animado frame a frame: corre pela tela e se encaixa no logotipo CleverMove. Cada corte, cada passo e cada aplicação da marca cai no tempo exato da música, como uma jogada bem calculada.",
-        "en": "The knight was animated frame by frame: it runs across the screen and locks into the CleverMove logotype. Every cut, every stride and every brand application lands right on the music's beat, like a well-calculated move."
-      },
-      "creditos": [
-        {
-          "funcao": {
-            "pt": "Estúdio",
-            "en": "Studio"
-          },
-          "nome": "Oddside"
-        },
-        {
-          "funcao": {
-            "pt": "Direção criativa e estratégia",
-            "en": "Creative direction & strategy"
-          },
-          "nome": "Felipe Rufino · @ofeliperufino",
-          "foto": "media/eq-felipe.jpg"
-        },
-        {
-          "funcao": {
-            "pt": "Logotipo",
-            "en": "Logotype"
-          },
-          "nome": "@brenowork"
-        },
-        {
-          "funcao": {
-            "pt": "Motion design e efeitos sonoros",
-            "en": "Motion design & sound effects"
-          },
-          "nome": "Emanuel Costa · @dacostamotion",
-          "foto": "media/eq-emanuel.jpg"
-        }
-      ],
-      "entregas": [
-        {
-          "pt": "Cavalo do xadrez animado quadro a quadro",
-          "en": "Chess knight animated frame by frame"
-        },
-        {
-          "pt": "Transição do cavalo para o logotipo CleverMove",
-          "en": "Transition from the knight into the CleverMove logotype"
-        },
-        {
-          "pt": "Apresentação das aplicações da marca em movimento",
-          "en": "The brand's applications presented in motion"
-        },
-        {
-          "pt": "Cortes e passos no tempo exato da música",
-          "en": "Cuts and strides timed exactly to the music"
-        },
-        {
-          "pt": "Efeitos sonoros",
-          "en": "Sound effects"
-        }
-      ]
-    },
-    {
-      "nome": "Realure",
-      "cliente": "Realure",
-      "duracao": "1:32",
-      "video": "media/realure.mp4",
-      "preview": "media/prev-realure.mp4",
-      "capa": "media/poster-realure.jpg",
-      "frames": [
-        {
-          "video": "media/re-5.mp4"
-        },
-        {
-          "video": "media/re-1.mp4"
-        },
-        {
-          "video": "media/re-2.mp4"
-        },
-        {
-          "video": "media/re-3.mp4"
-        },
-        {
-          "video": "media/re-4.mp4"
-        },
-        {
-          "video": "media/re-6.mp4"
-        },
-        {
-          "video": "media/re-10.mp4"
-        },
-        {
-          "video": "media/re-7.mp4"
-        },
-        {
-          "video": "media/re-8.mp4"
-        },
-        {
-          "video": "media/re-9.mp4"
-        },
-        {
-          "video": "media/re-11.mp4"
-        },
-        {
-          "video": "media/re-12.mp4"
-        },
-        {
-          "video": "media/re-13.mp4"
-        }
-      ],
-      "rodape_escuro": false,
-      "tipo": {
-        "pt": "Motion de marca · Manifesto",
-        "en": "Brand motion · Manifesto"
-      },
-      "servicos": {
-        "pt": "Motion design · Sound design",
-        "en": "Motion design · Sound design"
-      },
-      "resumo": {
-        "pt": "A convite de Felipe Rufino, transformei o manifesto da Realure numa peça viva. Para a marca, identidade não é algo fixo: é um ciclo hormonal, neurológico e comportamental que, quando se realinha, traz a mulher de volta pra si mesma.",
-        "en": "Invited by Felipe Rufino, I turned Realure's manifesto into a living piece. For the brand, identity isn't fixed: it's a cycle (hormonal, neurological, behavioural) that, once realigned, brings a woman back to herself."
-      },
-      "desafio": {
-        "pt": "Fazer esse ciclo ser sentido no vídeo inteiro. Cada textura, movimento e elemento gráfico precisava respirar, orbitar e se reorganizar, fase por fase.",
-        "en": "Make that cycle felt across the whole film. Every texture, movement and graphic element had to breathe, orbit and rearrange itself, phase by phase."
-      },
-      "solucao": {
-        "pt": "No som, em vez de uma trilha pronta com efeitos separados, desmontamos a própria música (bateria, baixo e piano) e tiramos cada SFX de dentro das camadas. Todo o universo sonoro do filme nasceu de um único som.",
-        "en": "For the sound, instead of a stock track with separate effects, we took the music itself apart (drums, bass and piano) and pulled every SFX out of its layers. The film's entire sound world was born from a single sound."
-      },
-      "creditos": [
-        {
-          "funcao": {
-            "pt": "Direção criativa",
-            "en": "Creative direction"
-          },
-          "nome": "Felipe Rufino · @ofeliperufino",
-          "foto": "media/eq-felipe.jpg"
-        },
-        {
-          "funcao": {
-            "pt": "Motion design e sound design",
-            "en": "Motion & sound design"
-          },
-          "nome": "Emanuel Costa · @dacostamotion",
-          "foto": "media/eq-emanuel.jpg"
-        }
-      ],
-      "entregas": [
-        {
-          "pt": "Animação do manifesto, fase por fase do ciclo",
-          "en": "Manifesto animation, phase by phase of the cycle"
-        },
-        {
-          "pt": "Colagens, texturas e ilustrações científicas em movimento",
-          "en": "Collages, textures and scientific illustrations in motion"
-        },
-        {
-          "pt": "Aplicações da marca: app, produto e embalagem",
-          "en": "Brand applications: app, product and packaging"
-        },
-        {
-          "pt": "Símbolo da marca em versões 2D e 3D",
-          "en": "Brand symbol in 2D and 3D versions"
-        },
-        {
-          "pt": "Sound design inteiro tirado de uma única música",
-          "en": "Entire sound design pulled from a single song"
-        }
-      ]
-    },
-    {
       "nome": "idea.ai",
       "cliente": "idea.ai",
       "duracao": "0:53",
@@ -368,19 +79,129 @@
       "creditos": [
         {
           "funcao": {
-            "pt": "Rebranding e direção",
-            "en": "Rebrand & direction"
-          },
-          "nome": "Produx Design",
-          "foto": "media/eq-produx.jpg"
-        },
-        {
-          "funcao": {
             "pt": "Storyboard, motion e sound design",
             "en": "Storyboard, motion & sound design"
           },
           "nome": "Emanuel Costa · @dacostamotion",
           "foto": "media/eq-emanuel.jpg"
+        },
+        {
+          "funcao": {
+            "pt": "Rebranding e direção",
+            "en": "Rebrand & direction"
+          },
+          "nome": "Produx Design · @socoloff_alex",
+          "foto": "media/eq-produx.jpg"
+        }
+      ]
+    },
+    {
+      "nome": "Realure",
+      "cliente": "Realure",
+      "duracao": "1:32",
+      "video": "media/realure.mp4",
+      "preview": "media/prev-realure.mp4",
+      "capa": "media/poster-realure.jpg",
+      "frames": [
+        {
+          "video": "media/re-5.mp4"
+        },
+        {
+          "video": "media/re-1.mp4"
+        },
+        {
+          "video": "media/re-2.mp4"
+        },
+        {
+          "video": "media/re-3.mp4"
+        },
+        {
+          "video": "media/re-4.mp4"
+        },
+        {
+          "video": "media/re-6.mp4"
+        },
+        {
+          "video": "media/re-10.mp4"
+        },
+        {
+          "video": "media/re-7.mp4"
+        },
+        {
+          "video": "media/re-8.mp4"
+        },
+        {
+          "video": "media/re-9.mp4"
+        },
+        {
+          "video": "media/re-11.mp4"
+        },
+        {
+          "video": "media/re-12.mp4"
+        },
+        {
+          "video": "media/re-13.mp4"
+        }
+      ],
+      "rodape_escuro": false,
+      "tipo": {
+        "pt": "Motion de marca · Manifesto",
+        "en": "Brand motion · Manifesto"
+      },
+      "servicos": {
+        "pt": "Motion design · Sound design",
+        "en": "Motion design · Sound design"
+      },
+      "resumo": {
+        "pt": "A convite de Felipe Rufino, transformei o manifesto da Realure numa peça viva. Para a marca, identidade não é algo fixo: é um ciclo hormonal, neurológico e comportamental que, quando se realinha, traz a mulher de volta pra si mesma.",
+        "en": "Invited by Felipe Rufino, I turned Realure's manifesto into a living piece. For the brand, identity isn't fixed: it's a cycle (hormonal, neurological, behavioural) that, once realigned, brings a woman back to herself."
+      },
+      "desafio": {
+        "pt": "Fazer esse ciclo ser sentido no vídeo inteiro. Cada textura, movimento e elemento gráfico precisava respirar, orbitar e se reorganizar, fase por fase.",
+        "en": "Make that cycle felt across the whole film. Every texture, movement and graphic element had to breathe, orbit and rearrange itself, phase by phase."
+      },
+      "solucao": {
+        "pt": "No som, em vez de uma trilha pronta com efeitos separados, desmontamos a própria música (bateria, baixo e piano) e tiramos cada SFX de dentro das camadas. Todo o universo sonoro do filme nasceu de um único som.",
+        "en": "For the sound, instead of a stock track with separate effects, we took the music itself apart (drums, bass and piano) and pulled every SFX out of its layers. The film's entire sound world was born from a single sound."
+      },
+      "creditos": [
+        {
+          "funcao": {
+            "pt": "Motion design e sound design",
+            "en": "Motion & sound design"
+          },
+          "nome": "Emanuel Costa · @dacostamotion",
+          "foto": "media/eq-emanuel.jpg"
+        },
+        {
+          "funcao": {
+            "pt": "Direção criativa",
+            "en": "Creative direction"
+          },
+          "nome": "Felipe Rufino · @ofeliperufino",
+          "foto": "media/eq-felipe.jpg"
+        }
+      ],
+      "entregas": [
+        {
+          "pt": "Animação do manifesto, fase por fase do ciclo",
+          "en": "Manifesto animation, phase by phase of the cycle"
+        },
+        {
+          "pt": "Colagens, texturas e ilustrações científicas em movimento",
+          "en": "Collages, textures and scientific illustrations in motion"
+        },
+        {
+          "pt": "Aplicações da marca: app, produto e embalagem",
+          "en": "Brand applications: app, product and packaging"
+        },
+        {
+          "pt": "Símbolo da marca em versões 2D e 3D",
+          "en": "Brand symbol in 2D and 3D versions"
+        },
+        {
+          "pt": "Sound design inteiro tirado de uma única música",
+          "en": "Entire sound design pulled from a single song"
         }
       ]
     },
@@ -467,6 +288,185 @@
           },
           "nome": "Emanuel Costa · @dacostamotion",
           "foto": "media/eq-emanuel.jpg"
+        }
+      ]
+    },
+    {
+      "nome": "CleverMove",
+      "cliente": "CleverMove",
+      "duracao": "0:21",
+      "video": "media/clevermove.mp4",
+      "preview": "media/prev-clevermove.mp4",
+      "capa": "media/poster-clevermove.jpg",
+      "frames": [
+        {
+          "video": "media/cm-1.mp4"
+        },
+        {
+          "video": "media/cm-2.mp4"
+        },
+        {
+          "video": "media/cm-3.mp4"
+        },
+        {
+          "video": "media/cm-4.mp4"
+        }
+      ],
+      "rodape_escuro": false,
+      "tipo": {
+        "pt": "Motion de marca · Apresentação",
+        "en": "Brand motion · Showreel"
+      },
+      "servicos": {
+        "pt": "Motion design · Efeitos sonoros",
+        "en": "Motion design · Sound effects"
+      },
+      "resumo": {
+        "pt": "Um showreel pra apresentar o universo visual da CleverMove, criado com o estúdio Oddside. A CleverMove é uma das peças de um ecossistema maior, e o seu símbolo é o cavalo do xadrez: estratégia em cada jogada.",
+        "en": "A showreel introducing CleverMove's visual world, made with Oddside studio. CleverMove is one piece of a larger ecosystem, and its symbol is the chess knight: strategy in every move."
+      },
+      "desafio": {
+        "pt": "Mostrar a identidade inteira num só filme e fazer o cavalo carregar a ideia de estratégia sem precisar de uma palavra.",
+        "en": "Show the whole identity in a single film and let the knight carry the idea of strategy without a single word."
+      },
+      "solucao": {
+        "pt": "O cavalo foi animado frame a frame: corre pela tela e se encaixa no logotipo CleverMove. Cada corte, cada passo e cada aplicação da marca cai no tempo exato da música, como uma jogada bem calculada.",
+        "en": "The knight was animated frame by frame: it runs across the screen and locks into the CleverMove logotype. Every cut, every stride and every brand application lands right on the music's beat, like a well-calculated move."
+      },
+      "creditos": [
+        {
+          "funcao": {
+            "pt": "Motion design e efeitos sonoros",
+            "en": "Motion design & sound effects"
+          },
+          "nome": "Emanuel Costa · @dacostamotion",
+          "foto": "media/eq-emanuel.jpg"
+        },
+        {
+          "funcao": {
+            "pt": "Estúdio",
+            "en": "Studio"
+          },
+          "nome": "Oddside"
+        },
+        {
+          "funcao": {
+            "pt": "Direção criativa e estratégia",
+            "en": "Creative direction & strategy"
+          },
+          "nome": "Felipe Rufino · @ofeliperufino",
+          "foto": "media/eq-felipe.jpg"
+        },
+        {
+          "funcao": {
+            "pt": "Logotipo",
+            "en": "Logotype"
+          },
+          "nome": "@brenowork"
+        }
+      ],
+      "entregas": [
+        {
+          "pt": "Cavalo do xadrez animado quadro a quadro",
+          "en": "Chess knight animated frame by frame"
+        },
+        {
+          "pt": "Transição do cavalo para o logotipo CleverMove",
+          "en": "Transition from the knight into the CleverMove logotype"
+        },
+        {
+          "pt": "Apresentação das aplicações da marca em movimento",
+          "en": "The brand's applications presented in motion"
+        },
+        {
+          "pt": "Cortes e passos no tempo exato da música",
+          "en": "Cuts and strides timed exactly to the music"
+        },
+        {
+          "pt": "Efeitos sonoros",
+          "en": "Sound effects"
+        }
+      ]
+    },
+    {
+      "nome": "Work From Within",
+      "cliente": "Workflow Studio",
+      "duracao": "0:40",
+      "video": "media/reel.mp4",
+      "preview": "media/prev-workflow.mp4",
+      "capa": "media/poster-workflow.jpg",
+      "frames": [
+        {
+          "video": "media/ws-logo.mp4"
+        },
+        {
+          "video": "media/ws-2.mp4"
+        },
+        {
+          "video": "media/ws-3.mp4"
+        },
+        {
+          "video": "media/ws-4.mp4"
+        },
+        {
+          "video": "media/ws-5.mp4"
+        }
+      ],
+      "rodape_escuro": true,
+      "tipo": {
+        "pt": "Motion de marca · Manifesto",
+        "en": "Brand motion · Manifesto"
+      },
+      "servicos": {
+        "pt": "Animação · Sound design",
+        "en": "Animation · Sound design"
+      },
+      "resumo": {
+        "pt": "“Work From Within” é o manifesto da Workflow Studio em movimento. A missão era clara: um filme que prendesse o olhar desde o primeiro segundo. A resposta já estava no próprio símbolo, três círculos.",
+        "en": "“Work From Within” is Workflow Studio's manifesto in motion. The brief was clear: a film that grabs attention from the very first second. The answer was already in the symbol itself, three circles."
+      },
+      "desafio": {
+        "pt": "Fazer um manifesto impossível de pular. Cada segundo precisava segurar a atenção sem perder a elegância de um estúdio de branding.",
+        "en": "Make a manifesto impossible to skip. Every second had to hold attention without losing the elegance of a branding studio."
+      },
+      "solucao": {
+        "pt": "Os círculos viraram o conceito visual do filme inteiro: se encontram, se separam e reorganizam a cena, sempre no tempo da música. Animação e efeitos sonoros foram construídos juntos, então cada movimento tem um som e cada batida tem uma imagem.",
+        "en": "The circles became the visual concept of the whole film: they meet, split apart and rebuild the scene, always on the music's beat. Animation and sound effects were built together, so every movement has a sound and every beat has an image."
+      },
+      "creditos": [
+        {
+          "funcao": {
+            "pt": "Motion design e efeitos sonoros",
+            "en": "Motion design & sound effects"
+          },
+          "nome": "Emanuel Costa · @dacostamotion",
+          "foto": "media/eq-emanuel.jpg"
+        },
+        {
+          "funcao": {
+            "pt": "Direção criativa e de marca",
+            "en": "Brand & creative direction"
+          },
+          "nome": "Stephen Jennings · @madebyworkflow",
+          "foto": "media/eq-stephen.jpg"
+        }
+      ],
+      "entregas": [
+        {
+          "pt": "Conceito visual construído a partir dos três círculos do símbolo",
+          "en": "Visual concept built from the symbol's three circles"
+        },
+        {
+          "pt": "Animação completa do manifesto “Work From Within”",
+          "en": "Full animation of the “Work From Within” manifesto"
+        },
+        {
+          "pt": "Cada movimento sincronizado com a música",
+          "en": "Every movement synced to the music"
+        },
+        {
+          "pt": "Efeitos sonoros criados sob medida pra cada cena",
+          "en": "Custom sound effects for every scene"
         }
       ]
     }
