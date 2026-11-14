@@ -3,6 +3,7 @@
 <meta charset="utf-8">
 <script>document.documentElement.classList.add("is-loading")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<base href="/">
 <title>DacostaStudio</title>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
@@ -832,8 +833,8 @@ const langHTML = () => `<div class="lang" role="group" aria-label="${S("idioma")
 function headerHTML(active, extra = "") {
   const items = ["inicio", "trabalhos", "sobre", "contato"];
   return `<header class="site-header ${extra}" id="siteHeader"><div class="wrap row">
-    <div class="left"><a class="brand" href="#inicio">DacostaStudio</a><span class="local"><span>${S("brasil")}</span><span class="t2 js-clock">${brTime()}</span></span></div>
-    <nav class="site-nav">${items.map(k => `<a href="#${k}" class="${k === active ? "active" : ""}">${tx(STR.nav[k])}</a>`).join("")}</nav>
+    <div class="left"><a class="brand" href="/">DacostaStudio</a><span class="local"><span>${S("brasil")}</span><span class="t2 js-clock">${brTime()}</span></span></div>
+    <nav class="site-nav">${items.map(k => `<a href="${k === "inicio" ? "/" : "/" + k}" class="${k === active ? "active" : ""}">${tx(STR.nav[k])}</a>`).join("")}</nav>
     <div class="right"><div class="socials"><a href="${LINKS.instagram}" target="_blank" rel="noopener">Instagram</a><a href="${LINKS.behance}" target="_blank" rel="noopener">Behance</a></div>${langHTML()}</div>
   </div></header>`;
 }
@@ -848,12 +849,12 @@ function footerHTML() {
       <span class="tag l"><i></i>DacostaStudio</span><span class="tag r" id="footBrand">${MEDIA.rodape ? "" : esc(PROJECTS[0].nome)}</span>
       <p class="label"><span class="sq"></span>${S("footLabel")}</p>
       ${casc([S("footD1"), S("footD2")])}
-      <div class="acts"><a class="b1" href="#contato">${S("entrar")}</a><a class="b2" href="#trabalhos">${S("verTrab")}</a></div>
+      <div class="acts"><a class="b1" href="/contato">${S("entrar")}</a><a class="b2" href="/trabalhos">${S("verTrab")}</a></div>
     </div>
     <div class="wrap foot-cols">
       <div class="col main"><span class="fl">${S("contatoL")}</span><a class="mail" href="mailto:${LINKS.email}">${LINKS.email}</a><span class="item" style="font-size:15px">${S("respondo")}</span></div>
       <div class="col"><span class="fl">${S("redes")}</span><a href="${LINKS.instagram}" target="_blank" rel="noopener">Instagram ↗</a><a href="${LINKS.behance}" target="_blank" rel="noopener">Behance ↗</a><a href="${LINKS.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a><a href="${LINKS.whatsapp}" target="_blank" rel="noopener">WhatsApp ↗</a></div>
-      <div class="col"><span class="fl">${S("navegacao")}</span>${["inicio", "trabalhos", "sobre", "contato"].map(k => `<a href="#${k}">${tx(STR.nav[k])}</a>`).join("")}</div>
+      <div class="col"><span class="fl">${S("navegacao")}</span>${["inicio", "trabalhos", "sobre", "contato"].map(k => `<a href="${k === "inicio" ? "/" : "/" + k}">${tx(STR.nav[k])}</a>`).join("")}</div>
     </div>
     <div class="wrap foot-bar"><span>© 2026 DacostaStudio</span><span>${S("sempre")}</span><button type="button" data-top>${S("topo")}</button></div>
   </footer>`;
@@ -907,7 +908,7 @@ function inicioHTML() {
           <p class="label"><span class="dia"></span>${S("sobreL")}</p>
           <p class="txt">${S("aboutTxt")}</p>
           <p class="txt2">${S("aboutTxt2")}</p>
-          <a class="more" href="#sobre">${S("maisSobre")}</a>
+          <a class="more" href="/sobre">${S("maisSobre")}</a>
         </div>
         <div class="photo-card" data-mask>
           <div class="reveal">${photoStack()}</div>
@@ -924,9 +925,9 @@ function inicioHTML() {
     </section>
 
     <section class="wrap" style="padding-bottom:120px">
-      <div class="sec-head" data-rv><p class="label"><span class="sq"></span>${S("selecionados")}</p><a class="sub" href="#trabalhos">${S("todos")}</a></div>
+      <div class="sec-head" data-rv><p class="label"><span class="sq"></span>${S("selecionados")}</p><a class="sub" href="/trabalhos">${S("todos")}</a></div>
       <div class="work-grid">
-        ${PROJECTS.map((p, i) => `<a class="work-card" href="#projeto-${p.id}" data-rv="scale" style="transition-delay:${(i % 3) * 90}ms">
+        ${PROJECTS.map((p, i) => `<a class="work-card" href="/projeto-${p.id}" data-rv="scale" style="transition-delay:${(i % 3) * 90}ms">
           <div class="work-cover">${coverHTML(p)}</div>
           <div class="cap"><span>${pad(p.id)} / ${esc(p.nome)}</span><span class="l2"><span><span>${esc(p.cliente)}</span><span>${esc(tx(p.tipo))}</span></span><span>${p.duracao}</span></span></div>
         </a>`).join("")}
@@ -1083,7 +1084,7 @@ function projetoHTML(id) {
   const main = mv.type.startsWith("video") ? `<video src="${mv.url}" poster="${p.poster}" autoplay muted loop playsinline webkit-playsinline preload="auto" id="pVideo"></video>` : `<img src="${mv.url}" alt="">`;
   return `${headerHTML("trabalhos")}
   <main class="wrap">
-    <div class="p-top"><a href="#trabalhos">${S("voltar")}</a><span>${pad(i + 1)} / ${pad(PROJECTS.length)}</span></div>
+    <div class="p-top"><a href="/trabalhos">${S("voltar")}</a><span>${pad(i + 1)} / ${pad(PROJECTS.length)}</span></div>
     <p class="label" style="margin-top:40px"><span class="sq"></span>${esc(p.cliente)} · ${esc(tx(p.tipo))}</p>
     ${casc([esc(p.nome)], "display", "h1", "margin-top:20px")}
     <div class="ficha">
@@ -1111,9 +1112,9 @@ function projetoHTML(id) {
       <div class="team-grid">${teamHTML(p)}</div>
     </div>
     <div class="outros">
-      <div class="head"><p class="label"><span class="sq"></span>${S("outros")}</p><a class="label" href="#trabalhos">${S("verTodos")}</a></div>
+      <div class="head"><p class="label"><span class="sq"></span>${S("outros")}</p><a class="label" href="/trabalhos">${S("verTodos")}</a></div>
       <div class="grid5">
-        ${outros.map((o, k) => `<a class="card" href="#projeto-${o.id}" data-rv style="transition-delay:${k * 70}ms">
+        ${outros.map((o, k) => `<a class="card" href="/projeto-${o.id}" data-rv style="transition-delay:${k * 70}ms">
           <div class="cover">${coverHTML(o)}</div>
           <div class="lg"><span class="n">${pad(o.id)}</span><div><div class="nm">${esc(o.nome)}</div><div class="cl">${esc(o.cliente)} · ${esc(tx(o.tipo))}</div></div></div>
         </a>`).join("")}
@@ -1133,9 +1134,9 @@ function trabalhosHTML() {
     <div class="ui">
       <div class="shade-top"></div><div class="shade-bot"></div>
       <div class="topbar">
-        <a href="#inicio">DacostaStudio</a>
-        <nav class="nav-mid"><a href="#inicio">${tx(STR.nav.inicio)}</a><span class="on">${tx(STR.nav.trabalhos)}</span><a href="#sobre">${tx(STR.nav.sobre)}</a></nav>
-        <div class="tb-right">${langHTML()}<a class="pill" href="#contato">${tx(STR.nav.contato)} ↗</a></div>
+        <a href="/">DacostaStudio</a>
+        <nav class="nav-mid"><a href="/">${tx(STR.nav.inicio)}</a><span class="on">${tx(STR.nav.trabalhos)}</span><a href="/sobre">${tx(STR.nav.sobre)}</a></nav>
+        <div class="tb-right">${langHTML()}<a class="pill" href="/contato">${tx(STR.nav.contato)} ↗</a></div>
       </div>
       <div class="bottombar">
         <div class="meta">
@@ -1254,7 +1255,7 @@ function route(keepScroll) {
   cleanups.forEach(fn => { try { fn(); } catch (e) {} }); cleanups = [];
   document.body.classList.remove("player-idle");
   document.documentElement.lang = L === "pt" ? "pt-BR" : "en";
-  const h = (location.hash || "#inicio").slice(1);
+  const h = location.pathname.replace(/^\/+|\/+$/g, "") || "inicio";
   const app = $("#app");
   if (h === "sobre") app.innerHTML = sobreHTML();
   else if (h === "contato") app.innerHTML = contatoHTML();
@@ -1320,7 +1321,18 @@ function setLang(l) {
   L = l; try { localStorage.setItem("dcs-lang", l); } catch (e) {}
   route(true);
 }
-addEventListener("hashchange", () => route());
+/* endereços limpos (dacostamotion.com/contato): links internos trocam a página sem recarregar */
+function navTo(path) { if (path !== location.pathname) history.pushState(null, "", path); route(); }
+addEventListener("popstate", () => route());
+document.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest("a[href^='/']");
+  if (!a || a.target || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+  const href = a.getAttribute("href");
+  if (/^\/(admin|media|content)\b/.test(href)) return;
+  e.preventDefault(); navTo(href);
+});
+/* links antigos com # (ex.: /#contato) viram o endereço novo */
+if (/^#(inicio|trabalhos|sobre|contato|projeto-\d+)$/.test(location.hash)) history.replaceState(null, "", location.hash === "#inicio" ? "/" : "/" + location.hash.slice(1));
 
 /* =========== Início =========== */
 function afterInicio() {
@@ -1492,7 +1504,7 @@ function afterTrabalhos() {
   }
   layers.forEach((l, k) => l.tagName === "VIDEO" && l.addEventListener("ended", () => { if (k === cur) go(cur + 1); }));
   $$("#plThumbs .thumb").forEach(t => t.addEventListener("click", () => go(+t.dataset.i)));
-  $("#plOpen").addEventListener("click", () => location.hash = "projeto-" + PROJECTS[cur].id);
+  $("#plOpen").addEventListener("click", () => navTo("/projeto-" + PROJECTS[cur].id));
   $("#plPrev").addEventListener("click", () => go(cur - 1));
   $("#plNext").addEventListener("click", () => go(cur + 1));
   $("#plMute").addEventListener("click", () => { muted = !muted; const v = active(); if (v.tagName === "VIDEO") { v.muted = muted; if (!muted) v.play().catch(() => {}); } muteIcon(); });

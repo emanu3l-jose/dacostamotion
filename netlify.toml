@@ -22,3 +22,9 @@
   for = "/content/*"
   [headers.values]
     Cache-Control = "no-cache"
+
+# endereços limpos: /contato, /sobre, /projeto-1... abrem o site (arquivos reais têm prioridade)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
