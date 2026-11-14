@@ -88,7 +88,7 @@ collections:
                   - { name: pt, label: "Português", widget: string }
                   - { name: en, label: "Inglês", widget: string }
               - name: creditos
-                label: "Equipe do projeto (foto, nome e função). Escreve @usuario que vira link pro Instagram"
+                label: "Equipe do projeto (nome e função). Escreve @usuario que vira link pro Instagram"
                 label_singular: Pessoa
                 widget: list
                 required: false
@@ -101,7 +101,6 @@ collections:
                       - { name: pt, label: "Português (ex: Direção criativa)", widget: string }
                       - { name: en, label: "Inglês (ex: Creative direction)", widget: string }
                   - { name: nome, label: "Nome (ex: Felipe Rufino · @ofeliperufino)", widget: string }
-                  - { name: foto, label: "Foto ou logo (quadrada; sem foto aparecem as iniciais)", widget: image, required: false }
 
       - name: depoimentos
         label: Depoimentos
