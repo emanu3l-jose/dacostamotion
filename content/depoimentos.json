@@ -2,44 +2,44 @@
   "depoimentos": [
     {
       "texto": {
-        "pt": "Depoimento de exemplo. Aqui entra o que o cliente falou sobre o projeto, em uma ou duas frases.",
-        "en": "Sample testimonial. This is where the client's words about the project go, in one or two sentences."
+        "pt": "Ele amassou nesse case, e o cliente curtiu muito. De todas as contratações do projeto, foi a única que não me deu dor de cabeça. Se eu tivesse três dele, estaria feliz demais.",
+        "en": "He crushed this case, and the client loved it. Of everyone we hired for the project, he was the only one who gave me zero headaches. If I had three of him, I'd be more than happy."
       },
       "nome": {
-        "pt": "Nome do cliente",
-        "en": "Client name"
+        "pt": "Felipe Rufino",
+        "en": "Felipe Rufino"
       },
       "cargo": {
-        "pt": "Cargo · Empresa",
-        "en": "Role · Company"
+        "pt": "Direção criativa · Realure",
+        "en": "Creative direction · Realure"
       }
     },
     {
       "texto": {
-        "pt": "Segundo depoimento de exemplo. Prazo, processo, resultado: o que mais marcou pra quem contratou.",
-        "en": "Second sample testimonial. Deadline, process, result: whatever stood out to whoever hired you."
+        "pt": "Valeu, cara! Trabalho incrível, e foi ótimo trabalhar com você.",
+        "en": "Thank you dude! Incredible work and amazing to work with you."
       },
       "nome": {
-        "pt": "Nome do cliente",
-        "en": "Client name"
+        "pt": "Stephen Jennings",
+        "en": "Stephen Jennings"
       },
       "cargo": {
-        "pt": "Cargo · Empresa",
-        "en": "Role · Company"
+        "pt": "Workflow Studio",
+        "en": "Workflow Studio"
       }
     },
     {
       "texto": {
-        "pt": "Terceiro depoimento de exemplo. Troca por uma frase real assim que tiver.",
-        "en": "Third sample testimonial. Swap it for a real quote as soon as you have one."
+        "pt": "O melhor motion designer. Incrível, como sempre.",
+        "en": "Best motion designer. Amazing as always."
       },
       "nome": {
-        "pt": "Nome do cliente",
-        "en": "Client name"
+        "pt": "Alexandr Socoloff",
+        "en": "Alexandr Socoloff"
       },
       "cargo": {
-        "pt": "Cargo · Empresa",
-        "en": "Role · Company"
+        "pt": "Produx Design",
+        "en": "Produx Design"
       }
     }
   ]
