@@ -175,9 +175,9 @@ a.sub:hover { color: var(--ink); }
 .testi-mark { font-size: 120px; line-height: 56px; height: 56px; letter-spacing: -.045em; }
 .testi-swap { display: flex; flex-direction: column; gap: 28px; transition: opacity .45s, transform .45s; }
 .testi-swap.out { opacity: 0; transform: translateY(12px); }
-.testi-text { font-size: clamp(22px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -.025em; }
+.testi-text { font-size: clamp(26px, 3.2vw, 46px); line-height: 1.1; letter-spacing: -.03em; max-width: 26ch; }
 .testi-author { display: flex; align-items: center; gap: 16px; }
-.testi-author .pic { width: 52px; height: 52px; border-radius: 50%; background: var(--tint); flex: none; }
+.testi-author .pic { width: 52px; height: 52px; border-radius: 50%; background: var(--tint); flex: none; display: grid; place-items: center; font-size: 16px; letter-spacing: -.02em; color: var(--dim); }
 .testi-author .name { font-size: 16px; }
 .testi-author .role { font-size: 15px; color: var(--dim); }
 .testi-progress { display: flex; gap: 8px; }
@@ -197,9 +197,9 @@ a.sub:hover { color: var(--ink); }
 .quem-photo .m { position: absolute; width: 6px; height: 6px; background: var(--ink); z-index: 2; }
 .quem-text { display: flex; flex-direction: column; gap: 20px; }
 .quem-text .bio { font-size: 16px; line-height: 24px; color: var(--dim); max-width: 520px; }
-.lists { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 40px; position: relative; border-bottom: 1px solid var(--hair); }
+.lists { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 40px; position: relative; border-bottom: 1px solid var(--hair); }
 .lists .cell { border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 10px; position: relative; }
-.lists .cell:first-child { border-left: 0; }
+.lists .cell:nth-child(odd) { border-left: 0; }
 .lists .cell::before { content: ""; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
 .lists .cell:last-child::after { content: ""; position: absolute; right: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
 .lists .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
@@ -505,6 +505,11 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 .pstack img.on { clip-path: inset(0 0 0 0); transform: none; }
 .pstack img.top { z-index: 2; }
 .pstack img.old { transform: scale(1.06) translateY(-4%); transition: transform 1.3s cubic-bezier(.76,0,.24,1); }
+/* fotos em preto e branco; ganham cor com o mouse em cima */
+.pstack img { filter: grayscale(1); }
+.pstack img:not(.old) { transition-property: clip-path, transform, filter; }
+.pstack:hover img { filter: none; }
+@media (hover: none) { .pstack img { filter: none; } }
 /* loading */
 .loader { position: fixed; inset: 0; z-index: 200; background: #000; color: #f5f5f1; display: flex; flex-direction: column; justify-content: space-between; padding: 28px var(--gut); transition: transform 1.1s cubic-bezier(.76,0,.24,1); }
 .loader.done { transform: translateY(-100%); }
@@ -553,7 +558,7 @@ body.player-idle .fab { opacity: 0; pointer-events: none; }
 .tm-pic .ini { font-size: clamp(32px, 4vw, 56px); letter-spacing: -.04em; color: var(--dim); }
 .tm-txt { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
 .tm-txt .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
-.tm-txt a { color: var(--dim); font-size: 14px; }
+.tm-txt .hd { color: var(--dim); font-size: 14px; }
 .tm-txt a:hover { color: var(--ink); }
 @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; } }
 /* o que eu fiz */
@@ -623,13 +628,13 @@ const STR = {
   topo: { pt: "Voltar ao topo ↑", en: "Back to top ↑" },
   /* sobre */
   quemLabel: { pt: "José Emanuel Silva Costa · Motion designer", en: "José Emanuel Silva Costa · Motion designer" },
-  quemH: { pt: "Motion designer brasileiro. Faço filmes de marca, lançamentos de produto e manifestos, com animação e som saindo da mesma mão.",
-           en: "Brazilian motion designer. I make brand films, product launches and manifestos, with animation and sound coming from the same hands." },
+  quemH: { pt: "Motion designer brasileiro. Faço filmes de marca, lançamentos de produto e manifestos.",
+           en: "Brazilian motion designer. I make brand films, product launches and manifestos." },
   quemBio: { pt: "Meu caminho começou na fotografia e no design, ainda no ensino médio. Em 2021 encontrei o motion e não larguei mais. Hoje trabalho com brand motion: identidades em movimento, filmes de marca e lançamentos de produto. O que eu mais gosto é pegar uma marca que já existe e descobrir como ela se move, no ritmo, no som e nos detalhes que fazem alguém lembrar dela.",
              en: "My path started with photography and design, back in high school. In 2021 I found motion and never let it go. Today I work in brand motion: moving identities, brand films and product launches. What I love most is taking a brand that already exists and discovering how it moves, in the rhythm, the sound and the details that make someone remember it." },
   oQueFaco: { pt: ["Animação de logo", "Identidade visual em movimento", "Filmes de marca e manifestos", "Lançamentos de SaaS e produtos", "Sound design"],
               en: ["Logo animation", "Motion identity", "Brand films and manifestos", "SaaS and product launches", "Sound design"] },
-  whatIDo: { pt: "O que faço", en: "What I do" }, clients: { pt: "Clientes", en: "Clients" }, tools: { pt: "Ferramentas", en: "Tools" },
+  whatIDo: { pt: "O que faço", en: "What I do" }, clients: { pt: "Clientes", en: "Clients" }, estudios: { pt: "Estúdios", en: "Studios" }, marcas: { pt: "Marcas", en: "Brands" }, tools: { pt: "Ferramentas", en: "Tools" },
   principios: { pt: "Princípios", en: "Principles" }, guia: { pt: "O que guia cada animação", en: "What guides every animation" },
   /* contato */
   cH1: { pt: "Vamos colocar", en: "Let's put" }, cH2: { pt: "sua marca em movimento.", en: "your brand in motion." },
@@ -704,11 +709,11 @@ let PROJECTS = [
 ];
 /* altura de cada logo ajustada pra todos parecerem do mesmo tamanho */
 let LOGOS = [["media/logo-workflow.png", "Workflow Studio"], ["media/logo-clevermove.png", "CleverMove"], ["media/logo-realure.png", "Realure"]];
-/* depoimentos: textos de exemplo até chegarem os reais */
+/* depoimentos: um de cada cliente (o painel pode substituir) */
 let TESTIMONIALS = [
-  { q: { pt: "Depoimento de exemplo. Aqui entra o que o cliente falou sobre o projeto, em uma ou duas frases.", en: "Sample testimonial. This is where the client's words about the project go, in one or two sentences." }, n: { pt: "Nome do cliente", en: "Client name" }, r: { pt: "Cargo · Empresa", en: "Role · Company" } },
-  { q: { pt: "Segundo depoimento de exemplo. Prazo, processo, resultado: o que mais marcou pra quem contratou.", en: "Second sample testimonial. Deadline, process, result: whatever stood out to whoever hired you." }, n: { pt: "Nome do cliente", en: "Client name" }, r: { pt: "Cargo · Empresa", en: "Role · Company" } },
-  { q: { pt: "Terceiro depoimento de exemplo. Troca por uma frase real assim que tiver.", en: "Third sample testimonial. Swap it for a real quote as soon as you have one." }, n: { pt: "Nome do cliente", en: "Client name" }, r: { pt: "Cargo · Empresa", en: "Role · Company" } },
+  { q: { pt: "Ele amassou nesse case, e o cliente curtiu muito. De todas as contratações do projeto, foi a única que não me deu dor de cabeça. Se eu tivesse três dele, estaria feliz demais.", en: "He crushed this case, and the client loved it. Of everyone we hired for the project, he was the only one who gave me zero headaches. If I had three of him, I'd be more than happy." }, n: "Felipe Rufino", r: { pt: "Direção criativa · Realure", en: "Creative direction · Realure" } },
+  { q: { pt: "Valeu, cara! Trabalho incrível, e foi ótimo trabalhar com você.", en: "Thank you dude! Incredible work and amazing to work with you." }, n: "Stephen Jennings", r: "Workflow Studio" },
+  { q: { pt: "O melhor motion designer. Incrível, como sempre.", en: "Best motion designer. Amazing as always." }, n: "Alexandr Socoloff", r: "Produx Design" },
 ];
 const STEPS = [
   ["01", "Briefing", { pt: "Uma conversa para entender a marca, o objetivo e onde a peça vai viver.", en: "A conversation to understand the brand, the goal and where the piece will live." }],
@@ -952,7 +957,7 @@ function inicioHTML() {
           <p class="testi-mark">“</p>
           <div class="testi-swap" id="tSwap">
             <p class="testi-text" id="tText"></p>
-            <div class="testi-author"><div class="pic"></div><div><div class="name" id="tName"></div><div class="role" id="tRole"></div></div></div>
+            <div class="testi-author"><div class="pic" id="tPic"></div><div><div class="name" id="tName"></div><div class="role" id="tRole"></div></div></div>
           </div>
           <div class="testi-progress" id="tProg">${TESTIMONIALS.map((_, i) => `<button type="button" aria-label="${S("dep")} ${i + 1}"><i></i></button>`).join("")}</div>
         </div>
@@ -963,7 +968,10 @@ function inicioHTML() {
 }
 
 /* =========== SOBRE =========== */
-const CLIENTS = ["idea.ai", "Realure", "Fonzi", "CleverMove", "Workflow Studio", "Produx Design", "Oddside"];
+/* estúdios que me contratam; marcas que animei através deles */
+const ESTUDIOS = ["Workflow Studio", "Produx Design", "Oddside"];
+const MARCAS = ["idea.ai", "Realure", "Fonzi", "CleverMove"];
+const CLIENTS = [...ESTUDIOS, ...MARCAS];
 function openClients() {
   const ov = document.createElement("div"); ov.className = "cli-ov"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true");
   ov.innerHTML = `<div class="cli-box"><div class="cli-head"><p class="label"><span class="sq"></span>${S("clients")}</p><button type="button" class="cli-x">${S("fechar")} ✕</button></div>
@@ -996,8 +1004,9 @@ function sobreHTML() {
         <p class="bio" data-rv>${S("quemBio")}</p>
         <div class="lists">
           <div class="cell" data-rv><span class="fl">${S("whatIDo")}</span>${S("oQueFaco").map(t => `<span>${t}</span>`).join("")}</div>
-          <div class="cell" data-rv style="transition-delay:90ms"><span class="fl">${S("clients")}</span>${CLIENTS.slice(0, 4).map(c => `<span>${c}</span>`).join("")}${CLIENTS.length > 4 ? `<button type="button" class="see-more" id="cliMore">${S("verMais")} (${CLIENTS.length}) ↗</button>` : ""}</div>
-          <div class="cell" data-rv style="transition-delay:180ms"><span class="fl">${S("tools")}</span><span>After Effects</span><span>Illustrator</span><span>Figma</span><span>Cinema 4D</span></div>
+          <div class="cell" data-rv style="transition-delay:90ms"><span class="fl">${S("estudios")}</span>${ESTUDIOS.map(c => `<span>${c}</span>`).join("")}</div>
+          <div class="cell" data-rv style="transition-delay:180ms"><span class="fl">${S("marcas")}</span>${MARCAS.map(c => `<span>${c}</span>`).join("")}</div>
+          <div class="cell" data-rv style="transition-delay:270ms"><span class="fl">${S("tools")}</span><span>After Effects</span><span>Illustrator</span><span>Figma</span><span>Cinema 4D</span></div>
         </div>
       </div>
     </section>
@@ -1061,8 +1070,8 @@ function teamHTML(p) {
     const name = raw.replace(/·?\s*@[\w.]+/, "").replace(/\s*·\s*$/, "").trim() || (m ? "@" + m[1] : raw);
     const ini = name.replace(/^@/, "").split(/[\s.]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
     const pic = c.foto ? `<img src="${esc(c.foto)}" alt="${esc(name)}" loading="lazy">` : `<span class="ini">${esc(ini)}</span>`;
-    const handle = m && name !== "@" + m[1] ? `<a href="https://www.instagram.com/${m[1]}/" target="_blank" rel="noopener">@${m[1]}</a>` : "";
-    const nm = m && name === "@" + m[1] ? `<a href="https://www.instagram.com/${m[1]}/" target="_blank" rel="noopener" style="color:inherit;font-size:16px">${esc(name)}</a>` : esc(name);
+    const handle = m && name !== "@" + m[1] ? `<span class="hd">@${esc(m[1])}</span>` : "";
+    const nm = esc(name);
     return `<div class="tm" data-rv style="transition-delay:${(k % 4) * 80}ms"><div class="tm-pic">${pic}</div><div class="tm-txt"><span class="fl">${esc(tx(c.funcao))}</span><span>${nm}</span>${handle}</div></div>`;
   }).join("");
 }
@@ -1368,7 +1377,7 @@ function afterInicio() {
     const swap = $("#tSwap");
     const apply = () => {
       if (!document.body.contains(swap)) return;
-      $("#tN").textContent = pad(i + 1); $("#tText").textContent = tx(d.q); $("#tName").textContent = tx(d.n); $("#tRole").textContent = tx(d.r);
+      $("#tN").textContent = pad(i + 1); $("#tText").textContent = tx(d.q); $("#tName").textContent = tx(d.n); $("#tRole").textContent = tx(d.r); $("#tPic").textContent = String(tx(d.n)).split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
       $$("#tProg button").forEach((b, k) => { b.classList.remove("on", "done"); void b.offsetWidth; if (k < i) b.classList.add("done"); if (k === i) b.classList.add("on"); });
       swap.classList.remove("out");
     };

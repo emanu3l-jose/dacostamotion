@@ -288,6 +288,14 @@
           },
           "nome": "Emanuel Costa · @dacostamotion",
           "foto": "media/eq-emanuel.jpg"
+        },
+        {
+          "funcao": {
+            "pt": "Direção",
+            "en": "Direction"
+          },
+          "nome": "Produx Design · @socoloff_alex",
+          "foto": "media/eq-produx.jpg"
         }
       ]
     },

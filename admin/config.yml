@@ -88,7 +88,7 @@ collections:
                   - { name: pt, label: "Português", widget: string }
                   - { name: en, label: "Inglês", widget: string }
               - name: creditos
-                label: "Equipe do projeto (foto, nome e função). Escreve @usuario que vira link pro Instagram"
+                label: "Equipe do projeto (foto, nome e função). O @ aparece só como texto, sem link"
                 label_singular: Pessoa
                 widget: list
                 required: false
