@@ -163,21 +163,22 @@ a.sub:hover { color: var(--ink); }
 @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, 1fr); } .step:nth-child(odd) { border-left: 0; } }
 @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } .step { border-left: 0; } }
 
-.testi { display: flex; gap: 60px; border-top: 1px solid var(--hair); padding-top: 56px; }
+.testi { display: flex; gap: 60px; border-top: 1px solid var(--hair); padding-top: 40px; }
 .testi-nav { width: 320px; flex: none; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; }
 .testi-count { display: flex; align-items: baseline; gap: 8px; }
-.testi-count .big { font-size: 72px; line-height: 74px; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.testi-count .big { font-size: 48px; line-height: 50px; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
 .testi-count .of { color: var(--dim); font-size: 16px; }
 .testi-arrows { display: flex; gap: 8px; }
 .testi-arrows button { width: 52px; height: 52px; border: 1px solid var(--hair); display: grid; place-items: center; font-size: 16px; color: var(--dim); }
 .testi-arrows button.next { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .testi-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
-.testi-mark { font-size: 120px; line-height: 56px; height: 56px; letter-spacing: -.045em; }
+.testi-mark { font-size: 64px; line-height: 30px; height: 30px; letter-spacing: -.045em; }
 .testi-swap { display: flex; flex-direction: column; gap: 28px; transition: opacity .45s, transform .45s; }
 .testi-swap.out { opacity: 0; transform: translateY(12px); }
-.testi-text { font-size: clamp(26px, 3.2vw, 46px); line-height: 1.1; letter-spacing: -.03em; max-width: 26ch; }
+.testi-text { font-size: clamp(18px, 1.6vw, 24px); line-height: 1.35; letter-spacing: -.01em; max-width: 46ch; }
 .testi-author { display: flex; align-items: center; gap: 16px; }
-.testi-author .pic { width: 52px; height: 52px; border-radius: 50%; background: var(--tint); flex: none; display: grid; place-items: center; font-size: 16px; letter-spacing: -.02em; color: var(--dim); }
+.testi-author .pic { width: 52px; height: 52px; border-radius: 50%; background: var(--tint); flex: none; display: grid; place-items: center; font-size: 16px; letter-spacing: -.02em; color: var(--dim); overflow: hidden; }
+.testi-author .pic img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
 .testi-author .name { font-size: 16px; }
 .testi-author .role { font-size: 15px; color: var(--dim); }
 .testi-progress { display: flex; gap: 8px; }
@@ -197,9 +198,9 @@ a.sub:hover { color: var(--ink); }
 .quem-photo .m { position: absolute; width: 6px; height: 6px; background: var(--ink); z-index: 2; }
 .quem-text { display: flex; flex-direction: column; gap: 20px; }
 .quem-text .bio { font-size: 16px; line-height: 24px; color: var(--dim); max-width: 520px; }
-.lists { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 40px; position: relative; border-bottom: 1px solid var(--hair); }
+.lists { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 40px; position: relative; border-bottom: 1px solid var(--hair); }
 .lists .cell { border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 10px; position: relative; }
-.lists .cell:nth-child(odd) { border-left: 0; }
+.lists .cell:first-child { border-left: 0; }
 .lists .cell::before { content: ""; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
 .lists .cell:last-child::after { content: ""; position: absolute; right: -3px; top: -3px; width: 6px; height: 6px; background: var(--ink); }
 .lists .fl { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
@@ -711,9 +712,9 @@ let PROJECTS = [
 let LOGOS = [["media/logo-workflow.png", "Workflow Studio"], ["media/logo-clevermove.png", "CleverMove"], ["media/logo-realure.png", "Realure"]];
 /* depoimentos: um de cada cliente (o painel pode substituir) */
 let TESTIMONIALS = [
-  { q: { pt: "Ele amassou nesse case, e o cliente curtiu muito. De todas as contratações do projeto, foi a única que não me deu dor de cabeça. Se eu tivesse três dele, estaria feliz demais.", en: "He crushed this case, and the client loved it. Of everyone we hired for the project, he was the only one who gave me zero headaches. If I had three of him, I'd be more than happy." }, n: "Felipe Rufino", r: { pt: "Direção criativa · Realure", en: "Creative direction · Realure" } },
-  { q: { pt: "Valeu, cara! Trabalho incrível, e foi ótimo trabalhar com você.", en: "Thank you dude! Incredible work and amazing to work with you." }, n: "Stephen Jennings", r: "Workflow Studio" },
-  { q: { pt: "O melhor motion designer. Incrível, como sempre.", en: "Best motion designer. Amazing as always." }, n: "Alexandr Socoloff", r: "Produx Design" },
+  { q: { pt: "Ele amassou nesse case, e o cliente curtiu muito. De todas as contratações do projeto, foi a única que não me deu dor de cabeça. Se eu tivesse três dele, estaria feliz demais.", en: "He crushed this case, and the client loved it. Of everyone we hired for the project, he was the only one who gave me zero headaches. If I had three of him, I'd be more than happy." }, n: "Felipe Rufino", f: "media/eq-felipe.jpg", r: { pt: "Direção criativa · Realure", en: "Creative direction · Realure" } },
+  { q: { pt: "Valeu, cara! Trabalho incrível, e foi ótimo trabalhar com você.", en: "Thank you dude! Incredible work and amazing to work with you." }, n: "Stephen Jennings", f: "media/eq-stephen.jpg", r: "Workflow Studio" },
+  { q: { pt: "O melhor motion designer. Incrível, como sempre.", en: "Best motion designer. Amazing as always." }, n: "Alexandr Socoloff", f: "media/eq-produx.jpg", r: "Produx Design" },
 ];
 const STEPS = [
   ["01", "Briefing", { pt: "Uma conversa para entender a marca, o objetivo e onde a peça vai viver.", en: "A conversation to understand the brand, the goal and where the piece will live." }],
@@ -1005,8 +1006,7 @@ function sobreHTML() {
         <div class="lists">
           <div class="cell" data-rv><span class="fl">${S("whatIDo")}</span>${S("oQueFaco").map(t => `<span>${t}</span>`).join("")}</div>
           <div class="cell" data-rv style="transition-delay:90ms"><span class="fl">${S("estudios")}</span>${ESTUDIOS.map(c => `<span>${c}</span>`).join("")}</div>
-          <div class="cell" data-rv style="transition-delay:180ms"><span class="fl">${S("marcas")}</span>${MARCAS.map(c => `<span>${c}</span>`).join("")}</div>
-          <div class="cell" data-rv style="transition-delay:270ms"><span class="fl">${S("tools")}</span><span>After Effects</span><span>Illustrator</span><span>Figma</span><span>Cinema 4D</span></div>
+          <div class="cell" data-rv style="transition-delay:180ms"><span class="fl">${S("tools")}</span><span>After Effects</span><span>Illustrator</span><span>Figma</span><span>Cinema 4D</span></div>
         </div>
       </div>
     </section>
@@ -1377,7 +1377,7 @@ function afterInicio() {
     const swap = $("#tSwap");
     const apply = () => {
       if (!document.body.contains(swap)) return;
-      $("#tN").textContent = pad(i + 1); $("#tText").textContent = tx(d.q); $("#tName").textContent = tx(d.n); $("#tRole").textContent = tx(d.r); $("#tPic").textContent = String(tx(d.n)).split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+      $("#tN").textContent = pad(i + 1); $("#tText").textContent = tx(d.q); $("#tName").textContent = tx(d.n); $("#tRole").textContent = tx(d.r); { const ini = String(tx(d.n)).split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join(""); $("#tPic").innerHTML = d.f ? `<img src="${esc(d.f)}" alt="${esc(tx(d.n))}">` : esc(ini); }
       $$("#tProg button").forEach((b, k) => { b.classList.remove("on", "done"); void b.offsetWidth; if (k < i) b.classList.add("done"); if (k === i) b.classList.add("on"); });
       swap.classList.remove("out");
     };
@@ -1623,7 +1623,7 @@ async function loadContent() {
     }));
     SLOTS = SLOTS.filter(s => s.grp !== "Projetos").concat(PROJECTS.map(p => ({ grp: "Projetos", key: "p" + p.id, nome: `${pad(p.id)} · ${p.nome}`, accept: "video/*,image/*" })));
   }
-  if (dp && Array.isArray(dp.depoimentos) && dp.depoimentos.length) TESTIMONIALS = dp.depoimentos.map(d => ({ q: d.texto || "", n: d.nome || "", r: d.cargo || "" }));
+  if (dp && Array.isArray(dp.depoimentos) && dp.depoimentos.length) TESTIMONIALS = dp.depoimentos.map(d => ({ q: d.texto || "", n: d.nome || "", r: d.cargo || "", f: d.foto || "" }));
   if (mc && Array.isArray(mc.marcas) && mc.marcas.length) LOGOS = mc.marcas.filter(m => m.logo).map(m => [m.logo, m.nome || ""]);
   if (ft && Array.isArray(ft.fotos) && ft.fotos.length) PHOTO_LIST = ft.fotos.map(f => f.foto || f).filter(Boolean);
   preloadPhotos();

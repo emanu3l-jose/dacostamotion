@@ -125,6 +125,7 @@ collections:
                 fields:
                   - { name: pt, label: "Português", widget: string }
                   - { name: en, label: "Inglês", widget: string }
+              - { name: foto, label: "Foto (quadrada, opcional)", widget: image, required: false }
               - name: cargo
                 label: Cargo e empresa
                 widget: object

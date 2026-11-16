@@ -12,7 +12,8 @@
       "cargo": {
         "pt": "Direção criativa · Realure",
         "en": "Creative direction · Realure"
-      }
+      },
+      "foto": "media/eq-felipe.jpg"
     },
     {
       "texto": {
@@ -26,7 +27,8 @@
       "cargo": {
         "pt": "Workflow Studio",
         "en": "Workflow Studio"
-      }
+      },
+      "foto": "media/eq-stephen.jpg"
     },
     {
       "texto": {
@@ -40,7 +42,8 @@
       "cargo": {
         "pt": "Produx Design",
         "en": "Produx Design"
-      }
+      },
+      "foto": "media/eq-produx.jpg"
     }
   ]
 }
