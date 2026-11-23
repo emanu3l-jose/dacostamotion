@@ -1,0 +1,18 @@
+/* Estilos das páginas de orçamento (mesma identidade do site) */
+:root{--ink:#111;--dim:#7c7c78;--paper:#fff;--hair:rgba(17,17,17,.13);--tint:#eef0eb;--red:#f0553a;--sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;--gut:60px}
+@media (max-width:900px){:root{--gut:20px}}
+*{box-sizing:border-box}html,body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}h1,h2,h3,p{margin:0;font-weight:400}
+button{font:inherit;color:inherit;text-transform:inherit;letter-spacing:inherit;background:none;border:0;cursor:pointer;padding:0}
+.wrap{max-width:1440px;width:100%;margin:0 auto;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
+.up{font-size:12px;line-height:16px;letter-spacing:.05em;text-transform:uppercase}
+.dim{color:var(--dim)}
+.label{display:inline-flex;align-items:center;gap:10px}
+.dia{width:6px;height:6px;background:currentColor;transform:rotate(45deg);display:inline-block;flex:none}
+.sq{width:6px;height:6px;background:currentColor;display:inline-block;flex:none}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block;flex:none}
+.display{font-size:clamp(42px,6.7vw,96px);line-height:1;letter-spacing:-.045em}
+.display .fade{color:var(--dim)}
+.hdr{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:24px}
+.hdr .l{display:flex;align-items:center}.hdr .brand{width:240px}
+@media (max-width:900px){.hdr .brand{width:auto;margin-right:14px}.hdr .mid{display:none}}

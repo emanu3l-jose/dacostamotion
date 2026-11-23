@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel de orçamentos · DacostaStudio</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/orcamento/estilo.css">
+<style>
+body{background:#f6f6f3}
+.top{background:#fff;border-bottom:1px solid var(--hair)}
+.lock{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--hair);border-radius:999px;padding:6px 12px}
+.lock .dot{background:#22a04b}
+.head{padding-top:56px;display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.h1{font-size:clamp(36px,4vw,56px);line-height:1;letter-spacing:-.045em}
+.grid{display:grid;grid-template-columns:1fr 440px;gap:40px;padding-block:48px 80px;align-items:start}
+.card{background:#fff;border:1px solid var(--hair);border-radius:6px}
+.card .hd{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px 28px;border-bottom:1px solid var(--hair)}
+form{padding:12px 28px 32px;display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+.field{display:flex;flex-direction:column;gap:10px;padding-top:26px;min-width:0}
+.field.full{grid-column:1/-1}
+.fl{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);display:flex;justify-content:space-between;gap:12px}
+.field input[type=text],.field input[type=number],.field input[type=password]{font:inherit;font-size:24px;line-height:32px;letter-spacing:-.025em;border:0;border-bottom:1px solid var(--ink);padding:0 0 12px;background:transparent;color:var(--ink);width:100%;border-radius:0;outline:none}
+.field input.sm{font-size:17px;line-height:26px}
+.field input::placeholder,.field textarea::placeholder{color:#bdbdb8}
+.field textarea{font:inherit;font-size:16px;line-height:24px;border:1px solid var(--hair);border-radius:4px;padding:14px 16px;color:var(--ink);resize:vertical;min-height:110px;outline:none;background:#fff}
+.field textarea:focus,.field input:focus{border-color:var(--ink)}
+.hint{font-size:13px;color:var(--dim);text-transform:none;letter-spacing:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--hair);border-radius:999px;padding:9px 14px;font-size:14px;display:inline-flex;gap:8px;align-items:center;background:#fff}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.add{border-style:dashed;color:var(--dim)}
+.addin{display:none;gap:8px}.addin.on{display:flex}.addin input{font:inherit;font-size:14px;border:1px solid var(--hair);border-radius:999px;padding:8px 14px;outline:none}
+.seg{display:flex;border:1px solid var(--hair);border-radius:4px;overflow:hidden;width:fit-content;flex-wrap:wrap}
+.seg button{padding:10px 16px;font-size:14px;border-left:1px solid var(--hair)}.seg button:first-child{border-left:0}.seg button.on{background:var(--ink);color:#fff}
+.check{display:flex;gap:10px;align-items:center;font-size:15px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:22px 28px;border-top:1px solid var(--hair);flex-wrap:wrap}
+.btn{background:var(--ink);color:#fff;padding:18px 26px;display:inline-flex;gap:12px;align-items:center}
+.btn[disabled]{opacity:.5;cursor:wait}
+.lnk{border-bottom:1px solid currentColor;padding-bottom:2px}
+.erro{color:#c0392b;font-size:14px}
+.side{display:flex;flex-direction:column;gap:24px;position:sticky;top:24px}
+.gen{background:var(--ink);color:#fff;border-radius:6px;padding:28px;display:flex;flex-direction:column;gap:18px;position:relative;overflow:hidden}
+.gen .arc{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.1);pointer-events:none;width:360px;height:360px;right:-140px;top:-160px}
+.gen .url{font-family:var(--mono);font-size:19px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:16px 18px;color:rgba(255,255,255,.6);word-break:break-all;position:relative}
+.gen .url b{font-weight:500;color:#fff}
+.gen .acts{display:flex;gap:8px;flex-wrap:wrap;position:relative}
+.gen .b1{background:#fff;color:var(--ink);padding:14px 18px}.gen .b2{border:1px solid rgba(255,255,255,.5);padding:14px 18px}
+.gen .info{display:flex;justify-content:space-between;color:rgba(255,255,255,.6);position:relative}
+.gen .lb .dot{background:#4ade80}
+.mini{padding:20px 24px}
+.mini .thumb{border:1px solid var(--hair);border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.mini .t{font-size:26px;line-height:1.05;letter-spacing:-.04em;word-break:break-word}.mini .t span{color:var(--dim)}
+.mini .r{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--dim);border-top:1px solid var(--hair);padding-top:10px}
+.mini .p{font-size:30px;letter-spacing:-.04em;font-weight:300}
+.list .row{padding:16px 24px;border-top:1px solid var(--hair);display:flex;flex-direction:column;gap:8px}
+.list .row:first-of-type{border-top:0}
+.list .l1{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.list .nm{font-size:16px}.list .sub{font-size:13px;color:var(--dim)}
+.list .ac{display:flex;gap:14px;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+.list .ac button:hover,.list .ac a:hover{color:var(--ink)}
+.list .vazio{padding:20px 24px;color:var(--dim);font-size:14px}
+.st{font-size:11px;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:5px 10px;white-space:nowrap}
+.st.a{background:#e7f3e9;color:#22713a}.st.v{background:var(--tint);color:var(--ink)}.st.e{background:#f3f3f1;color:var(--dim)}.st.n{border:1px solid var(--hair)}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login .card{width:min(440px,100%);padding:36px;display:flex;flex-direction:column;gap:24px}
+.login .field{padding-top:0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.on{opacity:1}
+[hidden]{display:none!important}
+@media (max-width:1000px){.grid{grid-template-columns:1fr}.side{position:static}}
+@media (max-width:700px){form{grid-template-columns:1fr;padding:4px 20px 24px}.card .hd,.foot{padding-inline:20px}.top .lock{display:none}}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <div class="card">
+    <p class="label up"><span class="dia"></span>DacostaStudio · Orçamentos</p>
+    <h1 class="h1" style="font-size:40px">Área privada</h1>
+    <div class="field"><span class="fl">Senha</span><input type="password" id="senha" autocomplete="current-password" autofocus></div>
+    <p class="erro" id="loginErro" hidden></p>
+    <button class="btn up" id="entrar" type="button"><span class="sq" style="background:#fff"></span>Entrar</button>
+  </div>
+</div>
+
+<div id="painel" hidden>
+<div class="top"><div class="wrap hdr up"><div class="l"><a class="brand" href="/">DacostaStudio</a><span class="dim">Painel de orçamentos</span></div><span class="lock"><span class="dot"></span>Área privada</span><button type="button" id="sair">Sair</button></div></div>
+<div class="wrap head">
+  <div><p class="label up dim" style="margin-bottom:18px"><span class="dia" style="background:var(--ink)"></span><span id="modo">Nova proposta</span></p><h1 class="h1">Monta o orçamento,<br><span class="dim">gera o link, manda pro cliente.</span></h1></div>
+  <button type="button" class="up lnk" id="nova">+ Nova proposta</button>
+</div>
+<div class="wrap grid">
+  <div class="card">
+    <div class="hd up"><span>Dados da proposta</span><span class="dim" id="numero"></span></div>
+    <form id="form" autocomplete="off">
+      <div class="field"><span class="fl">Cliente / marca *</span><input type="text" name="cliente" placeholder="Blank"></div>
+      <div class="field"><span class="fl"><span>Contato</span><span>Opcional</span></span><input type="text" name="contato" placeholder="Nome de quem vai receber"></div>
+      <div class="field full"><span class="fl">Título *</span><input type="text" name="titulo" placeholder="Vídeo do site"></div>
+      <div class="field full"><span class="fl"><span>Complemento do título (fica em cinza)</span><span>Opcional</span></span><input type="text" name="subtitulo" placeholder="da Blank, em 27 telas"></div>
+      <div class="field full"><span class="fl"><span>Texto do escopo</span><span>Opcional</span></span><textarea name="intro" rows="3" placeholder="Produção de 1 vídeo com 27 telas para o site…"></textarea></div>
+      <div class="field full"><span class="fl"><span>Itens do escopo</span><span class="hint">um por linha</span></span><textarea name="escopo" rows="4" placeholder="Geração por IA das imagens e cenas das telas"></textarea></div>
+      <div class="field"><span class="fl"><span>Telas</span><span>Opcional</span></span><input type="number" name="telas" min="0" placeholder="27"></div>
+      <div class="field"><span class="fl"><span>Animações</span><span>Opcional</span></span><input type="number" name="animacoes" min="0" placeholder="3"></div>
+      <div class="field"><span class="fl">Prazo (dias úteis)</span><input type="number" name="prazo" min="0" placeholder="10"></div>
+      <div class="field"><span class="fl">Rodadas de ajuste</span><div class="seg" data-seg="ajustes"><button type="button" data-v="1">1</button><button type="button" data-v="2" class="on">2</button><button type="button" data-v="3">3</button><button type="button" data-v="">Não mostrar</button></div></div>
+      <div class="field full"><span class="fl"><span>Entregáveis</span><span>Opcional</span></span><div class="chips" id="entregaveis"></div><div class="addin" id="addEnt"><input type="text" placeholder="Ex.: Versão 4:5"><button type="button" class="chip">Adicionar</button></div></div>
+      <div class="field"><span class="fl">Valor total (R$)</span><input type="text" name="valor" inputmode="decimal" placeholder="1.500,00"></div>
+      <div class="field"><span class="fl">Entrada na aprovação</span><div class="seg" data-seg="entrada"><button type="button" data-v="50" class="on">50%</button><button type="button" data-v="30">30%</button><button type="button" data-v="100">À vista</button></div></div>
+      <div class="field full"><span class="fl"><span>Frase embaixo do valor</span><span>Opcional</span></span><input type="text" class="sm" name="notaValor" placeholder="Valor total pelo vídeo completo."></div>
+      <div class="field full"><span class="fl"><span>Observações extras nas condições</span><span>Opcional</span></span><textarea name="observacoes" rows="2" placeholder="Versões para redes sociais são orçadas à parte."></textarea></div>
+      <div class="field full"><span class="fl"><span>Trabalhos parecidos pra mostrar</span><span class="hint">até 3</span></span><div class="chips" id="trabalhos"></div></div>
+      <div class="field"><span class="fl">Link vale por</span><div class="seg" data-seg="validade"><button type="button" data-v="7" class="on">7 dias</button><button type="button" data-v="15">15 dias</button><button type="button" data-v="30">30 dias</button></div></div>
+      <div class="field"><span class="fl">Etapas</span><label class="check"><input type="checkbox" name="mostrarEtapas" checked> Mostrar "Como vai ser"</label></div>
+    </form>
+    <div class="foot up"><div style="display:flex;flex-direction:column;gap:8px"><a class="dim" id="verCliente" href="#" target="_blank" rel="noopener" hidden>Ver como o cliente ↗</a><span class="erro" id="formErro" hidden></span></div><button class="btn up" id="salvar" type="button"><span class="sq" style="background:#fff"></span><span id="salvarTxt">Gerar link da proposta</span></button></div>
+  </div>
+  <div class="side">
+    <div class="gen" id="gen" hidden>
+      <span class="arc"></span>
+      <p class="label up lb"><span class="dot"></span>Link da proposta</p>
+      <div class="url" id="genUrl"></div>
+      <div class="acts up"><button type="button" class="b1" id="copiar">Copiar link</button><a class="b2" id="mandar" target="_blank" rel="noopener">Mandar no WhatsApp ↗</a></div>
+      <div class="info up"><span id="genExp"></span><span id="genData"></span></div>
+    </div>
+    <div class="card mini"><p class="up dim" style="margin-bottom:14px">Prévia do cliente</p>
+      <div class="thumb"><span class="up dim" style="font-size:10px" id="mCli">◆ Proposta para …</span><span class="t" id="mTit">Título</span>
+      <div class="r"><span id="mNum"></span><span id="mPrazo"></span></div><span class="p" id="mVal"></span></div></div>
+    <div class="card list">
+      <div class="hd up"><span>Propostas</span><span class="dim" id="total"></span></div>
+      <div id="lista"><div class="vazio">Carregando…</div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="/painel-orcamento/painel.js"></script>
+</body>
+</html>

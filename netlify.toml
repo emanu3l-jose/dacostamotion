@@ -23,6 +23,30 @@
   [headers.values]
     Cache-Control = "no-cache"
 
+# orçamentos: páginas privadas, fora do Google
+[[headers]]
+  for = "/o/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/painel-orcamento/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/orcamento/*"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+# link da proposta: dacostamotion.com/o/x7k2p9 (os dados vêm da função netlify/functions/orcamentos)
+[[redirects]]
+  from = "/o/*"
+  to = "/orcamento/proposta.html"
+  status = 200
+
 # endereços limpos: /contato, /sobre, /projeto-1... abrem o site (arquivos reais têm prioridade)
 [[redirects]]
   from = "/*"
