@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Proposta · DacostaStudio</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/orcamento/estilo.css">
+<style>
+.ribbon{background:var(--ink);color:#fff}.ribbon .wrap{display:flex;justify-content:space-between;gap:12px;padding-block:12px}
+.ribbon .r{color:rgba(255,255,255,.6)}
+.hero{padding-top:110px;padding-bottom:64px;display:flex;flex-direction:column;gap:36px}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.meta div{padding:20px 20px 22px 0;display:flex;flex-direction:column;gap:8px;font-size:16px}
+.meta div+div{padding-left:20px;border-left:1px solid var(--hair)}
+.sec{padding-block:96px}.sec+.sec{padding-top:0}
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.intro{font-size:22px;line-height:32px;font-weight:300;color:var(--dim);max-width:30ch;white-space:pre-line}
+.did{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
+.did li{padding:16px 0;border-bottom:1px solid var(--hair);font-size:17px;line-height:25px;display:flex;gap:16px}
+.did li span{color:var(--dim);min-width:28px;font-variant-numeric:tabular-nums;font-size:13px;padding-top:3px}
+.nums{display:grid;grid-template-columns:repeat(var(--n,4),1fr);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.num{padding:22px 20px 26px;border-left:1px solid var(--hair);display:flex;flex-direction:column;gap:56px;position:relative}
+.num:first-child{border-left:0;padding-left:0}
+.num::before,.step::before{content:"";position:absolute;left:-3px;top:-3px;width:6px;height:6px;background:var(--ink)}
+.num:last-child::after,.step:last-child::after{content:"";position:absolute;right:-3px;top:-3px;width:6px;height:6px;background:var(--ink)}
+.num .v{font-size:88px;line-height:.9;letter-spacing:-.05em;font-weight:300;font-variant-numeric:tabular-nums;white-space:nowrap}
+.num .v small{font-size:22px;letter-spacing:-.02em;color:var(--dim);margin-left:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid var(--hair);border-radius:999px;padding:10px 16px;font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr)}
+.step{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);border-left:1px solid var(--hair);padding:20px 20px 28px;display:flex;flex-direction:column;gap:10px;min-height:230px;position:relative}
+.step:first-child{border-left:0;padding-left:0}
+.step .n{font-size:12px;letter-spacing:.05em;color:var(--dim);display:flex;justify-content:space-between;gap:8px}
+.step .t{font-size:26px;line-height:32px;letter-spacing:-.025em;margin-top:auto}
+.step .d{font-size:15px;line-height:22px;color:var(--dim)}
+.inv{background:var(--ink);color:#fff;border-radius:6px;padding:56px 60px;display:grid;grid-template-columns:1.2fr 1fr;gap:60px;position:relative;overflow:hidden}
+.inv .arc{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.1);pointer-events:none}
+.inv .price{font-size:128px;line-height:.9;letter-spacing:-.055em;font-weight:300;margin-top:28px;white-space:nowrap}
+.inv .price small{font-size:34px;letter-spacing:-.02em;vertical-align:top;margin-right:8px;color:rgba(255,255,255,.6)}
+.inv .price .cts{font-size:44px;color:rgba(255,255,255,.6);letter-spacing:-.03em}
+.inv .note{color:rgba(255,255,255,.6);font-size:15px;line-height:22px;margin-top:20px;max-width:40ch}
+.inv ul{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.18);position:relative;align-self:start}
+.inv li{display:flex;justify-content:space-between;gap:12px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18);font-size:16px}
+.inv li span:first-child{color:rgba(255,255,255,.6)}
+.inv .acts{display:flex;gap:12px;margin-top:32px;position:relative;flex-wrap:wrap}
+.inv .b1{background:#fff;color:var(--ink);padding:18px 26px;display:inline-flex;gap:10px;align-items:center;justify-content:center}
+.inv .b2{border:1px solid #fff;padding:18px 26px;display:inline-flex;justify-content:center}
+.inv .ok{display:inline-flex;gap:10px;align-items:center;border:1px solid rgba(255,255,255,.4);padding:18px 26px}
+.inv .ok i{width:6px;height:6px;border-radius:50%;background:#4ade80}
+.conds{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
+.conds li{display:grid;grid-template-columns:240px 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--hair);font-size:17px;line-height:25px}
+.conds li span{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);padding-top:4px}
+.conds li p{white-space:pre-line}
+.who{display:flex;gap:16px;align-items:center;margin-top:36px}
+.who .pic{width:52px;height:52px;border-radius:50%;background:#ccc url(/media/emanuel.jpg) center/cover;filter:grayscale(1)}
+.who .nm{font-size:16px}.who .rl{font-size:15px;color:var(--dim)}
+.works{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.w .img{aspect-ratio:16/10;border-radius:6px;background:#111 center/cover;margin-bottom:14px}
+.w .cap{display:flex;justify-content:space-between;gap:12px}
+.foot{border-top:1px solid var(--hair);margin-top:40px}
+.foot .wrap{display:flex;justify-content:space-between;gap:14px;padding-block:28px;flex-wrap:wrap}
+.exp{display:inline-flex;gap:10px;align-items:center;border:1px solid var(--hair);border-radius:999px;padding:8px 14px}
+/* link expirado / não encontrado */
+.dead{background:#111;color:#fff;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.dead .arc{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.12);pointer-events:none}
+.dead .ln{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.25)}
+.dead .mk{position:absolute;width:6px;height:6px;background:#fff}
+.dead .c{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:30px;padding:60px 20px}
+.dead .display .fade{color:rgba(255,255,255,.45)}
+.dead .t{font-size:18px;line-height:27px;color:rgba(255,255,255,.65);max-width:46ch}
+.dead .acts{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.dead .b1{background:#fff;color:#111;padding:16px 24px}.dead .b2{border:1px solid #fff;padding:16px 24px}
+.dead .code{font-family:var(--mono);font-size:13px;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:7px 14px;display:inline-flex;gap:10px;align-items:center}
+.dead .bar{position:relative;border-top:1px solid rgba(255,255,255,.25)}.dead .bar .wrap{display:flex;justify-content:space-between;gap:12px;padding-block:26px;flex-wrap:wrap}
+.dead .hdr{position:relative}
+.loading{min-height:100vh;display:grid;place-items:center}
+@media (max-width:700px){
+  .ribbon .wrap{flex-direction:column;gap:4px}
+  .hero{padding-top:48px;gap:24px}
+  .meta{grid-template-columns:1fr 1fr}.meta div{padding:16px 12px 16px 0}.meta div+div{padding-left:0;border-left:0}.meta div:nth-child(even){padding-left:14px;border-left:1px solid var(--hair)}.meta div:nth-child(n+3){border-top:1px solid var(--hair)}
+  .sec{padding-block:56px}.two{grid-template-columns:1fr;gap:28px}.intro{font-size:19px;line-height:28px}
+  .nums{grid-template-columns:1fr 1fr}.num{gap:28px;padding:18px 14px 20px}.num:nth-child(odd){border-left:0;padding-left:0}.num:nth-child(n+3){border-top:1px solid var(--hair)}.num .v{font-size:60px}.num .v small{font-size:15px}
+  .steps{grid-template-columns:1fr}.step{border-left:0;padding-left:0;min-height:0}.step .t{margin-top:18px}
+  .inv{grid-template-columns:1fr;padding:32px 22px;gap:32px}.inv .price{font-size:84px}.inv .price .cts{font-size:30px}.inv .acts{flex-direction:column}
+  .conds li{grid-template-columns:1fr;gap:6px}
+  .works{grid-template-columns:1fr}.foot .wrap{flex-direction:column;align-items:flex-start}
+  .dead .ln,.dead .mk{display:none}
+}
+</style>
+</head>
+<body>
+<div id="app" class="loading"><span class="up dim">Carregando proposta…</span></div>
+<script src="/orcamento/proposta.js"></script>
+</body>
+</html>

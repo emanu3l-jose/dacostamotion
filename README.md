@@ -41,3 +41,10 @@ Dicas:
 ## Publicação
 
 O repositório é público para o Netlify (plano grátis) aceitar atualizações de mais de um autor. Nada secreto fica aqui: a chave do login do painel está guardada no Netlify.
+
+## Orçamentos (propostas com link privado)
+- Painel: `dacostamotion.com/painel-orcamento` (não tem link no site). Entra com a senha, preenche e clica em **Gerar link da proposta**.
+- O cliente abre `dacostamotion.com/o/xxxxxx`. O link vale 7, 15 ou 30 dias; depois aparece a tela de link expirado. Proposta aprovada não expira.
+- Na lista do painel dá pra ver se o cliente abriu ou aprovou, editar, duplicar, dar +7 dias ou apagar.
+- As propostas ficam guardadas no Netlify Blobs, pela função `netlify/functions/orcamentos`.
+- **Senha:** no Netlify, em **Project configuration → Environment variables**, crie `ORCAMENTO_SENHA` com a senha do painel e publique de novo.
