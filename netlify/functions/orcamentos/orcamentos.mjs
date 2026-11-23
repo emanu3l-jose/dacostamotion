@@ -6,7 +6,7 @@ import { tratar, sha256 } from "./logica.mjs";
 
 const SENHA_HASH = "a08f1d5f3bcc1ee5503feb2aa0645158e7b9f765ae392e4a74aa771cfe803331";
 
-export default async (req) => {
+export default async (req, context) => {
   const blobs = getStore({ name: "orcamentos", consistency: "strong" });
   const store = {
     get: k => blobs.get(k, { type: "json" }),
@@ -15,7 +15,9 @@ export default async (req) => {
     keys: async prefix => (await blobs.list({ prefix })).blobs.map(b => b.key),
   };
   const senha = Netlify.env.get("ORCAMENTO_SENHA");
-  return tratar(req, {}, store, senha ? sha256(senha) : SENHA_HASH);
+  const g = (context && context.geo) || {};
+  const geo = { cidade: g.city, estado: g.country && g.country.code === "BR" && g.subdivision ? g.subdivision.code : "", pais: g.country && (g.country.code === "BR" ? "Brasil" : g.country.name) };
+  return tratar(req, {}, store, senha ? sha256(senha) : SENHA_HASH, Date.now(), geo);
 };
 
 export const config = { path: ["/api/orcamentos", "/api/orcamentos/*", "/api/o/*"] };

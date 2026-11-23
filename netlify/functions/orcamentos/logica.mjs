@@ -42,11 +42,19 @@ function limpar(b = {}) {
   };
 }
 
-const resumo = p => ({ id: p.id, cliente: p.cliente, titulo: p.titulo, valor: p.valor, criadoEm: p.criadoEm, expiraEm: p.expiraEm, views: p.views || 0, ultimaVista: p.ultimaVista || null, aprovadoEm: p.aprovadoEm || null });
+const resumo = p => ({ visitas: (p.visitas || []).slice(0, 30), id: p.id, cliente: p.cliente, titulo: p.titulo, valor: p.valor, criadoEm: p.criadoEm, expiraEm: p.expiraEm, views: p.views || 0, ultimaVista: p.ultimaVista || null, aprovadoEm: p.aprovadoEm || null });
 const expirou = (p, agora) => Date.parse(p.expiraEm) <= agora;
 
 // store: { get(key) -> objeto|null, set(key, obj), del(key), keys(prefix) -> [key] }
-export async function tratar(req, params, store, senhaHash, agora = Date.now()) {
+// "Mozilla/5.0 (iPhone; ...)" -> { aparelho: "Celular", sistema: "iPhone" }
+export function aparelho(ua = "") {
+  const sistema = /iPhone/.test(ua) ? "iPhone" : /iPad/.test(ua) ? "iPad" : /Android/.test(ua) ? "Android" : /Windows/.test(ua) ? "Windows" : /Mac OS X|Macintosh/.test(ua) ? "Mac" : /Linux/.test(ua) ? "Linux" : "";
+  const tipo = /iPad|Tablet/.test(ua) || (/Android/.test(ua) && !/Mobile/.test(ua)) ? "Tablet" : /Mobi|iPhone|Android/.test(ua) ? "Celular" : "Computador";
+  return { aparelho: tipo, sistema };
+}
+
+// geo: { cidade, estado, pais } (vem do Netlify, aproximado pelo IP)
+export async function tratar(req, params, store, senhaHash, agora = Date.now(), geo = {}) {
   const url = new URL(req.url);
   const partes = url.pathname.replace(/^\/api\//, "").split("/").filter(Boolean); // ["orcamentos", id?] ou ["o", id, acao?]
   const [rota, id, acao] = partes;
@@ -64,8 +72,13 @@ export async function tratar(req, params, store, senhaHash, agora = Date.now()) 
       return json({ ok: true, aprovadoEm: p.aprovadoEm });
     }
     if (req.method !== "GET" || acao) return json({ erro: "metodo" }, 405);
-    if (url.searchParams.get("eu") !== "1") { p.views = (p.views || 0) + 1; p.ultimaVista = new Date(agora).toISOString(); await store.set(chave(id), p); }
-    const { views, ultimaVista, ...publico } = p;
+    if (url.searchParams.get("eu") !== "1") {
+      p.views = (p.views || 0) + 1; p.ultimaVista = new Date(agora).toISOString();
+      const visita = { em: p.ultimaVista, cidade: txt(geo.cidade, 80), estado: txt(geo.estado, 40), pais: txt(geo.pais, 60), ...aparelho(req.headers.get("user-agent") || "") };
+      p.visitas = [visita, ...(p.visitas || [])].slice(0, 100); // guarda as 100 mais recentes
+      await store.set(chave(id), p);
+    }
+    const { views, ultimaVista, visitas, ...publico } = p;
     return json(publico);
   }
 

@@ -140,6 +140,7 @@ $("#salvar").addEventListener("click", async () => {
 $("#nova").addEventListener("click", () => { modo(null); preencher({}); $("#gen").hidden = true; window.scrollTo({ top: 0, behavior: "smooth" }); });
 
 // ---------- lista ----------
+const quando = iso => { const d = new Date(iso); return `${d.getDate()} ${MESES[d.getMonth()]}, ${d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`; };
 function status(p) {
   if (p.aprovadoEm) return `<span class="st a">Aprovada</span>`;
   if (diasAte(p.expiraEm) <= 0) return `<span class="st e">Expirada</span>`;
@@ -156,6 +157,7 @@ function desenharLista(ps) {
   $("#lista").innerHTML = ps.length ? ps.map(p => `<div class="row" data-id="${p.id}">
     <div class="l1"><span class="nm">${esc(p.cliente)} · ${esc(p.titulo)}</span>${status(p)}</div>
     <span class="sub">${sub(p)}</span>
+    ${p.visitas && p.visitas.length ? `<details class="vis"><summary>Ver visitas (${p.views || p.visitas.length})</summary><ul>${p.visitas.map(v => `<li><span>${quando(v.em)}</span><span>${esc([v.cidade, v.estado].filter(Boolean).join(", ") || "Local desconhecido")}${v.pais && v.pais !== "Brasil" ? " · " + esc(v.pais) : ""}</span><span>${esc(v.aparelho)}${v.sistema ? " · " + esc(v.sistema) : ""}</span></li>`).join("")}</ul></details>` : ""}
     <div class="ac"><button type="button" data-a="editar">Editar</button><a href="/o/${p.id}?eu=1" target="_blank" rel="noopener">Abrir ↗</a><button type="button" data-a="duplicar">Duplicar</button>${p.aprovadoEm ? "" : `<button type="button" data-a="renovar">+7 dias</button>`}<button type="button" data-a="apagar">Apagar</button></div>
   </div>`).join("") : `<div class="vazio">Nenhuma proposta ainda.</div>`;
 }
