@@ -9,10 +9,12 @@ const json = (dados, status = 200) =>
 
 function novoId() { let s = ""; for (let i = 0; i < 6; i++) s += LETRAS[randomInt(LETRAS.length)]; return s; }
 
-function senhaOk(req, senha) {
-  if (!senha) return false;
-  const h = v => createHash("sha256").update(String(v)).digest();
-  return timingSafeEqual(h(req.headers.get("x-senha") || ""), h(senha));
+export const sha256 = v => createHash("sha256").update(String(v)).digest("hex");
+
+// compara o hash da senha digitada com o hash guardado (a senha em si nunca fica no código)
+function senhaOk(req, senhaHash) {
+  if (!senhaHash || !/^[0-9a-f]{64}$/.test(senhaHash)) return false;
+  return timingSafeEqual(Buffer.from(sha256(req.headers.get("x-senha") || ""), "hex"), Buffer.from(senhaHash, "hex"));
 }
 
 const txt = (v, max = 400) => (typeof v === "string" ? v.trim().slice(0, max) : "");
@@ -44,7 +46,7 @@ const resumo = p => ({ id: p.id, cliente: p.cliente, titulo: p.titulo, valor: p.
 const expirou = (p, agora) => Date.parse(p.expiraEm) <= agora;
 
 // store: { get(key) -> objeto|null, set(key, obj), del(key), keys(prefix) -> [key] }
-export async function tratar(req, params, store, senha, agora = Date.now()) {
+export async function tratar(req, params, store, senhaHash, agora = Date.now()) {
   const url = new URL(req.url);
   const partes = url.pathname.replace(/^\/api\//, "").split("/").filter(Boolean); // ["orcamentos", id?] ou ["o", id, acao?]
   const [rota, id, acao] = partes;
@@ -69,8 +71,8 @@ export async function tratar(req, params, store, senha, agora = Date.now()) {
 
   // ---------- painel: precisa da senha ----------
   if (rota !== "orcamentos") return json({ erro: "nao_encontrada" }, 404);
-  if (!senha) return json({ erro: "senha_nao_configurada" }, 503);
-  if (!senhaOk(req, senha)) return json({ erro: "senha" }, 401);
+  if (!senhaHash) return json({ erro: "senha_nao_configurada" }, 503);
+  if (!senhaOk(req, senhaHash)) return json({ erro: "senha" }, 401);
 
   if (!id) {
     if (req.method === "GET") {
