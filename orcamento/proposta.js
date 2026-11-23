@@ -74,45 +74,45 @@ function render(p, trabalhos) {
   ${hdr(p.titulo ? `Orçamento · ${p.titulo}` : "Orçamento")}
   <main>
   <section class="wrap hero">
-    <p class="label up"><span class="dia"></span>Proposta para ${esc(p.cliente)}</p>
-    <h1 class="display">${esc(p.titulo)}${p.subtitulo ? `<br><span class="fade">${esc(p.subtitulo)}</span>` : ""}</h1>
+    <p class="label up" data-rv><span class="dia"></span>Proposta para ${esc(p.cliente)}</p>
+    <h1 class="display casc"><span class="cz"><span style="--i:0">${esc(p.titulo)}</span></span>${p.subtitulo ? `<span class="cz fade"><span style="--i:1">${esc(p.subtitulo)}</span></span>` : ""}</h1>
     <div class="meta">
-      <div><span class="up dim">Cliente</span>${esc(p.cliente)}${p.contato ? ` · ${esc(p.contato)}` : ""}</div>
-      <div><span class="up dim">Enviada em</span>${dt(p.criadoEm)}</div>
-      <div><span class="up dim">Prazo de entrega</span>${p.prazo ? `Até ${plural(p.prazo, "dia útil", "dias úteis")}` : "A combinar"}</div>
-      <div><span class="up dim">Válida até</span>${dt(p.expiraEm)} (${plural(p.validade || 7, "dia", "dias")})</div>
+      <div data-rv style="--d:4"><span class="up dim">Cliente</span>${esc(p.cliente)}${p.contato ? ` · ${esc(p.contato)}` : ""}</div>
+      <div data-rv style="--d:5"><span class="up dim">Enviada em</span>${dt(p.criadoEm)}</div>
+      <div data-rv style="--d:6"><span class="up dim">Prazo de entrega</span>${p.prazo ? `Até ${plural(p.prazo, "dia útil", "dias úteis")}` : "A combinar"}</div>
+      <div data-rv style="--d:7"><span class="up dim">Válida até</span>${dt(p.expiraEm)} (${plural(p.validade || 7, "dia", "dias")})</div>
     </div>
   </section>
 
   ${p.intro || p.escopo.length ? `<section class="wrap sec">
-    <div class="sh"><p class="label up"><span class="sq"></span>Escopo</p><span class="up dim">${sec()}</span></div>
+    <div class="sh" data-rv><p class="label up"><span class="sq"></span>Escopo</p><span class="up dim">${sec()}</span></div>
     <div class="two">
-      <p class="intro">${esc(p.intro)}</p>
-      <ul class="did">${p.escopo.map((e, i) => `<li><span>${pad(i + 1)}</span>${esc(e)}</li>`).join("")}</ul>
+      <p class="intro" data-rv>${esc(p.intro)}</p>
+      <ul class="did">${p.escopo.map((e, i) => `<li data-rv style="--d:${i}"><span>${pad(i + 1)}</span>${esc(e)}</li>`).join("")}</ul>
     </div>
   </section>` : ""}
 
   ${nums.length ? `<section class="wrap sec">
-    <div class="sh"><p class="label up"><span class="sq"></span>Em números</p><span class="up dim">${sec()}</span></div>
-    <div class="nums" style="--n:${nums.length}">${nums.map(([l, v, s]) => `<div class="num"><span class="up dim">${l}</span><span class="v">${pad(v)}${s ? `<small>${s}</small>` : ""}</span></div>`).join("")}</div>
+    <div class="sh" data-rv><p class="label up"><span class="sq"></span>Em números</p><span class="up dim">${sec()}</span></div>
+    <div class="nums" style="--n:${nums.length}">${nums.map(([l, v, s], i) => `<div class="num" data-rv style="--d:${i}"><span class="up dim">${l}</span><span class="v"><b data-count="${v}" data-pad="1">${pad(v)}</b>${s ? `<small>${s}</small>` : ""}</span></div>`).join("")}</div>
   </section>` : ""}
 
   ${p.entregaveis.length ? `<section class="wrap sec">
-    <div class="sh"><p class="label up"><span class="sq"></span>O que você recebe</p><span class="up dim">${sec()}</span></div>
-    <div class="chips">${p.entregaveis.map(e => `<span class="chip">${esc(e)}</span>`).join("")}</div>
+    <div class="sh" data-rv><p class="label up"><span class="sq"></span>O que você recebe</p><span class="up dim">${sec()}</span></div>
+    <div class="chips">${p.entregaveis.map((e, i) => `<span class="chip" data-rv style="--d:${i}">${esc(e)}</span>`).join("")}</div>
   </section>` : ""}
 
   ${p.mostrarEtapas ? `<section class="wrap sec">
-    <div class="sh"><p class="label up"><span class="sq"></span>Como vai ser</p><span class="up dim">${sec()}</span></div>
-    <div class="steps">${etapas(p).map(([q, t, d], i) => `<div class="step"><span class="n"><span>${pad(i + 1)}</span><span>${q}</span></span><span class="t">${t}</span><span class="d">${d}</span></div>`).join("")}</div>
+    <div class="sh" data-rv><p class="label up"><span class="sq"></span>Como vai ser</p><span class="up dim">${sec()}</span></div>
+    <div class="steps">${etapas(p).map(([q, t, d], i) => `<div class="step" data-rv style="--d:${i}"><span class="n"><span>${pad(i + 1)}</span><span>${q}</span></span><span class="t">${t}</span><span class="d">${d}</span></div>`).join("")}</div>
   </section>` : ""}
 
   ${p.valor ? `<section class="wrap sec">
-    <div class="inv">
+    <div class="inv" data-rv="scale">
       <span class="arc" style="width:620px;height:620px;right:-200px;top:-220px"></span><span class="arc" style="width:380px;height:380px;right:-80px;top:-100px"></span>
       <div>
         <p class="label up"><span class="dia"></span>Investimento</p>
-        <p class="price"><small>R$</small>${reais}${cts !== "00" ? `<span class="cts">,${cts}</span>` : ""}</p>
+        <p class="price"><small>R$</small><b data-count="${Math.floor(p.valor / 100)}" style="font-weight:inherit">${reais}</b>${cts !== "00" ? `<span class="cts">,${cts}</span>` : ""}</p>
         ${p.notaValor ? `<p class="note">${esc(p.notaValor)}</p>` : ""}
         <div class="acts up" id="acts">${p.aprovadoEm
           ? `<span class="ok"><i></i>Aprovado em ${dt(p.aprovadoEm)}</span><a class="b2" href="${whats(`Oi Emanuel! Sobre o orçamento "${p.titulo}"...`)}" target="_blank" rel="noopener">Falar no WhatsApp ↗</a>`
@@ -123,18 +123,19 @@ function render(p, trabalhos) {
   </section>` : ""}
 
   <section class="wrap sec">
-    <div class="sh"><p class="label up"><span class="sq"></span>Condições</p><span class="up dim">${sec()}</span></div>
-    <ul class="conds">${conds.map(([l, t]) => `<li><span>${l}</span><p>${esc(t)}</p></li>`).join("")}</ul>
-    <div class="who"><span class="pic"></span><div><div class="nm">Emanuel Costa</div><div class="rl">Motion designer · DacostaStudio</div></div></div>
+    <div class="sh" data-rv><p class="label up"><span class="sq"></span>Condições</p><span class="up dim">${sec()}</span></div>
+    <ul class="conds">${conds.map(([l, t], i) => `<li data-rv style="--d:${i}"><span>${l}</span><p>${esc(t)}</p></li>`).join("")}</ul>
+    <div class="who" data-rv><span class="pic"></span><div><div class="nm">Emanuel Costa</div><div class="rl">Motion designer · DacostaStudio</div></div></div>
   </section>
 
   ${trabalhos.length ? `<section class="wrap sec">
-    <div class="sh"><p class="label up"><span class="sq"></span>Trabalhos parecidos</p><a class="up dim" href="/trabalhos">Ver todos ↗</a></div>
-    <div class="works">${trabalhos.map(t => `<a class="w" href="/projeto-${t.id}"><div class="img" style="background-image:url('/${esc(t.capa)}')"></div><div class="cap up"><span>${esc(t.nome)}</span><span class="dim">${esc(t.tipo)}</span></div></a>`).join("")}</div>
+    <div class="sh" data-rv><p class="label up"><span class="sq"></span>Trabalhos parecidos</p><a class="up dim" href="/trabalhos">Ver todos ↗</a></div>
+    <div class="works">${trabalhos.map((t, i) => `<a class="w" data-rv="scale" style="--d:${i}" href="/projeto-${t.id}"><div class="img" style="background-image:url('/${esc(t.capa)}')"></div><div class="cap up"><span>${esc(t.nome)}</span><span class="dim">${esc(t.tipo)}</span></div></a>`).join("")}</div>
   </section>` : ""}
   </main>
   <footer class="foot"><div class="wrap up"><span>© ${new Date().getFullYear()} DacostaStudio</span><a class="dim" href="mailto:${EMAIL}">${EMAIL}</a>${expira ? `<span class="exp"><span class="dot"></span>Link expira em ${dt(expira)}</span>` : ""}</div></footer>`;
 
+  animar();
   const btn = document.getElementById("aprovar");
   if (btn) btn.addEventListener("click", async () => {
     if (!confirm(`Aprovar o orçamento de ${brl(p.valor)}?`)) return;
@@ -145,6 +146,29 @@ function render(p, trabalhos) {
       if (j.ok) { p.aprovadoEm = j.aprovadoEm; render(p, trabalhos); }
     } catch (e) { if (!janela) location.href = whats(msgAprova); }
   });
+}
+
+// ---------- animações ----------
+let jaAnimou = false;
+function contar(el) {
+  const fim = +el.dataset.count, comPad = el.dataset.pad, dur = 1600, t0 = performance.now();
+  const fmt = n => comPad ? pad(n) : n.toLocaleString("pt-BR");
+  const passo = t => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(2, -10 * k); el.textContent = fmt(Math.round(fim * (k >= 1 ? 1 : e))); if (k < 1) requestAnimationFrame(passo); };
+  el.textContent = fmt(0); requestAnimationFrame(passo);
+}
+function animar() {
+  const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const alvos = app.querySelectorAll("[data-rv], .casc");
+  // depois de aprovar, a página é redesenhada: aí mostra tudo direto, sem animar de novo
+  if (reduz || jaAnimou || !("IntersectionObserver" in window)) { alvos.forEach(el => el.classList.add("in")); return; }
+  jaAnimou = true;
+  app.classList.add("anim");
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add("in"); io.unobserve(e.target);
+    e.target.querySelectorAll("[data-count]").forEach(contar);
+  }), { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+  alvos.forEach(el => io.observe(el));
 }
 
 async function iniciar() {
